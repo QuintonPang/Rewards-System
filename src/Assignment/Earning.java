@@ -20,7 +20,7 @@ public class Earning {
     private String invoiceNo;
     private int value;
     private String memberNo;
-    private boolean redeemed;
+    private int oriValue;
     private LocalDate earningDate;
     private LocalDate expiryDate;
 
@@ -28,11 +28,11 @@ public class Earning {
 
     }
 
-    public Earning(String invoiceNo, int value, String memberNo, boolean redeemed, LocalDate earningDate, LocalDate expiryDate) {
+    public Earning(String invoiceNo, int value, String memberNo, int oriValue, LocalDate earningDate, LocalDate expiryDate) {
         this.invoiceNo = invoiceNo;
         this.value = value;
         this.memberNo = memberNo;
-        this.redeemed = redeemed;
+        this.oriValue = oriValue;
         this.earningDate = earningDate;
         this.expiryDate = expiryDate;
     }
@@ -43,7 +43,7 @@ public class Earning {
         this.memberNo = memberNo;
         this.earningDate = LocalDate.now();
         this.expiryDate = LocalDate.now();
-        this.redeemed = false;
+        this.oriValue = value;
 
         // write to file logic
         writeToFile();
@@ -54,9 +54,23 @@ public class Earning {
 //            CSVWrite csvWrite = new CSVWrite();
             List<String[]> dataLines;
             dataLines = new ArrayList<>();
-            dataLines.add(new String[]{this.getMemberNo(), this.getInvoiceNo(), Integer.toString(this.getValue()), String.valueOf(this.isRedeemed()), this.getEarningDate().toString(), this.getExpiryDate().toString()});
+            dataLines.add(new String[]{this.getMemberNo(), this.getInvoiceNo(), Integer.toString(this.getValue()), String.valueOf(this.getOriValue()), this.getEarningDate().toString(), this.getExpiryDate().toString()});
 
-            CSVWrite.givenDataArray_whenConvertToCSV_thenOutputCreated(dataLines,"earning.csv");
+            CSVWrite.givenDataArray_whenConvertToCSV_thenOutputCreated(dataLines,"earning.csv",true);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+     public static void rewriteToFile(List<Earning> earnings) {
+        try {
+//            CSVWrite csvWrite = new CSVWrite();
+          List<String[]> dataLines;
+            dataLines = new ArrayList<>();
+            for(Earning earning: earnings){
+            dataLines.add(new String[]{earning.getMemberNo(), earning.getInvoiceNo(), Integer.toString(earning.getValue()), String.valueOf(earning.getOriValue()), earning.getEarningDate().toString(), earning.getExpiryDate().toString()});
+            }
+            CSVWrite.givenDataArray_whenConvertToCSV_thenOutputCreated(dataLines,"earning.csv",false);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,13 +104,15 @@ public class Earning {
         this.memberNo = memberNo;
     }
 
-    public boolean isRedeemed() {
-        return redeemed;
+    public int getOriValue() {
+        return oriValue;
     }
 
-    public void setRedeemed(boolean redeemed) {
-        this.redeemed = redeemed;
+    public void setOriValue(int oriValue) {
+        this.oriValue = oriValue;
     }
+
+   
 
     public LocalDate getEarningDate() {
         return earningDate;

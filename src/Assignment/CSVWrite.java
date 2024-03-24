@@ -49,9 +49,12 @@ public class CSVWrite {
         }
         return escapedData;
     }
+    
+ 
 
-    public static void givenDataArray_whenConvertToCSV_thenOutputCreated(List<String[]> dataLines, String fileName) throws IOException {
-        FileWriter csvOutputFile = new FileWriter(fileName, true);
+
+    public static void givenDataArray_whenConvertToCSV_thenOutputCreated(List<String[]> dataLines, String fileName, boolean isAppend) throws IOException {
+        FileWriter csvOutputFile = new FileWriter(fileName, isAppend);
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
             dataLines.stream()
                     .map(data -> CSVWrite.convertToCSV(data))
@@ -126,11 +129,11 @@ public class CSVWrite {
                 String invoiceNo = (values[1]);
 
                 int value = (Integer.parseInt(values[2]));
-                boolean redeemed = (Boolean.getBoolean(values[3]));
+                int oriValue = (Integer.parseInt(values[3]));
                 LocalDate earningDate =  LocalDate.of(Integer.parseInt(values[4].split("-")[0]),Integer.parseInt(values[4].split("-")[1]),Integer.parseInt(values[4].split("-")[2]));
                 LocalDate expiryDate =  LocalDate.of(Integer.parseInt(values[5].split("-")[0]),Integer.parseInt(values[5].split("-")[1]),Integer.parseInt(values[5].split("-")[2]));
 
-                Earning earning = new Earning(invoiceNo,value,memberNo,redeemed,earningDate,expiryDate);
+                Earning earning = new Earning(invoiceNo,value,memberNo,oriValue,earningDate,expiryDate);
 
 //            }
 //        }

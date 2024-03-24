@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class Main {
 
-    static void deductPoints(int total, List<Earning>filteredList) {
+    static void deductPoints(int total, List<Earning> filteredList) {
         int counter = 0;
         while (total > 0) {
             if (total >= filteredList.get(counter).getValue()) {
@@ -34,21 +34,26 @@ public class Main {
         }
     }
 
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         while (isRunning) {
             try {
                 System.out.println("Welcome to our rewards system\n");
 
-                System.out.println("0. Exit:");
+                System.out.println("0. Exit");
 
-                System.out.println("1. Earn rewards:");
-                System.out.println("2. Redeem rewards:");
-                System.out.print("Enter your choice:");
+                System.out.println("1. Earn rewards");
+                System.out.println("2. Redeem rewards");
+                System.out.print("Enter your choice: ");
                 String choice = scanner.nextLine();
                 switch (choice) {
                     case "1":
@@ -57,9 +62,11 @@ public class Main {
                         System.out.print("Enter your invoice NO.: ");
                         String invoiceNo = scanner.nextLine();
                         System.out.print("Enter the total payment amount: ");
-                        int value = (int) Math.round(scanner.nextDouble() * 10);
-                        Earning earning = new Earning(invoiceNo, value, memberID);
+                        int value = (int) Math.round(Double.parseDouble(scanner.nextLine()) * 10);
+                        new Earning(invoiceNo, value, memberID);
+                        System.out.print("\n");
                         break;
+
                     case "2":
                         System.out.print("Enter your member No.:");
                         String memberNo = scanner.nextLine();
@@ -86,27 +93,38 @@ public class Main {
                         System.out.print("Current points: " + totalPoints + '\n');
 
                         System.out.println("What would you like to redeem?");
-                        System.out.println("1. Mug (150 points)");
-                        System.out.println("2. Umbrella (300 points)");
-                        System.out.println("3. Skipping Rope (500 points)");
+                        for (int i = 0; i < redemptionItems.length; i++) {
+                            if (redemptionItems[i].getRedemptionValue() <= totalPoints) {
+                                System.out.printf("%d %s (%d points)\n", i + 1, redemptionItems[i].getName(), redemptionItems[i].getRedemptionValue());
+                            }
+
+                        }
+
                         System.out.print("Enter your choice:");
                         String redemptionChoice = scanner.nextLine();
-                        switch (redemptionChoice) {
-                            case "1":
-                                deductPoints(150,filteredList);
 
-                                break;
+                        while (!isNumeric(redemptionChoice)||Integer.parseInt(redemptionChoice)<1||Integer.parseInt(redemptionChoice)>redemptionItems.length) {
+                            System.out.println("Invalid input!");
+                            System.out.print("Enter your choice:");
+                            redemptionChoice = scanner.nextLine();
+
                         }
-                        for (Earning test : filteredList) {
-                            System.out.println(test.getValue());
-                        }
-                        System.out.println("Redemption successful!");
+                        deductPoints(redemptionItems[Integer.parseInt(redemptionChoice) - 1].getRedemptionValue(), filteredList);
+
+//                        for (Earning test : filteredList) {
+//                            System.out.println(test.getValue());
+//                        }
+                        List<Earning> newEarnings = new ArrayList<>();
+                        newEarnings.addAll(filteredList);
+                        newEarnings.addAll(otherMembers);
+                        Earning.rewriteToFile(newEarnings);
+                        System.out.println("Redemption successful!\n");
                         break;
-                    case "3":
+                    case "0":
                         isRunning = false;
                         break;
                     default:
-                        System.out.println("Invalid input!1");
+                        System.out.println("Invalid input!");
 
                 }
             } catch (FileNotFoundException ex) {
