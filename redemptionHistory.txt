@@ -1,0 +1,3 @@
+
+Date: 2024-05-02 11:18:16, Member ID: m1003, Redeemed Item: Shampoo, Quantity: 1
+Date: 2024-05-02 11:18:27, Member ID: m1003, Redeemed Item: Year end sale voucher, Quantity: 1

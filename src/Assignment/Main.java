@@ -4,8 +4,12 @@ package Assignment;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +22,31 @@ import java.util.logging.Logger;
  * @author TARUC
  */
 public class Main {
+
+    public static void writeToRedemptionHistory(RedemptionItem redemptionItem, String memberID) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("redemptionHistory.txt", true));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        writer.write("Date: " + LocalDateTime.now().format(formatter) + ", Member ID: " + memberID + ", Redeemed Item: " + redemptionItem.getName() + ", Quantity: 1\n");
+        writer.close();
+    }
+
+    // Record the redeemed item to the redemptionHistory.txt file
+    public static void recordRedeemedItem(RedemptionItem redeemedItem, String memberID, int quantity) {
+        try {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedNow = now.format(formatter);
+            String record = "Date: " + formattedNow + ", Member ID: " + memberID + ", Redeemed Item: " + redeemedItem.getName() + ", Quantity: " + quantity;
+
+            // Always add a new record
+            try (FileWriter writer = new FileWriter("redemptionHistory.txt", true)) {
+                writer.write(record + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while recording the redeemed item.");
+            e.printStackTrace();
+        }
+    }
 
     static void deductPoints(int total, List<Earning> filteredList) {
         int counter = 0;
@@ -53,6 +82,7 @@ public class Main {
 
                 System.out.println("1. Earn rewards");
                 System.out.println("2. Redeem rewards");
+                System.out.println("3. Report");
                 System.out.print("Enter your choice: ");
                 String choice = scanner.nextLine();
                 switch (choice) {
@@ -93,22 +123,40 @@ public class Main {
                         System.out.print("Current points: " + totalPoints + '\n');
 
                         System.out.println("What would you like to redeem?");
+
+                        int total = 0;
                         for (int i = 0; i < redemptionItems.length; i++) {
                             if (redemptionItems[i].getRedemptionValue() <= totalPoints) {
+                                total++;
                                 System.out.printf("%d %s (%d points)\n", i + 1, redemptionItems[i].getName(), redemptionItems[i].getRedemptionValue());
                             }
 
                         }
 
+                        if (total <= 0) {
+                            System.out.println("Sorry, you have insufficient points to redeem any item\n");
+                            break;
+                        }
+
                         System.out.print("Enter your choice:");
                         String redemptionChoice = scanner.nextLine();
 
-                        while (!isNumeric(redemptionChoice)||Integer.parseInt(redemptionChoice)<1||Integer.parseInt(redemptionChoice)>redemptionItems.length) {
+                        while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
                             System.out.println("Invalid input!");
                             System.out.print("Enter your choice:");
                             redemptionChoice = scanner.nextLine();
 
                         }
+
+                         {
+                            try {
+                                // write to txt file
+                                writeToRedemptionHistory(redemptionItems[Integer.parseInt(redemptionChoice) - 1], memberNo);
+                            } catch (IOException ex) {
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+
                         deductPoints(redemptionItems[Integer.parseInt(redemptionChoice) - 1].getRedemptionValue(), filteredList);
 
 //                        for (Earning test : filteredList) {
@@ -120,6 +168,38 @@ public class Main {
                         Earning.rewriteToFile(newEarnings);
                         System.out.println("Redemption successful!\n");
                         break;
+
+                    case "3":
+                        // Code to display the report
+                        System.out.println("1. View the most popular gift redeem");
+                        System.out.println("2. View the least gift redeem");
+                        System.out.println("3. User profile status");
+                        System.out.print("Enter your choice: ");
+                        String reportChoice = scanner.nextLine();
+                        while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
+                            System.out.println("Invalid input!");
+                            System.out.print("Enter your choice: ");
+                            reportChoice = scanner.nextLine();
+                        }
+                        Reporting reporting = new Reporting();
+
+                        switch (reportChoice) {
+                            case "1":
+                                //to view the most popular gift redeem
+                                reporting.displayTopRedeemedItem();
+                                break;
+                            case "2":
+                                //to view the least gift redeem
+                                reporting.displayLowRedeemedItem();
+                                break;
+                            case "3":
+                                //to view user profile status
+                                reporting.userProfileStatus();
+                                break;
+                        }
+                        System.out.println(" ");
+                        break;
+
                     case "0":
                         isRunning = false;
                         break;
