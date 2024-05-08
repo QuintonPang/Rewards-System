@@ -74,6 +74,7 @@ public class Main {
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
+        Loyalty loyalty = new Loyalty();
         while (isRunning) {
             try {
                 System.out.println("Welcome to our rewards system\n");
@@ -92,7 +93,7 @@ public class Main {
                         System.out.print("Enter your invoice NO.: ");
                         String invoiceNo = scanner.nextLine();
                         System.out.print("Enter the total payment amount: ");
-                        int value = (int) Math.round(Double.parseDouble(scanner.nextLine()) * 10);
+                        int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * 10) * loyalty.getMultiplier(memberID)) ;
                         new Earning(invoiceNo, value, memberID);
                         System.out.print("\n");
                         break;
@@ -110,7 +111,7 @@ public class Main {
 
                             if (earn.getMemberNo().equals(memberNo)) {
 
-                                filteredList.add(earn);
+                                filteredList.add(earn);                  
                             } else {
                                 otherMembers.add(earn);
                             }

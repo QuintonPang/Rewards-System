@@ -1,47 +1,39 @@
 package Assignment;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Loyalty {
-    private Map<String, Integer> accumulatedPoints; // Mapping between customer ID and accumulated points
-    private Map<String, String> customerGrades; // Mapping between customer ID and grade
+
     private Map<String, Double> tierMultipliers; // Mapping between tier and multiplier
 
-
     public Loyalty() {
-        this.accumulatedPoints = new HashMap<>();
-        this.customerGrades = new HashMap<>();
-        this.tierMultipliers = new HashMap<>();
-        // Initialize accumulated points and customer grades
-    }
-    //initialize the Multiplier Rate , can be modify by admin
-    public void initializeMultiplier(){
+        //initialize the tierMultiplier
+        tierMultipliers = new HashMap<>();
         tierMultipliers.put("Bronze", 1.0);
         tierMultipliers.put("Silver", 1.25);
         tierMultipliers.put("Gold", 1.5);
         tierMultipliers.put("Platinium", 2.0);
     }
 
-    // Do Every time when customer earn points
-    public void trackActivity(String customerId, int pointsEarned) {
-        accumulatedPoints.put(customerId, accumulatedPoints.getOrDefault(customerId, 0) + pointsEarned);
-        upgradeCustomerGrade(customerId);
+    public void updateMultiplier(String tier, double multiplier) {
+        tierMultipliers.put(tier, multiplier);
     }
 
-    //check points and upgrade when reach threshold
-    public void upgradeCustomerGrade(String customerId) {
-        int points = accumulatedPoints.getOrDefault(customerId, 0);
-        String grade = determineGrade(points);
-        customerGrades.put(customerId, grade);
+    //display to admin to modify
+    public void printTierMultipliers() {
+        for (Map.Entry<String, Double> entry : tierMultipliers.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     //return grade level
     public String determineGrade(int points) {
-        if (points >= 3000){
+        if (points >= 3000) {
             return "Platinium";
-        }
-        else if (points >= 2000) {
+        } else if (points >= 2000) {
             return "Gold";
         } else if (points >= 1000) {
             return "Silver";
@@ -50,16 +42,37 @@ public class Loyalty {
         }
     }
 
-    public String getCustomerGrade(String customerId) {
-        return customerGrades.getOrDefault(customerId, "Bronze"); // Default grade is Bronze
+    public String getCustomerGrade(String customerId) throws FileNotFoundException {
+        List<Earning> earnings = CSVWrite.getAllEarnings();
+        int totalPoints = 0;
+        for (Earning earn : earnings) {
+
+            if (earn.getMemberNo().equals(customerId)) {
+
+                totalPoints += earn.getOriValue();
+            }
+        }
+        return determineGrade(totalPoints); // Default grade is Bronze
+    }
+
+    public double getMultiplier(String customerId) throws FileNotFoundException {
+        return tierMultipliers.get(getCustomerGrade(customerId));
     }
 
     //toString Customer Grade Details
-    public String toString(String customerId) {
+    public String toString(String customerId) throws FileNotFoundException {
         String grade = getCustomerGrade(customerId);
         return "Dear Customer " + customerId + ", your grade is: " + grade;
     }
-    
 
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Loyalty loyalty = new Loyalty();
+
+        String memberNo = "m1001";
+        System.out.println(loyalty.toString(memberNo));
+        System.out.println(loyalty.getMultiplier(memberNo));
+
+    }
 
 }
