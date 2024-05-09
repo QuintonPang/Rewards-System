@@ -94,7 +94,10 @@ public class Main {
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
+        boolean validate = false;
         Loyalty loyalty = new Loyalty();
+        Policy policy = new Policy();
+        String expiryMonths;
         while (isRunning) {
             try {
 
@@ -110,6 +113,7 @@ public class Main {
                 System.out.println("5. Show my referees");
 
                 System.out.println("6. Open full earning history in external window");
+                System.out.println("7. Update Expiration Duration");
 
                 System.out.print("Enter your choice: ");
 //                if (!scanner.hasNextLine()) {
@@ -132,6 +136,7 @@ public class Main {
                         System.out.print("Enter the total payment amount: ");
                         int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberID));
                         new Earning(invoiceNo, value, memberID);
+                        policy.updateExpiryDate();
                         System.out.println("You have earned a total of " + value + " points!");
                         System.out.print("\n");
                         break;
@@ -256,6 +261,22 @@ public class Main {
                             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                    case "7":
+                        validate = false;
+                        while (!validate) {
+                            System.out.print("Update the expiration durations in months (01-12):");
+                            expiryMonths = scanner.nextLine();
+                            System.out.println(policy.validateMonth(expiryMonths));
+                            if (policy.validateMonth(expiryMonths)) {
+                                System.out.println("Valid");
+                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
+                                System.out.println(policy.getExpiryMonths());
+                                validate = true;
+
+                            } else {
+                                System.err.println("Invalid");
+                            }
+                        }
                     case "0":
                         isRunning = false;
                         break;
