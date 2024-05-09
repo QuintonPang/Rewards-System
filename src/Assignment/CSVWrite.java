@@ -72,7 +72,7 @@ public class CSVWrite {
 
         // Read all lines
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-
+        lines.remove(0);
         // variable to hold int values after conversion
         double a;
         //current row number
@@ -108,12 +108,16 @@ public class CSVWrite {
     public static List<Earning>  getAllEarnings() throws FileNotFoundException {
         List<Earning> records = new ArrayList<>();
 
+          File file = new File("earning.csv");
+        if(!(file.exists()&& !(file.isDirectory()))){ return records; }
         try (Scanner scanner = new Scanner(new File("earning.csv"))) {
+            scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 if(!line.isEmpty()) records.add(getRecordFromLine(line));
 
             }
+            
         }
         return records;
     }

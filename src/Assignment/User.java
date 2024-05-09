@@ -5,15 +5,30 @@ public class User {
     private String password;
     private String membershipNumber;
     private String transactionRecord;
+    private User referrer;
 
-    public User(String username, String email, String phone, String password, String membershipNumber, String transactionRecord) {
+    public User(String username, String email, String phone, String password, String membershipNumber, String transactionRecord, User referrer) {
         this.username = username;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.membershipNumber = membershipNumber;
+        this.referrer = referrer;
+    }
+    
+    public User(){
+        
     }
 
+    public User getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(User referrer) {
+        this.referrer = referrer;
+    }
+
+    
     // Getters and setters
     public String getUsername() {
         return username;

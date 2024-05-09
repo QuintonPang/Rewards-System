@@ -4,6 +4,7 @@
  */
 package Assignment;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,9 +48,27 @@ public class Earning {
 
         // write to file logic
         writeToFile();
+
     }
 
     private void writeToFile() {
+        File file = new File("earning.csv");
+        if(!(file.exists()&& !(file.isDirectory()))){
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(Earning.class.getName()).log(Level.SEVERE, null, ex);
+            }
+              List<String[]> dataLines;
+            dataLines = new ArrayList<>();
+            dataLines.add(new String[]{"Member No.","Invoice No.","Current Value","Original Value","Earning Date","Expiry Date"});
+            try {
+                CSVWrite.givenDataArray_whenConvertToCSV_thenOutputCreated(dataLines,"earning.csv",true);
+            } catch (IOException ex) {
+                Logger.getLogger(Earning.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
         try {
 //            CSVWrite csvWrite = new CSVWrite();
             List<String[]> dataLines;

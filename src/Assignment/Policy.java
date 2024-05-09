@@ -42,6 +42,7 @@ public class Policy {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+ 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(csvSplitBy);
                 // The expiration date is at index 5 in the CSV file

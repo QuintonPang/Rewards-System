@@ -4,10 +4,17 @@ package Assignment;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
+import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,6 +29,10 @@ import java.util.logging.Logger;
  * @author TARUC
  */
 public class Main {
+
+    private final static int POINTS_PER_RM = 10;
+    private final static String ANSI_COLORNAME = "\u001B[37m";
+    private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
 
     public static void writeToRedemptionHistory(RedemptionItem redemptionItem, String memberID) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("redemptionHistory.txt", true));
@@ -70,42 +81,68 @@ public class Main {
     /**
      * @param args the command line arguments
      */
+    public static void open(File document) throws IOException {
+        Desktop dt = Desktop.getDesktop();
+        dt.open(document);
+    }
+
     public static void main(String[] args) {
+
         AccountOperations userAccount; // Use the interface type
         userAccount = new UserAccount();
-        userAccount.displayMenu(); // Invoke methods through the interface
-        
+
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         Loyalty loyalty = new Loyalty();
         while (isRunning) {
             try {
-                System.out.println("Welcome to our rewards system\n");
 
+                System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n");
+
+                //System.out.println("Welcome to our rewards system\n");
                 System.out.println("0. Exit");
 
                 System.out.println("1. Earn rewards");
                 System.out.println("2. Redeem rewards");
                 System.out.println("3. Report");
+                System.out.println("4. Accounts");
+                System.out.println("5. Show my referees");
+
+                System.out.println("6. Open full earning history in external window");
+
                 System.out.print("Enter your choice: ");
+//                if (!scanner.hasNextLine()) {
+//                    System.out.println("STOP");
+//                }
                 String choice = scanner.nextLine();
                 switch (choice) {
                     case "1":
                         System.out.print("Enter your member ID: ");
                         String memberID = scanner.nextLine();
+
+                        ////////////////////////////////////////////////////
+                        if (!memberIsExists(memberID)) {
+                            System.out.println("User not found\n");
+                            break;
+                        }
+
                         System.out.print("Enter your invoice NO.: ");
                         String invoiceNo = scanner.nextLine();
                         System.out.print("Enter the total payment amount: ");
-                        int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * 10) * loyalty.getMultiplier(memberID)) ;
+                        int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberID));
                         new Earning(invoiceNo, value, memberID);
+                        System.out.println("You have earned a total of " + value + " points!");
                         System.out.print("\n");
                         break;
 
                     case "2":
                         System.out.print("Enter your member No.:");
                         String memberNo = scanner.nextLine();
-
+                        if (!memberIsExists(memberNo)) {
+                            System.out.println("User not found\n");
+                            break;
+                        }
                         List<Earning> earnings = CSVWrite.getAllEarnings();
 
                         List<Earning> filteredList = new ArrayList<>();
@@ -115,7 +152,7 @@ public class Main {
 
                             if (earn.getMemberNo().equals(memberNo)) {
 
-                                filteredList.add(earn);                  
+                                filteredList.add(earn);
                             } else {
                                 otherMembers.add(earn);
                             }
@@ -204,7 +241,21 @@ public class Main {
                         }
                         System.out.println(" ");
                         break;
+                    case "4":
+                        userAccount.displayMenu(); // Invoke methods through the interface
+                        break;
+                    case "5":
+                        userAccount.showReferees();
+                        break;
+                    case "6":
+                        try {
+                            open(new File("earning.csv"));
+                            System.out.println(" ");
 
+                        } catch (IOException ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                     case "0":
                         isRunning = false;
                         break;
@@ -219,6 +270,32 @@ public class Main {
 
     }
 
+    public static boolean memberIsExists(String memberID) {
+        boolean found = false;
+
+        // validate member ID
+        try (InputStream input = Files.newInputStream(Paths.get("user.txt")); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+            String membershipNumber = memberID;
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] user = line.split(" ");
+                if (user[4].equals(membershipNumber)) {
+                    found = true;
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: user.txt not found.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error reading user accounts: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return found;
+
+    }
 }
 
 class EarningComparator implements java.util.Comparator<Earning> {

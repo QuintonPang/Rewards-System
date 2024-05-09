@@ -98,6 +98,8 @@ public void userProfileStatus() {
             String memberNo = scanner.nextLine();
             try {
                 BufferedReader reader = new BufferedReader(new FileReader("earning.csv"));
+                 reader.readLine(); // this will read the first line
+
                 String line;
                 boolean found = false;
         
