@@ -69,7 +69,7 @@ public class Main {
             } else {
                 filteredList.get(counter).setValue(filteredList.get(counter).getValue() - total);
                 total = 0;
-
+                    /////////
             }
         }
     }
