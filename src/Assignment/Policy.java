@@ -1,4 +1,3 @@
-
 package Assignment;
 
 import java.io.BufferedReader;
@@ -12,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Policy {
+
     private Map<String, String> productEligibility;
 
     public Policy() {
@@ -59,15 +59,14 @@ public class Policy {
             e.printStackTrace();
         }
     }
-    
+
     // Method to update date in the earning file
     public void updateEarningFileDate() {
         // Input and output file paths
         String inputFile = "earning.csv";
         String outputFile = "updated_earning.csv";
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile)); BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 // Split the line by comma to extract date field
@@ -101,14 +100,41 @@ public class Policy {
                 }
             }
             System.out.println("Date updated successfully.");
+            
 
-            // Rename the updated file to overwrite the original file
-            java.io.File file = new java.io.File(outputFile);
-            file.renameTo(new java.io.File(inputFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Rename the updated file to overwrite the original file
+        try {
+            java.io.File originalFile = new java.io.File(inputFile);
+            java.io.File updatedFile = new java.io.File(outputFile);
+            if (originalFile.exists()) {
+                if (originalFile.delete()) {
+                    if (!updatedFile.renameTo(originalFile)) {
+                        System.out.println("Failed to rename the updated file.");
+                    }
+                } else {
+                    System.out.println("Failed to delete the original file.");
+                }
+            } else {
+                System.out.println("Original file does not exist.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
-    
-    
+
+    public static void main(String[] args) {
+        Policy policy = new Policy();
+        //policy.updateEarningFileDate();
+        //policy.checkExpiryDate();
+        
+        
+        System.out.println(policy.checkEligibilityCriteria("Umbrella", "Gold"));
+        
+    }
+
 }
