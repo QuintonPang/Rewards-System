@@ -71,6 +71,10 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        AccountOperations userAccount; // Use the interface type
+        userAccount = new UserAccount();
+        userAccount.displayMenu(); // Invoke methods through the interface
+        
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
