@@ -31,14 +31,6 @@ public class UserAccount extends Account implements AccountOperations {
         scanner = new Scanner(System.in);
     }
 
-    public static void clearScreen() {
-        try {
-            System.out.print("\033[H\033[2J");
-        } catch (Exception e) {
-            System.out.println("Error clearing screen!");
-        }
-    }
-
     @Override
     public void displayMenu() {
         System.out.println("------------------------------");
@@ -79,75 +71,9 @@ public class UserAccount extends Account implements AccountOperations {
     }
 
     @Override
-
     public void createAccount() {
-        try {
-            Path path = Paths.get(filename);
-            if (!Files.exists(path)) {
-                Files.createFile(path);
-            }
-            BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND);
-
-            System.out.println("\n Create User Account \n");
-            while (true) {
-                System.out.print("Enter your username: ");
-                String username = scanner.nextLine();
-
-                if (!isValidUsername(username)) {
-                    System.out.println("Invalid username format should be (6-20 characters, no special characters)");
-                    continue;
-                }
-
-                System.out.print("Enter your email: ");
-                String email = scanner.nextLine();
-                if (!isValidEmail(email)) {
-                    System.out.println("Invalid email format should be (format: xxxxxx@yyy.zzz)");
-                    continue;
-                }
-
-                System.out.print("Enter your phone number: ");
-                String phone = scanner.nextLine();
-                if (!isValidPhone(phone)) {
-                    System.out.println("Invalid phone number format should be (digits only)");
-                    continue;
-                }
-
-                System.out.print("Enter your password: ");
-                String password = scanner.nextLine();
-                if (!isValidPassword(password)) {
-                    System.out.println("Invalid password format should be (6-20 characters)");
-                    continue;
-                }
-
-                System.out.print("Reffered by (Member ID) (Empty to skip): ");
-                String referrer = scanner.nextLine();
-                if (referrer.length() > 0) {
-                    boolean validMember = Main.memberIsExists(referrer);
-                    if (!validMember && referrer.length() > 0) {
-                        System.out.println("Member does not exist");
-                        continue;
-                    } else {
-                        new Earning("Referral", 10, referrer);
-
-                    }
-                }
-                Random random = new Random();
-                int randomNumber = random.nextInt(10000);
-                String membershipNumber = "ABC" + String.format("%04d", randomNumber);
-                System.out.println("Your membership number is: " + membershipNumber);
-                System.out.println("RANNNNNNN");
-                writer.write(username + " " + email + " " + phone + " " + password + " " + membershipNumber + " " + "0" + " " + referrer);
-                writer.newLine();
-
-                writer.close();
-                break;
-            }
-
-        } catch (IOException ex) {
-            System.out.println("Error creating account: " + ex.getMessage());
-        } finally {
-            displayMenu();
-        }
+        RegistrationManager registrationManager = new RegistrationManager();
+        registrationManager.createAccount();
     }
 
     @Override
@@ -190,76 +116,10 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-    private boolean isValidUsername(String username) {
-        return username.length() >= 6 && username.length() <= 20 && !username.matches("[^a-zA-Z0-9]");
-    }
-
-    private boolean isValidEmail(String email) {
-        return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+");
-    }
-
-    private boolean isValidPhone(String phone) {
-        return phone.matches("[0-9]+") && phone.length() == 10 || phone.length() == 11;
-    }
-
-    private boolean isValidPassword(String password) {
-        return password.length() >= 6 && password.length() <= 20;
-    }
 
     public void login() {
-        // Implement login logic here
-        try {
-            Path path = Paths.get(filename.toString());
-            InputStream input = Files.newInputStream(path);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            System.out.println("\n Login \n");
-            System.out.print("Enter your username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter your password: ");
-            String password = scanner.nextLine();
-            try {
-                String line = null;
-                boolean found = false;
-                while ((line = reader.readLine()) != null) {
-                    String[] user = line.split(" ");
-                    if (user[0].equals(username) && user[3].equals(password)) {
-                        found = true;
-                        memberId = user[4];
-
-                    }
-                }
-                if (found) {
-                    System.out.println("Login successful.");
-                    displayMenuOption();
-
-                } else {
-                    System.out.println("Invalid username or password.");
-                }
-                System.out.println("-------------------------------");
-                System.out.println("Press any key to continue...");
-            } catch (IOException ex) {
-                System.out.println("Error reading user accounts: " + ex.getMessage());
-            } finally {
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                    if (input != null) {
-                        input.close();
-                    }
-                } catch (IOException ex) {
-                    System.out.println("Error closing reader or input stream: " + ex.getMessage());
-                }
-            }
-            System.in.read(); // PAUSE THE PROGRAM UNTIL USER PRESSE
-            displayMenu(); // DISPLAY THE MENU AGAIN
-            reader.close(); // CLOSE THE READER
-            input.close(); // CLOSE THE INPUT STREAM
-
-        } catch (Exception ex) {
-            System.out.print(ex.getMessage());
-            ex.printStackTrace();
-        }
+        LoginManager loginManager = new LoginManager();
+        loginManager.login();
     }
 
     public void forgot() throws IOException {
@@ -412,6 +272,22 @@ public class UserAccount extends Account implements AccountOperations {
                 System.out.println("Invalid choice.");
                 updateAccount(membershipNumber); // Pass membershipNumber to recursive call
         }
+    }
+
+    private boolean isValidUsername(String username) {
+        return username.length() >= 6 && username.length() <= 20 && !username.matches("[^a-zA-Z0-9]");
+    }
+    
+    private boolean isValidEmail(String email) {
+        return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+");
+    }
+    
+    private boolean isValidPhone(String phone) {
+        return phone.matches("[0-9]+") && phone.length() == 10 || phone.length() == 11;
+    }
+    
+    private boolean isValidPassword(String password) {
+        return password.length() >= 6 && password.length() <= 20;
     }
 
     public void updateUsername(String membershipNumber) {

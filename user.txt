@@ -3,3 +3,5 @@ quinton quinton@gmail.com 0193902200 123456 ABC8857 0 ABC2842
 quinton@gmail.com quinton@gmail.com 0193903300 123456 ABC9679 0 ABC2842
 quinton quinton@gmail.com 0193902200 123456 ABC8892 0 
 wenkang wk@gmail.com 0121234567 wenkang ABC6460 0 
+haloisme haloisme@gmail.com 0000000000 0000000000 ABC3279 0 
+haloisme@gmail.com haloisme@gamil.com 00000000000 0000000000 ABC1957 0 
