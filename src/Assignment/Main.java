@@ -34,6 +34,9 @@ public class Main {
     private final static String ANSI_COLORNAME = "\u001B[37m";
     private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
 
+    // Declaring ANSI_RESET so that we can reset the color 
+    public static final String ANSI_RESET = "\u001B[0m"; 
+  
     public static void writeToRedemptionHistory(RedemptionItem redemptionItem, String memberID) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("redemptionHistory.txt", true));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -101,7 +104,7 @@ public class Main {
         while (isRunning) {
             try {
 
-                System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n");
+                System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n" +ANSI_RESET);
 
                 //System.out.println("Welcome to our rewards system\n");
                 System.out.println("0. Exit");
@@ -266,17 +269,18 @@ public class Main {
                         while (!validate) {
                             System.out.print("Update the expiration durations in months (01-12):");
                             expiryMonths = scanner.nextLine();
-                            System.out.println(policy.validateMonth(expiryMonths));
+                           // System.out.println(policy.validateMonth(expiryMonths));
                             if (policy.validateMonth(expiryMonths)) {
-                                System.out.println("Valid");
+                                System.out.println("Updated!");
                                 policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-                                System.out.println(policy.getExpiryMonths());
+                                //System.out.println(policy.getExpiryMonths());
                                 validate = true;
 
                             } else {
-                                System.err.println("Invalid");
+                                System.err.println("Invalid input!");
                             }
                         }
+                        break;
                     case "0":
                         isRunning = false;
                         break;
