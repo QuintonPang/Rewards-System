@@ -98,34 +98,35 @@ public void userProfileStatus() {
             String memberNo = scanner.nextLine();
             try {
                 BufferedReader reader = new BufferedReader(new FileReader("earning.csv"));
-                 reader.readLine(); // this will read the first line
-
+                List<String> lines = new ArrayList<>();
                 String line;
-                boolean found = false;
-        
                 while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(",");
-                    if (parts[0].equals(memberNo)) {
-                        System.out.println("MemberNo: " + parts[0]);
-                        System.out.println("Available value: " + parts[2]);
-                        System.out.println("Earning value: " + parts[3]);
-                        System.out.println("Expiry Date: " + parts[5]);
-                        found = true;
-                        break;
-                    }
+                lines.add(line);
                 }
-        
-                if (!found) {
-                    System.out.println("No member found with MemberNo: " + memberNo);
-                }
-        
                 reader.close();
+
+                boolean found = false;
+                for (int i = lines.size() - 1; i >= 1; i--) {
+                String[] parts = lines.get(i).split(",");
+                if (parts[0].equals(memberNo)) {
+                    System.out.println("MemberNo: " + parts[0]);
+                    System.out.println("Available value: " + parts[2]);
+                    System.out.println("Earning value: " + parts[3]);
+                    System.out.println("Expiry Date: " + parts[5]);
+                    found = true;
+                    break;
+                }
+                }
+
+                if (!found) {
+                System.out.println("No member found with MemberNo: " + memberNo);
+                }
             } catch (IOException e) {
                 System.out.println("An error occurred while reading the file.");
                 e.printStackTrace();
             }
             break;
-        
+
             case "2":
             System.out.println("Activity Tracking");
 
@@ -134,7 +135,7 @@ public void userProfileStatus() {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader("redemptionHistory.txt"));
                 String line;
-                System.out.printf("%-20s %-20s %-20s %-20s%n", "Date", "Time", "Redeemed Item", "Quantity");
+                System.out.printf("%-20s %-20s %-30s %-10s%n", "Date", "Time", "Redeemed Item", "Quantity");
                 while ((line = reader.readLine()) != null) {
                     if (line.contains("Member ID: " + memberId)) {
                         String[] parts = line.split(", ");
@@ -144,7 +145,7 @@ public void userProfileStatus() {
                         String time = dateTimeParts[1];
                         String itemName = parts[2].replace("Redeemed Item: ", "");
                         String quantity = parts[3].replace("Quantity: ", "");
-                        System.out.printf("%-20s %-20s %-20s %-20s%n", date, time, itemName, quantity);
+                        System.out.printf("%-20s %-20s %-30s %-10s %n", date, time, itemName, quantity);
                     }
                 }
                 reader.close();
