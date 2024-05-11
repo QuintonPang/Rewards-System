@@ -475,40 +475,7 @@ public void viewProfile() {
         }
 
     }
-
-    public void updateTransactionRecord(String membershipNumber) {
-        try {
-            Path path = Paths.get(filename);
-            List<String> lines = Files.readAllLines(path);
-            boolean updated = false;
-
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                String[] user = line.split(" ");
-                if (user.length >= 5 && user[4].equals(membershipNumber)) {
-                    System.out.print("Enter new transaction record: ");
-                    String newTransactionRecord = scanner.nextLine();
-
-                    // Update the transaction record in the line
-                    user[5] = newTransactionRecord;
-                    lines.set(i, String.join(" ", user));
-                    updated = true;
-                    break; // Exit the loop after updating the transaction record
-                }
-            }
-
-            if (updated) {
-                Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
-                System.out.println("Transaction record updated successfully.");
-            } else {
-                System.out.println("Membership number not found.");
-            }
-        } catch (IOException ex) {
-            System.out.println("Error updating transaction record: " + ex.getMessage());
-        }
-
-    }
-
+    
     public String getMemberNo() {
         return memberNo;
     }
