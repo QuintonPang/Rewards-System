@@ -60,16 +60,6 @@ import java.util.Scanner;
 
         
     }
-    // public void checkCustomerDetails(){
-        //open earning.csv file
-    //     try {
-    //         File file = new File("earning.csv");
-    //         Desktop desktop = Desktop.getDesktop();
-    //         if(file.exists()) desktop.open(file);
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 
     public void checkCustomerDetails() {
         System.out.println("View Customer Details");
