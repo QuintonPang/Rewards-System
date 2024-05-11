@@ -35,8 +35,8 @@ public class Main {
     private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
 
     // Declaring ANSI_RESET so that we can reset the color 
-    public static final String ANSI_RESET = "\u001B[0m"; 
-  
+    public static final String ANSI_RESET = "\u001B[0m";
+
     public static void writeToRedemptionHistory(RedemptionItem redemptionItem, String memberID) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("redemptionHistory.txt", true));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -72,9 +72,31 @@ public class Main {
             } else {
                 filteredList.get(counter).setValue(filteredList.get(counter).getValue() - total);
                 total = 0;
-                    /////////
+                /////////
             }
         }
+    }
+
+    //Main Reward System Menu
+    public static void printCustomerMainMenu() {
+        System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n" + ANSI_RESET);
+
+        //System.out.println("Welcome to our rewards system\n");
+        System.out.println("0. Exit");
+
+        System.out.println("1. Earn rewards");
+        System.out.println("2. Redeem rewards");
+        System.out.println("3. Report");
+        System.out.println("4. View Profile");
+        System.out.println("5. Show my referees");
+        System.out.println("6. Open full earning history in external window");
+        System.out.println("7. Update Expiration Duration");
+
+        System.out.print("Enter your choice: ");
+//                if (!scanner.hasNextLine()) {
+//                    System.out.println("STOP");
+//                }
+
     }
 
     public static boolean isNumeric(String str) {
@@ -102,30 +124,18 @@ public class Main {
         Loyalty loyalty = new Loyalty();
         Policy policy = new Policy();
         String expiryMonths;
+        String memberId = "a";
         
+        System.out.println("MemberID: " + memberId);
+        
+
         while (isRunning) {
             try {
-                System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n" +ANSI_RESET);
-
-                //System.out.println("Welcome to our rewards system\n");
-                System.out.println("0. Exit");
-
-                System.out.println("1. Earn rewards");
-                System.out.println("2. Redeem rewards");
-                System.out.println("3. Report");
-                System.out.println("4. View Profile");
-                System.out.println("5. Show my referees");
-                System.out.println("6. Open full earning history in external window");
-                System.out.println("7. Update Expiration Duration");
-
-                System.out.print("Enter your choice: ");
-//                if (!scanner.hasNextLine()) {
-//                    System.out.println("STOP");
-//                }
+                printCustomerMainMenu();
                 String choice = scanner.nextLine();
                 switch (choice) {
                     case "1":
-                        System.out.print("Enter your member ID: ");
+                        System.out.print("Enter your member ID: ");//Do at login
                         String memberID = scanner.nextLine();
 
                         ////////////////////////////////////////////////////
@@ -221,9 +231,9 @@ public class Main {
 
                     case "3":
                         // Code to display the report
-                        System.out.println("1. View the most popular gift redeem"+ "\n");
-                        System.out.println("2. View the least gift redeem"+ "\n");
-                        System.out.println("3. User profile status"+ "\n");
+                        System.out.println("1. View the most popular gift redeem" + "\n");
+                        System.out.println("2. View the least gift redeem" + "\n");
+                        System.out.println("3. User profile status" + "\n");
                         System.out.print("Enter your choice: ");
                         String reportChoice = scanner.nextLine();
                         while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
@@ -270,7 +280,7 @@ public class Main {
                         while (!validate) {
                             System.out.print("Update the expiration durations in months (01-12):");
                             expiryMonths = scanner.nextLine();
-                           // System.out.println(policy.validateMonth(expiryMonths));
+                            // System.out.println(policy.validateMonth(expiryMonths));
                             if (policy.validateMonth(expiryMonths)) {
                                 System.out.println("Updated!");
                                 policy.setExpiryMonths(Integer.parseInt(expiryMonths));
