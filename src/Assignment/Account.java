@@ -12,9 +12,9 @@ public abstract class Account  {
   private String phone;
   private String password;
   private String membershipNumber;
-  private User referrer;
+  private Account referrer;
 
-  public Account(String username, String email, String phone, String password, String membershipNumber,User referrer) {
+  public Account(String username, String email, String phone, String password, String membershipNumber,Account referrer) {
       this.username = username;
       this.email = email;
       this.phone = phone;
@@ -27,11 +27,11 @@ public abstract class Account  {
       
   }
 
-  public User getReferrer() {
+  public Account getReferrer() {
       return referrer;
   }
 
-  public void setReferrer(User referrer) {
+  public void setReferrer(Account referrer) {
       this.referrer = referrer;
   }
   
