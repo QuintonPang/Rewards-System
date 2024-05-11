@@ -145,6 +145,9 @@ public class RegistrationManager {
 
             System.out.println("\n Create Staff Account \n");
 
+            // You can add validation logic similar to createAccountUser for staff details
+            // For simplicity, I'm omitting some validation checks here
+
             System.out.print("Enter your authentication key: ");
             String key = scanner.nextLine();
             if (!key.equals("A123")) {
@@ -172,26 +175,28 @@ public class RegistrationManager {
                 return;
             }
 
-            //generate staffID
+            // Generate staffID
             Random random = new Random();
             int randomNumber = random.nextInt(10000);
             String staffID = "STF" + String.format("%04d", randomNumber);
             System.out.println("Your staff ID is: " + staffID);
 
+            // Write staff details to the staff file
             writer.write(username + " " + email + " " + phone + " " + password + " " + staffID);
             writer.newLine();
             writer.close();
 
             System.out.println("Staff account created successfully.");
+            // If needed, you can add further logic here to redirect to the admin dashboard
+            // AdminDashBoard adminDashBoard = new AdminDashBoard();
+            // adminDashBoard.display();
 
         } catch (IOException ex) {
-
             System.out.println("Error creating account: " + ex.getMessage());
         } finally {
             System.out.println("-------------------------------");
             System.out.println("Press any key to continue...");
         }
-
     }
 
 }

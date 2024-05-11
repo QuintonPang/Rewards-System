@@ -124,8 +124,11 @@ public class LoginManager {
                     String[] user = line.split(" ");
                     if (user[0].equals(username) && user[3].equals(password)) {
                         found = true;
-                        // Additional logic if login is successful
-                        continue;
+                        System.out.println("Login successful.");
+                        System.out.println("-------------------------------");
+                        // Direct to the staff menu
+                        AdminDashBoard adminDashBoard = new AdminDashBoard();
+                        adminDashBoard.display();
                     }
                 }
                 if (!found) {
