@@ -28,6 +28,7 @@ public class RegistrationManager {
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
+    Policy policy = new Policy();
  public void createAccountUser() {
         try {
             Path path = Paths.get(filename);
@@ -76,6 +77,8 @@ public class RegistrationManager {
                         continue;
                     } else {
                         new Earning("Referral", 10, referrer);
+                        policy.updateExpiryDate();
+                        
                     }
                 }
 
