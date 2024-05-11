@@ -25,9 +25,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RegistrationManager {
+     // Define ANSI escape codes for red color
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_RESET = "\u001B[0m";
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
+    
     Policy policy = new Policy();
     UserAccount useraccount = new UserAccount();
     
