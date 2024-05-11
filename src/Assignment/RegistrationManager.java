@@ -88,7 +88,7 @@ public class RegistrationManager {
                 // Generate a random membership number
                 Random random = new Random();
                 int randomNumber = random.nextInt(10000);
-                String memberNo = "ABC" + String.format("%04d", randomNumber);
+                memberNo = "ABC" + String.format("%04d", randomNumber);
                 System.out.println("Your membership number is: " + memberNo);
 
                 // Write the user account details to the file
