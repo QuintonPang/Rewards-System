@@ -123,7 +123,7 @@ public class UserAccount extends Account implements AccountOperations {
                 break;
             default:
                 System.out.println("Invalid choice.");
-                displayRegisterUser();
+                displayLoginMenu();
         }
     }
 
@@ -475,7 +475,7 @@ public void viewProfile() {
         }
 
     }
-    
+
     public String getMemberNo() {
         return memberNo;
     }
