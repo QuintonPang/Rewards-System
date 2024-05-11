@@ -133,9 +133,12 @@ public class LoginManager {
                 }
                 if (!found) {
                     System.out.println("Invalid username or password.");
+                    System.out.println("-------------------------------");
+                    userAccount.displayLoginMenu();
+                    
                 }
-                System.out.println("-------------------------------");
-                System.out.println("Press any key to continue...");
+                
+
             } catch (IOException ex) {
                 System.out.println("Error reading staff accounts: " + ex.getMessage());
             } finally {
