@@ -36,3 +36,6 @@ Date: 2024-05-12 01:56:30, Member No: ABC9550, Redeemed Item: Umbrella, Quantity
 Date: 2024-05-12 01:56:31, Member No: ABC9550, Redeemed Item: Umbrella, Quantity: 1
 Date: 2024-05-12 01:56:33, Member No: ABC9550, Redeemed Item: Umbrella, Quantity: 1
 Date: 2024-05-12 01:56:37, Member No: ABC9550, Redeemed Item: Umbrella, Quantity: 1
+Date: 2024-05-12 02:53:43, Member No: ABC9550, Redeemed Item: Shampoo, Quantity: 1
+Date: 2024-05-12 02:53:53, Member No: ABC9550, Redeemed Item: Shampoo, Quantity: 1
+Date: 2024-05-12 02:54:00, Member No: ABC9550, Redeemed Item: Shampoo, Quantity: 1
