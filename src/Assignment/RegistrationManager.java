@@ -28,6 +28,8 @@ public class RegistrationManager {
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
+    UserAccount useraccount = new UserAccount();
+    
  public void createAccountUser() {
         try {
             Path path = Paths.get(filename);
@@ -108,7 +110,7 @@ public class RegistrationManager {
             System.out.println("Error creating account: " + ex.getMessage());
         } finally {
             System.out.println("-------------------------------");
-            System.out.println("Press any key to continue...");
+            useraccount.displayRegisterUser();
         }
     }
 
@@ -127,7 +129,7 @@ public class RegistrationManager {
 
     public void createAccountStaff() {
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get("staff.txt");
             if (!Files.exists(path)) {
                 Files.createFile(path);
             }
@@ -141,6 +143,7 @@ public class RegistrationManager {
                 System.out.println("Invalid authentication key");
                 writer.close(); // Close the writer before returning
                 return;
+
             }
 
             while (true) {
@@ -174,7 +177,7 @@ public class RegistrationManager {
                 }
 
                 // Check if the username, email, or phone already exist in the file
-                if (isAlreadyRegistered(username, email, phone)) {
+                if (isAlreadyRegisteredStaff(username, email, phone)) {
                     System.out.println("Username, email, or phone number already exists. Please try again.");
                     writer.close(); // Close the writer before returning
                     return;
@@ -203,7 +206,7 @@ public class RegistrationManager {
             System.out.println("Error creating account: " + ex.getMessage());
         } finally {
             System.out.println("-------------------------------");
-            System.out.println("Press any key to continue...");
+            useraccount.displayRegisterUser();
         }
     }
 
@@ -223,6 +226,26 @@ public class RegistrationManager {
         }
         return false; // Not already registered
     }
+
+    private boolean isAlreadyRegisteredStaff(String username, String email, String phone) throws IOException {
+        Path path = Paths.get("staff.txt"); // Enclose the file name in quotes
+    
+        if (Files.exists(path)) {
+            try (Scanner fileScanner = new Scanner(path)) {
+                while (fileScanner.hasNextLine()) {
+                    String line = fileScanner.nextLine();
+                    String[] parts = line.split(" ");
+                    
+                    // Check if the line contains enough parts and matches the given username, email, or phone
+                    if (parts.length >= 4 && 
+                        (parts[0].equals(username) || parts[1].equals(email) || parts[2].equals(phone))) {
+                        return true; // Username, email, or phone already exists in the file
+                    }
+                }
+            }
+        }
+        return false; // Not already registered
+    }    
 
     private boolean isValidUsername(String username) {
         return username.matches("[a-zA-Z0-9]+") && username.length() >= 6 && username.length() <= 20;
