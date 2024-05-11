@@ -23,3 +23,6 @@ Date: 2024-05-11 23:33:32, Member No: ABC8823, Redeemed Item: Shampoo, Quantity:
 Date: 2024-05-11 23:33:37, Member No: ABC8823, Redeemed Item: Shampoo, Quantity: 1
 Date: 2024-05-11 23:33:43, Member No: ABC8823, Redeemed Item: Umbrella, Quantity: 1
 Date: 2024-05-11 23:47:44, Member No: ABC9550, Redeemed Item: Shampoo, Quantity: 1
+Date: 2024-05-12 00:43:16, Member No: ABC6460, Redeemed Item: Gold voucher, Quantity: 1
+Date: 2024-05-12 00:43:54, Member No: ABC6460, Redeemed Item: Shampoo, Quantity: 1
+Date: 2024-05-12 00:44:06, Member No: ABC6460, Redeemed Item: Gold voucher, Quantity: 1
