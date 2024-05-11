@@ -1,21 +1,19 @@
 package Assignment;
 
-import Assignment.Product;
-import Assignment.RedemptionItem;
-import Assignment.Earning;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Reporting {
 
@@ -94,33 +92,35 @@ public void userProfileStatus() {
 
         switch (choice) {
             case "1":
-            System.out.print("Enter your MemberNo: ");
-            String memberNo = scanner.nextLine();
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader("earning.csv"));
-                List<String> lines = new ArrayList<>();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                lines.add(line);
-                }
-                reader.close();
+            System.out.print("Enter memberID: ");
+            String memberID = scanner.nextLine();
+            Path path = Paths.get("earning.csv");
+            try (Stream<String> lines = Files.lines(path)) {
+                List<String[]> data = lines
+                    .map(line -> line.split(","))
+                    .filter(arr -> arr[0].equals(memberID))
+                    .collect(Collectors.toList());
 
-                boolean found = false;
-                for (int i = lines.size() - 1; i >= 1; i--) {
-                String[] parts = lines.get(i).split(",");
-                if (parts[0].equals(memberNo)) {
-                    System.out.println("MemberNo: " + parts[0]);
-                    System.out.println("Available value: " + parts[2]);
-                    System.out.println("Earning value: " + parts[3]);
-                    System.out.println("Expiry Date: " + parts[5]);
-                    found = true;
-                    break;
-                }
-                }
+                int totalCurrentValue = data.stream()
+                    .mapToInt(arr -> Integer.parseInt(arr[2]))
+                    .sum();
 
-                if (!found) {
-                System.out.println("No member found with MemberNo: " + memberNo);
-                }
+                int totalOriginalValue = data.stream()
+                    .mapToInt(arr -> Integer.parseInt(arr[3]))
+                    .sum();
+
+                    String expiryDate = data.stream()
+                        .map(arr -> arr[4])
+                        .reduce((first, second) -> second)
+                        .orElse("N/A");
+
+                System.out.println("\n"+"memberID: " + memberID);
+                System.out.println("Current value: " + totalCurrentValue);
+                System.out.println("Original value: " + totalOriginalValue);
+                System.out.println("Points redeemed: " + (totalOriginalValue - totalCurrentValue));
+
+
+            System.out.println("Expiry Date: " + expiryDate);
             } catch (IOException e) {
                 System.out.println("An error occurred while reading the file.");
                 e.printStackTrace();

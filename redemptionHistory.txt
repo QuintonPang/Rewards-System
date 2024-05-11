@@ -9,3 +9,5 @@ Date: 2024-05-10 22:06:52, Member ID: ABC7065, Redeemed Item: Year end sale vouc
 Date: 2024-05-10 23:00:51, Member ID: ABC7065, Redeemed Item: Toothpaste, Quantity: 1
 Date: 2024-05-10 23:08:08, Member ID: ABC7065, Redeemed Item: Umbrella, Quantity: 1
 Date: 2024-05-10 23:22:34, Member ID: ABC9728, Redeemed Item: Umbrella, Quantity: 1
+Date: 2024-05-11 08:52:59, Member ID: ABC9728, Redeemed Item: Gold voucher, Quantity: 1
+Date: 2024-05-11 09:16:58, Member ID: ABC7065, Redeemed Item: Umbrella, Quantity: 1

@@ -221,9 +221,9 @@ public class Main {
 
                     case "3":
                         // Code to display the report
-                        System.out.println("1. View the most popular gift redeem");
-                        System.out.println("2. View the least gift redeem");
-                        System.out.println("3. User profile status");
+                        System.out.println("1. View the most popular gift redeem"+ "\n");
+                        System.out.println("2. View the least gift redeem"+ "\n");
+                        System.out.println("3. User profile status"+ "\n");
                         System.out.print("Enter your choice: ");
                         String reportChoice = scanner.nextLine();
                         while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
