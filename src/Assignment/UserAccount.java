@@ -24,13 +24,11 @@ public class UserAccount extends Account implements AccountOperations {
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     private String memberNo;
-    
 
     public UserAccount() {
         super(null, null, null, null, null, null, null); // Set initial values to null
         scanner = new Scanner(System.in);
     }
-    
 
     @Override
     public void displayMenu() {
@@ -47,7 +45,7 @@ public class UserAccount extends Account implements AccountOperations {
         String choice = scanner.nextLine();
         switch (choice) {
             case "1":
-            displayRegisterUser();
+                displayRegisterUser();
                 break;
             case "2":
                 displayLoginMenu();
@@ -100,7 +98,7 @@ public class UserAccount extends Account implements AccountOperations {
         }
     }
 
-    public void displayLoginMenu(){
+    public void displayLoginMenu() {
         System.out.println("------------------------------");
         System.out.println("|         Main Menu          |");
         System.out.println("------------------------------");
@@ -141,14 +139,13 @@ public class UserAccount extends Account implements AccountOperations {
 
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
-            
             String line;
 
             System.out.println("\nMy Referees: ");
             int total = 0;
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
-                if (user.length >=7&& user[6].equals(memberNo)) {
+                if (user.length >= 7 && user[6].equals(memberNo)) {
                     total += 1;
                     System.out.println("Username: " + user[0]);
                     System.out.println("Membership Number: " + user[4]);
@@ -222,34 +219,13 @@ public class UserAccount extends Account implements AccountOperations {
         }
 
     }
-    
-    public void viewProfile() {
+
+public void viewProfile() {
     System.out.println("View Profile");
 
     // Assuming getMemberId() returns the correct membership number
-    String membershipNumber = getMemberId(); 
+    String membershipNumber = getMemberNo(); 
 
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    String[] user = line.split(" ");
-                    if (user[4].equals(memberNo)) {
-                        System.out.println("Username: " + user[0]);
-                        System.out.println("Email: " + user[1]);
-                        System.out.println("Phone: " + user[2]);
-                        System.out.println("Membership Number: " + user[4]);
-                        System.out.println("Transaction Record: " + user[5]);
-
-                        // Prompt the user outside of the loop
-                        boolean modifyDetails = promptModifyDetails();
-                        if (modifyDetails) {
-                            updateAccount(memberNo);
-                        } else {
-                            return;
-                        }
-
-                        return; // Return if the profile is found
-                    }
     try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
         String line;
 
@@ -284,14 +260,13 @@ public class UserAccount extends Account implements AccountOperations {
     }
 }
 
-
-      private boolean promptModifyDetails() {
+    private boolean promptModifyDetails() {
         System.out.println("Do you want to modify your account details? (Y/N): ");
         String choice = scanner.nextLine();
         return choice.equalsIgnoreCase("Y");
-      }
-    
-      public void updateAccount(String membershipNumber) {
+    }
+
+    public void updateAccount(String membershipNumber) {
         System.out.println("Which details do you want to modify?");
         System.out.println("1. Username");
         System.out.println("2. Email");
@@ -299,41 +274,42 @@ public class UserAccount extends Account implements AccountOperations {
         System.out.println("4. Password");
         System.out.println("5. Go back to main menu");
         System.out.print("Enter your choice: ");
-    
+
         String choice = scanner.nextLine();
         switch (choice) {
-          case "1":
-            updateUsername(membershipNumber); // Pass membershipNumber to updateUsername
-            break;
-          case "2":
-            updateEmail(membershipNumber);
-            break;
-          case "3":
-            updatePhone(membershipNumber);
-            break;
-          case "4":
-            updatePassword(membershipNumber);
-            break;
-          case "5":
-        
-            break;
-          default:
-            System.out.println("Invalid choice.");
-            updateAccount(memberNo); // Pass membershipNumber to recursive call
+            case "1":
+                updateUsername(membershipNumber); // Pass membershipNumber to updateUsername
+                break;
+            case "2":
+                updateEmail(membershipNumber);
+                break;
+            case "3":
+                updatePhone(membershipNumber);
+                break;
+            case "4":
+                updatePassword(membershipNumber);
+                break;
+            case "5":
+
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                updateAccount(memberNo); // Pass membershipNumber to recursive call
         }
-      }
+    }
+
     private boolean isValidUsername(String username) {
         return username.length() >= 6 && username.length() <= 20 && !username.matches("[^a-zA-Z0-9]");
     }
-    
+
     private boolean isValidEmail(String email) {
         return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+");
     }
-    
+
     private boolean isValidPhone(String phone) {
         return phone.matches("[0-9]+") && phone.length() == 10 || phone.length() == 11;
     }
-    
+
     private boolean isValidPassword(String password) {
         return password.length() >= 6 && password.length() <= 20;
     }
@@ -535,9 +511,5 @@ public class UserAccount extends Account implements AccountOperations {
     public String getMemberNo() {
         return memberNo;
     }
-
-  
-
-
 
 }

@@ -222,64 +222,6 @@ public class RegistrationManager {
         return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+");
     }
 
-    public void createAccountStaff() {
-        try {
-            Path path = Paths.get("staff.txt");
-            if (!Files.exists(path)) {
-                Files.createFile(path);
-            }
-            BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND);
-
-            System.out.println("\n Create Staff Account \n");
-
-            System.out.print("Enter your authentication key: ");
-            String key = scanner.nextLine();
-            if (!key.equals("A123")) {
-                System.out.println("Invalid authentication key");
-                writer.close(); // Close the writer before returning
-                return;
-            }
-
-            System.out.print("Enter your username: ");
-            String username = scanner.nextLine();
-
-            System.out.print("Enter your email: ");
-            String email = scanner.nextLine();
-
-            System.out.print("Enter your phone number: ");
-            String phone = scanner.nextLine();
-
-            System.out.print("Enter your password: ");
-            String password = scanner.nextLine();
-
-            // Check if the username, email, or phone already exist in the file
-            if (isAlreadyRegistered(username, email, phone)) {
-                System.out.println("Username, email, or phone number already exists. Please try again.");
-                writer.close(); // Close the writer before returning
-                return;
-            }
-
-            //generate staffID
-            Random random = new Random();
-            int randomNumber = random.nextInt(10000);
-            String staffID = "STF" + String.format("%04d", randomNumber);
-            System.out.println("Your staff ID is: " + staffID);
-
-            writer.write(username + " " + email + " " + phone + " " + password + " " + staffID);
-            writer.newLine();
-            writer.close();
-
-            System.out.println("Staff account created successfully.");
-
-        } catch (IOException ex) {
-
-            System.out.println("Error creating account: " + ex.getMessage());
-        } finally {
-            System.out.println("-------------------------------");
-            System.out.println("Press any key to continue...");
-        }
-
-    }
     
         public static boolean memberIsExists(String memberNo) {
         boolean found = false;
