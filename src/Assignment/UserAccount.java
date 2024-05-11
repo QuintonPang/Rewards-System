@@ -117,6 +117,7 @@ public class UserAccount extends Account implements AccountOperations {
             case "2":
                 LoginManager loginManager = new LoginManager();
                 loginManager.loginStaff();
+                memberId = loginManager.getMemberId();
                 break;
             case "3":
                 displayMenu();
@@ -175,6 +176,7 @@ public class UserAccount extends Account implements AccountOperations {
     public void login() {
         LoginManager loginManager = new LoginManager();
         loginManager.login();
+        memberId = loginManager.getMemberId();
     }
 
     public void forgot() throws IOException {
@@ -510,6 +512,10 @@ public class UserAccount extends Account implements AccountOperations {
             System.out.println("Error updating transaction record: " + ex.getMessage());
         }
 
+    }
+
+    public String getMemberId() {
+        return memberId;
     }
 
   

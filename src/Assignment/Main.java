@@ -79,24 +79,56 @@ public class Main {
 
     //Main Reward System Menu
     public static void printCustomerMainMenu() {
-        System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n" + ANSI_RESET);
+        System.out.println("\n--------------------------------------------------------");
+        System.out.print("|           ");
+        System.out.print(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system " + ANSI_RESET);
+        System.out.println("            |");
+        System.out.println("--------------------------------------------------------");
 
         //System.out.println("Welcome to our rewards system\n");
-        System.out.println("0. Exit");
+        System.out.println("| 0. Exit                                              |");
 
-        System.out.println("1. Earn rewards");
-        System.out.println("2. Redeem rewards");
-        System.out.println("3. Report");
-        System.out.println("4. View Profile");
-        System.out.println("5. Show my referees");
-        System.out.println("6. Open full earning history in external window");
-        System.out.println("7. Update Expiration Duration");
+        System.out.println("| 1. Earn rewards                                      |");
+        System.out.println("| 2. Redeem rewards                                    |");
+        System.out.println("| 3. Report                                            |");
+        System.out.println("| 4. View Profile                                      |");
+        System.out.println("| 5. Show my referees                                  |");
+        System.out.println("| 6. Open full earning history in external window      |");
+        System.out.println("| 7. Update Expiration Duration                        |");
+        System.out.println("--------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
 //                if (!scanner.hasNextLine()) {
 //                    System.out.println("STOP");
 //                }
 
+    }
+
+    public static void printAdminMainMenu() {
+        System.out.println("\n--------------------------------------------------------");
+        System.out.println("|                  Admin Dashboard                     |");
+        System.out.println("--------------------------------------------------------");
+        System.out.println("| 1. Check Customer Details                            |");
+        System.out.println("| 2. View all products                                 |");
+        System.out.println("| 3. Show Report                                       |"); // Added option to show report
+        System.out.println("| 4. View all reviews                                  |");
+        System.out.println("| 5. Open full earning history in external window      |");
+        System.out.println("| 6. Update Expiration Durations                       |");
+        System.out.println("| 7. Logout                                            |");
+        System.out.println("--------------------------------------------------------");
+        System.out.print("Enter your choice: ");
+
+    }
+
+    public static void printAdminReportMenu() {
+        System.out.println("\n-----------------------------------------");
+        System.out.println("|              Report Menu              |");
+        System.out.println("-----------------------------------------");
+        System.out.println("| 1. View the most popular gift redeem  |");
+        System.out.println("| 2. View the least gift redeem         |");
+        System.out.println("| 3. User profile status                |");
+        System.out.println("-----------------------------------------");
+        System.out.print("Enter your choice: ");
     }
 
     public static boolean isNumeric(String str) {
@@ -124,10 +156,9 @@ public class Main {
         Loyalty loyalty = new Loyalty();
         Policy policy = new Policy();
         String expiryMonths;
-        String memberId = "a";
-        
+        String memberId = userAccount.getMemberId();
+
         System.out.println("MemberID: " + memberId);
-        
 
         while (isRunning) {
             try {
@@ -136,9 +167,9 @@ public class Main {
                 switch (choice) {
                     case "1":
                         System.out.print("Enter your member ID: ");//Do at login
-                        String memberID = scanner.nextLine();
+                        String memberID = scanner.nextLine();//remove
 
-                        ////////////////////////////////////////////////////
+                        //Can be remove ***
                         if (!memberIsExists(memberID)) {
                             System.out.println("User not found\n");
                             break;
@@ -155,7 +186,7 @@ public class Main {
                         break;
 
                     case "2":
-                        System.out.print("Enter your member No.:");
+                        System.out.print("Enter your member No.:"); //Do at login
                         String memberNo = scanner.nextLine();
                         if (!memberIsExists(memberNo)) {
                             System.out.println("User not found\n");
@@ -231,10 +262,7 @@ public class Main {
 
                     case "3":
                         // Code to display the report
-                        System.out.println("1. View the most popular gift redeem" + "\n");
-                        System.out.println("2. View the least gift redeem" + "\n");
-                        System.out.println("3. User profile status" + "\n");
-                        System.out.print("Enter your choice: ");
+                        printAdminReportMenu();
                         String reportChoice = scanner.nextLine();
                         while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
                             System.out.println("Invalid input!");
@@ -282,7 +310,7 @@ public class Main {
                             expiryMonths = scanner.nextLine();
                             // System.out.println(policy.validateMonth(expiryMonths));
                             if (policy.validateMonth(expiryMonths)) {
-                                System.out.println("Updated!");
+                                System.out.println("Updated!Current earning points have " + expiryMonths + " months expiry.");
                                 policy.setExpiryMonths(Integer.parseInt(expiryMonths));
                                 //System.out.println(policy.getExpiryMonths());
                                 validate = true;

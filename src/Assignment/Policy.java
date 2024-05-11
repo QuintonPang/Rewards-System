@@ -15,6 +15,7 @@ public class Policy {
     private int expiryMonths;
 
     public Policy() {
+        expiryMonths = 3; //Deault Expiration Duration
     }
 
     // Method to update expiry date for the last record only
