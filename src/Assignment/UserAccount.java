@@ -222,76 +222,47 @@ public class UserAccount extends Account implements AccountOperations {
         }
 
     }
-    private String getCurrentValueFromCSV() {
-        try (BufferedReader csvReader = new BufferedReader(new FileReader("earning.csv"))) {
-            String row;
-            // Skip header row
-            csvReader.readLine();
-            // Read the next row containing the current value
-            if ((row = csvReader.readLine()) != null) {
-                String[] data = row.split(",");
-                // Assuming the current value is the third column
-                return data[2].trim();
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading earning.csv: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    public void viewProfile() {
-        System.out.println("View Profile");
-    
-        // Assuming getMemberId() returns the correct membership number
-        String membershipNumber = getMemberNo(); 
-    
-        try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
-            String line;
-    
-            while ((line = reader.readLine()) != null) {
-                String[] user = line.split(" ");
-                if (user.length >= 5 && user[4].equals(membershipNumber)) {
-                    System.out.println("Username: " + user[0]);
-                    System.out.println("Email: " + user[1]);
-                    System.out.println("Phone: " + user[2]);
-                    System.out.println("Membership Number: " + user[4]);
-                    System.out.println(loyalty.toString(memberNo));
-    
-                    // Extract current value from earning.csv
-                    String currentValue = getCurrentValueFromCSV();
-                    if (currentValue != null) {
-                        System.out.println("Current Value: " + currentValue);
-                    } else {
-                        // Print error message in red
-                        System.out.println("\u001B[31mCurrent value not found.\u001B[0m");
-                    }
-    
-                    // Prompt the user outside of the loop
-                    boolean modifyDetails = promptModifyDetails();
-                    if (modifyDetails) {
-                        updateAccount(membershipNumber);
-                    } else {
-                        return;
-                    }
-    
-                    return; // Return if the profile is found
+public void viewProfile() {
+    System.out.println("View Profile");
+
+    // Assuming getMemberId() returns the correct membership number
+    String membershipNumber = getMemberNo(); 
+
+    try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            String[] user = line.split(" ");
+            if (user.length >= 5 && user[4].equals(membershipNumber)) {
+                System.out.println("Username: " + user[0]);
+                System.out.println("Email: " + user[1]);
+                System.out.println("Phone: " + user[2]);
+                System.out.println("Membership Number: " + user[4]);
+                System.out.println(loyalty.toString(memberNo));
+
+                // Prompt the user outside of the loop
+                boolean modifyDetails = promptModifyDetails();
+                if (modifyDetails) {
+                    updateAccount(membershipNumber);
+                } else {
+                    return;
                 }
+
+                return; // Return if the profile is found
             }
-    
-            // Print error message in red
-            System.out.println("\u001B[31mUser not found.\u001B[0m");
-    
-        } catch (FileNotFoundException e) {
-            // Print error message in red
-            System.out.println("\u001B[31mError: user.txt not found.\u001B[0m");
-            e.printStackTrace();
-        } catch (IOException e) {
-            // Print error message in red
-            System.out.println("\u001B[31mError reading user accounts: " + e.getMessage() + "\u001B[0m");
-            e.printStackTrace();
         }
+
+        System.out.println("User not found.");
+
+    } catch (FileNotFoundException e) {
+        System.out.println("Error: user.txt not found.");
+        e.printStackTrace();
+    } catch (IOException e) {
+        System.out.println("Error reading user accounts: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
     private boolean promptModifyDetails() {
         System.out.println("Do you want to modify your account details? (Y/N): ");
