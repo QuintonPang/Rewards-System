@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -26,9 +28,7 @@ public class RegistrationManager {
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
-
-    public void createAccountUser() {
-
+ public void createAccountUser() {
         try {
             Path path = Paths.get(filename);
             if (!Files.exists(path)) {
@@ -67,7 +67,7 @@ public class RegistrationManager {
                     continue;
                 }
 
-                System.out.print("Reffered by (Member No) (Empty to skip): ");
+                System.out.print("Referred by (Member No) (Empty to skip): ");
                 String referrer = scanner.nextLine();
                 if (referrer.length() > 0) {
                     boolean validMember = memberIsExists(referrer);
@@ -85,17 +85,23 @@ public class RegistrationManager {
                     continue;
                 }
 
+                // Generate a random membership number
                 Random random = new Random();
                 int randomNumber = random.nextInt(10000);
-                memberNo = "ABC" + String.format("%04d", randomNumber);
+                String memberNo = "ABC" + String.format("%04d", randomNumber);
                 System.out.println("Your membership number is: " + memberNo);
-                System.out.println("RANNNNNNN");
-                writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + "0"
-                        + " " + referrer);
+
+                // Write the user account details to the file
+                writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + "0" + " " + referrer);
                 writer.newLine();
 
+                // Close the writer
                 writer.close();
-                break;
+
+                // Sort the user accounts based on username
+                sortUserAccountsByUsername(filename);
+
+                break; // Exit the loop after successfully creating the account
             }
 
         } catch (IOException ex) {
@@ -105,6 +111,19 @@ public class RegistrationManager {
             System.out.println("Press any key to continue...");
         }
     }
+
+    private void sortUserAccountsByUsername(String filename) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filename));
+            Collections.sort(lines); // Sort the lines
+            Files.write(Paths.get(filename), lines, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException ex) {
+            System.out.println("Error sorting user accounts: " + ex.getMessage());
+        }
+    }
+
+
+    
 
     public void createAccountStaff() {
         try {
