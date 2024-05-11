@@ -27,7 +27,7 @@ public class UserAccount extends Account implements AccountOperations {
     
 
     public UserAccount() {
-        super(null, null, null, null, null, null); // Set initial values to null
+        super(null, null, null, null, null, null, null); // Set initial values to null
         scanner = new Scanner(System.in);
     }
     
