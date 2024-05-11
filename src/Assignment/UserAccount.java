@@ -6,6 +6,7 @@ package Assignment;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +27,7 @@ public class UserAccount extends Account implements AccountOperations {
     
 
     public UserAccount() {
-        super(null, null, null, null, null, null); // Set initial values to null
+        super(null, null, null, null, null, null, null); // Set initial values to null
         scanner = new Scanner(System.in);
     }
     
@@ -223,10 +224,10 @@ public class UserAccount extends Account implements AccountOperations {
     }
     
     public void viewProfile() {
-            System.out.println("View Profile");
+    System.out.println("View Profile");
 
-            try (InputStream input = Files.newInputStream(Paths.get(filename));
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+    // Assuming getMemberId() returns the correct membership number
+    String membershipNumber = getMemberId(); 
 
                 String line;
 
@@ -249,18 +250,40 @@ public class UserAccount extends Account implements AccountOperations {
 
                         return; // Return if the profile is found
                     }
+    try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            String[] user = line.split(" ");
+            if (user.length >= 5 && user[4].equals(membershipNumber)) {
+                System.out.println("Username: " + user[0]);
+                System.out.println("Email: " + user[1]);
+                System.out.println("Phone: " + user[2]);
+                System.out.println("Membership Number: " + user[4]);
+
+                // Prompt the user outside of the loop
+                boolean modifyDetails = promptModifyDetails();
+                if (modifyDetails) {
+                    updateAccount(membershipNumber);
+                } else {
+                    return;
                 }
 
-                System.out.println("User not found.");
-
-            } catch (FileNotFoundException e) {
-                System.out.println("Error: user.txt not found.");
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println("Error reading user accounts: " + e.getMessage());
-                e.printStackTrace();
+                return; // Return if the profile is found
             }
+        }
+
+        System.out.println("User not found.");
+
+    } catch (FileNotFoundException e) {
+        System.out.println("Error: user.txt not found.");
+        e.printStackTrace();
+    } catch (IOException e) {
+        System.out.println("Error reading user accounts: " + e.getMessage());
+        e.printStackTrace();
     }
+}
+
 
       private boolean promptModifyDetails() {
         System.out.println("Do you want to modify your account details? (Y/N): ");
@@ -274,8 +297,7 @@ public class UserAccount extends Account implements AccountOperations {
         System.out.println("2. Email");
         System.out.println("3. Phone");
         System.out.println("4. Password");
-        System.out.println("5. Transaction Record");
-        System.out.println("6. Go back to main menu");
+        System.out.println("5. Go back to main menu");
         System.out.print("Enter your choice: ");
     
         String choice = scanner.nextLine();
@@ -293,8 +315,6 @@ public class UserAccount extends Account implements AccountOperations {
             updatePassword(membershipNumber);
             break;
           case "5":
-            updateTransactionRecord(membershipNumber);
-          case "6":
         
             break;
           default:
