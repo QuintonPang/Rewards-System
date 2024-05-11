@@ -12,10 +12,9 @@ public abstract class Account  {
   private String phone;
   private String password;
   private String membershipNumber;
-  private String transactionRecord;
   private User referrer;
 
-  public Account(String username, String email, String phone, String password, String membershipNumber, String transactionRecord, User referrer) {
+  public Account(String username, String email, String phone, String password, String membershipNumber,User referrer) {
       this.username = username;
       this.email = email;
       this.phone = phone;
@@ -75,14 +74,6 @@ public abstract class Account  {
 
   public void setMembershipNumber(String membershipNumber) {
       this.membershipNumber = membershipNumber;
-  }
-
-  public String getTransactionRecord() {
-      return transactionRecord;
-  }
-
-  public void setTransactionRecord(String transactionRecord) {
-      this.transactionRecord = transactionRecord;
   }
 
     public abstract void displayMenu();

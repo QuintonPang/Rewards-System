@@ -92,7 +92,7 @@ public class RegistrationManager {
                 System.out.println("Your membership number is: " + memberNo);
 
                 // Write the user account details to the file
-                writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + "0" + " " + referrer);
+                writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + referrer);
                 writer.newLine();
 
                 // Close the writer
