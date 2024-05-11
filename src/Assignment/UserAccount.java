@@ -239,7 +239,6 @@ public class UserAccount extends Account implements AccountOperations {
                 System.out.println("Email: " + user[1]);
                 System.out.println("Phone: " + user[2]);
                 System.out.println("Membership Number: " + user[4]);
-                System.out.println("Transaction Record: " + user[5]);
 
                 // Prompt the user outside of the loop
                 boolean modifyDetails = promptModifyDetails();
@@ -277,8 +276,7 @@ public class UserAccount extends Account implements AccountOperations {
         System.out.println("2. Email");
         System.out.println("3. Phone");
         System.out.println("4. Password");
-        System.out.println("5. Transaction Record");
-        System.out.println("6. Go back to main menu");
+        System.out.println("5. Go back to main menu");
         System.out.print("Enter your choice: ");
     
         String choice = scanner.nextLine();
@@ -296,8 +294,6 @@ public class UserAccount extends Account implements AccountOperations {
             updatePassword(membershipNumber);
             break;
           case "5":
-            updateTransactionRecord(membershipNumber);
-          case "6":
         
             break;
           default:

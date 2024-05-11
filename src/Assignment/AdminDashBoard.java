@@ -7,6 +7,10 @@ package Assignment;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,6 +22,8 @@ import java.util.Scanner;
 
 
  public class AdminDashBoard {
+    private static final String filename = "user.txt";
+    private String memberNo;
     public static void main(String[] args) {
         AdminDashBoard adminDashBoard = new AdminDashBoard();
         adminDashBoard.display();
@@ -33,8 +39,7 @@ import java.util.Scanner;
         
         switch (choice) {
             case 1:
-            // Call checkCustomerDetails() method
-            // checkCustomerDetails();
+            checkCustomerDetails();
             break;
             case 2:
             // Call viewAllProducts() method
@@ -65,6 +70,62 @@ import java.util.Scanner;
     //         e.printStackTrace();
     //     }
     // }
+
+    public void checkCustomerDetails() {
+        System.out.println("View Customer Details");
+        try (InputStream input = Files.newInputStream(Paths.get(filename));
+             BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+            
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter membership number: ");
+            memberNo = scanner.nextLine();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] user = line.split(" ");
+                if (user.length >= 5 && user[4].equals(memberNo)) {
+                    System.out.println("Username: " + user[0]);
+                    System.out.println("Email: " + user[1]);
+                    System.out.println("Phone: " + user[2]);
+                    System.out.println("Membership Number: " + user[4]);
+                    
+                    // Extract current value from earning.csv
+                    String currentValue = getCurrentValueFromCSV();
+                    if (currentValue != null) {
+                        System.out.println("Current Value: " + currentValue);
+                    } else {
+                        System.out.println("Current value not found.");
+                    }
+                    
+                    break;
+                }
+            }
+            System.out.println("Customer details not found for membership number: " + memberNo);
+        } catch (Exception e) {
+            System.out.println("Error viewing customer details: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private String getCurrentValueFromCSV() {
+        try (BufferedReader csvReader = new BufferedReader(new FileReader("earning.csv"))) {
+            String row;
+            // Skip header row
+            csvReader.readLine();
+            // Read the next row containing the current value
+            if ((row = csvReader.readLine()) != null) {
+                String[] data = row.split(",");
+                // Assuming the current value is the third column
+                return data[2].trim();
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading earning.csv: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     public void viewAllProducts(){
