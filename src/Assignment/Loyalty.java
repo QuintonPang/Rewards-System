@@ -55,6 +55,7 @@ public class Loyalty {
         return determineGrade(totalPoints); // Default grade is Bronze
     }
 
+
     public double getMultiplier(String customerId) throws FileNotFoundException {
         return tierMultipliers.get(getCustomerGrade(customerId));
     }
@@ -62,7 +63,7 @@ public class Loyalty {
     //toString Customer Grade Details
     public String toString(String customerId) throws FileNotFoundException {
         String grade = getCustomerGrade(customerId);
-        return "Dear Customer " + customerId + ", your grade is: " + grade;
+        return "Current Grade : " + grade +"(Earning Points x " + getMultiplier(customerId) + ")";
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -76,4 +77,3 @@ public class Loyalty {
     }
 
 }
-

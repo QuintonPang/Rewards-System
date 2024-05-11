@@ -48,7 +48,6 @@ import java.util.Scanner;
             case 3:
             break;
             case 4:
-            // Call viewAllReviews() method
             break;
             case 5:
             System.out.println("Logging out...");

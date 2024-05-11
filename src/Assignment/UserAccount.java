@@ -24,6 +24,7 @@ public class UserAccount extends Account implements AccountOperations {
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     private String memberNo;
+    Loyalty loyalty = new Loyalty();
 
     public UserAccount() {
         super(null, null, null, null, null, null); // Set initial values to null
@@ -238,6 +239,7 @@ public void viewProfile() {
                 System.out.println("Email: " + user[1]);
                 System.out.println("Phone: " + user[2]);
                 System.out.println("Membership Number: " + user[4]);
+                System.out.println(loyalty.toString(memberNo));
 
                 // Prompt the user outside of the loop
                 boolean modifyDetails = promptModifyDetails();
