@@ -22,7 +22,7 @@ public class LoginManager {
     private static final String filename = "user.txt";
     private Scanner scanner;
     UserAccount userAccount = new UserAccount();
-    private String memberId;
+    private String memberNo;
 
     public LoginManager() {
         scanner = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class LoginManager {
                 while ((line = reader.readLine()) != null) {
                     String[] user = line.split(" ");
                     if (user[0].equals(username) && user[3].equals(password)) {
-                        memberId = user[4];
+                        memberNo = user[4];
                         // Additional logic if login is successful
                         System.out.println("Login successful.");
                         System.out.println("-------------------------------");
@@ -155,8 +155,8 @@ public class LoginManager {
         }
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getMemberNo() {
+        return memberNo;
     }
     
     

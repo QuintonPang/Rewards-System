@@ -11,6 +11,6 @@ public interface AccountOperations {
     void login();
     void showReferees();
     void viewProfile();
-    String getMemberId();
+    String getMemberNo();
     
 }

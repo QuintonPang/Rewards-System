@@ -22,7 +22,7 @@ public class UserAccount extends Account implements AccountOperations {
 
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
-    private String memberId;
+    private String memberNo;
     
 
     public UserAccount() {
@@ -117,7 +117,7 @@ public class UserAccount extends Account implements AccountOperations {
             case "2":
                 LoginManager loginManager = new LoginManager();
                 loginManager.loginStaff();
-                memberId = loginManager.getMemberId();
+                memberNo = loginManager.getMemberNo();
                 break;
             case "3":
                 displayMenu();
@@ -132,6 +132,7 @@ public class UserAccount extends Account implements AccountOperations {
     public void createAccount() {
         RegistrationManager registrationManager = new RegistrationManager();
         registrationManager.createAccountUser();
+        memberNo = registrationManager.getMemberNo();
     }
 
     @Override
@@ -139,15 +140,14 @@ public class UserAccount extends Account implements AccountOperations {
 
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
-            System.out.print("\nEnter your Membership Number: ");
-            String membershipNumber = scanner.nextLine();
+            
             String line;
 
             System.out.println("\nMy Referees: ");
             int total = 0;
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
-                if (user.length >=7&& user[6].equals(membershipNumber)) {
+                if (user.length >=7&& user[6].equals(memberNo)) {
                     total += 1;
                     System.out.println("Username: " + user[0]);
                     System.out.println("Membership Number: " + user[4]);
@@ -176,7 +176,7 @@ public class UserAccount extends Account implements AccountOperations {
     public void login() {
         LoginManager loginManager = new LoginManager();
         loginManager.login();
-        memberId = loginManager.getMemberId();
+        memberNo = loginManager.getMemberNo();
     }
 
     public void forgot() throws IOException {
@@ -228,13 +228,11 @@ public class UserAccount extends Account implements AccountOperations {
             try (InputStream input = Files.newInputStream(Paths.get(filename));
                     BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
-                System.out.println("\nEnter your Membership Number: ");
-                String membershipNumber = scanner.nextLine();
                 String line;
 
                 while ((line = reader.readLine()) != null) {
                     String[] user = line.split(" ");
-                    if (user[4].equals(membershipNumber)) {
+                    if (user[4].equals(memberNo)) {
                         System.out.println("Username: " + user[0]);
                         System.out.println("Email: " + user[1]);
                         System.out.println("Phone: " + user[2]);
@@ -244,7 +242,7 @@ public class UserAccount extends Account implements AccountOperations {
                         // Prompt the user outside of the loop
                         boolean modifyDetails = promptModifyDetails();
                         if (modifyDetails) {
-                            updateAccount(membershipNumber);
+                            updateAccount(memberNo);
                         } else {
                             return;
                         }
@@ -301,7 +299,7 @@ public class UserAccount extends Account implements AccountOperations {
             break;
           default:
             System.out.println("Invalid choice.");
-            updateAccount(membershipNumber); // Pass membershipNumber to recursive call
+            updateAccount(memberNo); // Pass membershipNumber to recursive call
         }
       }
     private boolean isValidUsername(String username) {
@@ -514,8 +512,8 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getMemberNo() {
+        return memberNo;
     }
 
   

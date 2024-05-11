@@ -42,8 +42,10 @@ public void displayTopRedeemedItem() {
 
     List<Map.Entry<String, Integer>> list = new ArrayList<>(redeemedItems.entrySet());
     list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-
+    
+    System.out.println("-------------------------");
     System.out.println("Top 3 items redeemed:");
+    System.out.println("-------------------------");
     for (int i = 0; i < Math.min(list.size(), 3); i++) {
         System.out.println((i + 1) + ". " + list.get(i).getKey());
     }
@@ -92,13 +94,13 @@ public void userProfileStatus() {
 
         switch (choice) {
             case "1":
-            System.out.print("Enter memberID: ");
-            String memberID = scanner.nextLine();
+            System.out.print("Enter memberNo: ");
+            String memberNo = scanner.nextLine();
             Path path = Paths.get("earning.csv");
             try (Stream<String> lines = Files.lines(path)) {
                 List<String[]> data = lines
                     .map(line -> line.split(","))
-                    .filter(arr -> arr[0].equals(memberID))
+                    .filter(arr -> arr[0].equals(memberNo))
                     .collect(Collectors.toList());
 
                 int totalCurrentValue = data.stream()
@@ -114,7 +116,7 @@ public void userProfileStatus() {
                         .reduce((first, second) -> second)
                         .orElse("N/A");
 
-                System.out.println("\n"+"memberID: " + memberID);
+                System.out.println("\n"+"memberNo: " + memberNo);
                 System.out.println("Current value: " + totalCurrentValue);
                 System.out.println("Original value: " + totalOriginalValue);
                 System.out.println("Points redeemed: " + (totalOriginalValue - totalCurrentValue));
@@ -131,13 +133,13 @@ public void userProfileStatus() {
             System.out.println("Activity Tracking");
 
             System.out.print("Enter MemberNo: ");
-            String memberId = scanner.nextLine();
+            memberNo = scanner.nextLine();
             try {
                 BufferedReader reader = new BufferedReader(new FileReader("redemptionHistory.txt"));
                 String line;
                 System.out.printf("%-20s %-20s %-30s %-10s%n", "Date", "Time", "Redeemed Item", "Quantity");
                 while ((line = reader.readLine()) != null) {
-                    if (line.contains("Member ID: " + memberId)) {
+                    if (line.contains("Member No: " + memberNo)) {
                         String[] parts = line.split(", ");
                         String dateTime = parts[0].replace("Date: ", "");
                         String[] dateTimeParts = dateTime.split(" ");

@@ -37,20 +37,20 @@ public class Main {
     // Declaring ANSI_RESET so that we can reset the color 
     public static final String ANSI_RESET = "\u001B[0m";
 
-    public static void writeToRedemptionHistory(RedemptionItem redemptionItem, String memberID) throws IOException {
+    public static void writeToRedemptionHistory(RedemptionItem redemptionItem, String memberNo) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("redemptionHistory.txt", true));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        writer.write("Date: " + LocalDateTime.now().format(formatter) + ", Member ID: " + memberID + ", Redeemed Item: " + redemptionItem.getName() + ", Quantity: 1\n");
+        writer.write("Date: " + LocalDateTime.now().format(formatter) + ", Member No: " + memberNo + ", Redeemed Item: " + redemptionItem.getName() + ", Quantity: 1\n");
         writer.close();
     }
 
     // Record the redeemed item to the redemptionHistory.txt file
-    public static void recordRedeemedItem(RedemptionItem redeemedItem, String memberID, int quantity) {
+    public static void recordRedeemedItem(RedemptionItem redeemedItem, String memberNo, int quantity) {
         try {
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedNow = now.format(formatter);
-            String record = "Date: " + formattedNow + ", Member ID: " + memberID + ", Redeemed Item: " + redeemedItem.getName() + ", Quantity: " + quantity;
+            String record = "Date: " + formattedNow + ", Member No: " + memberNo + ", Redeemed Item: " + redeemedItem.getName() + ", Quantity: " + quantity;
 
             // Always add a new record
             try (FileWriter writer = new FileWriter("redemptionHistory.txt", true)) {
@@ -84,23 +84,21 @@ public class Main {
         System.out.print(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system " + ANSI_RESET);
         System.out.println("            |");
         System.out.println("--------------------------------------------------------");
-
-        //System.out.println("Welcome to our rewards system\n");
         System.out.println("| 0. Exit                                              |");
-
         System.out.println("| 1. Earn rewards                                      |");
         System.out.println("| 2. Redeem rewards                                    |");
-        System.out.println("| 3. Report                                            |");
-        System.out.println("| 4. View Profile                                      |");
-        System.out.println("| 5. Show my referees                                  |");
-        System.out.println("| 6. Open full earning history in external window      |");
-        System.out.println("| 7. Update Expiration Duration                        |");
+        System.out.println("| 3. View Profile                                      |");
+        System.out.println("| 4. Show my referees                                  |");
         System.out.println("--------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
 //                if (!scanner.hasNextLine()) {
 //                    System.out.println("STOP");
 //                }
+
+        //remove 3report
+        //remove 6openg earning
+        //remove 7update expiration
 
     }
 
@@ -156,9 +154,9 @@ public class Main {
         Loyalty loyalty = new Loyalty();
         Policy policy = new Policy();
         String expiryMonths;
-        String memberId = userAccount.getMemberId();
+        String memberNo = userAccount.getMemberNo();
 
-        System.out.println("MemberID: " + memberId);
+        System.out.println("MemberNo: " + memberNo); //Checking purpose, remove before submit
 
         while (isRunning) {
             try {
@@ -166,32 +164,17 @@ public class Main {
                 String choice = scanner.nextLine();
                 switch (choice) {
                     case "1":
-                        System.out.print("Enter your member ID: ");//Do at login
-                        String memberID = scanner.nextLine();//remove
-
-                        //Can be remove ***
-                        if (!memberIsExists(memberID)) {
-                            System.out.println("User not found\n");
-                            break;
-                        }
-
                         System.out.print("Enter your invoice NO.: ");
                         String invoiceNo = scanner.nextLine();
                         System.out.print("Enter the total payment amount: ");
-                        int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberID));
-                        new Earning(invoiceNo, value, memberID);
+                        int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
+                        new Earning(invoiceNo, value, memberNo);
                         policy.updateExpiryDate();
                         System.out.println("You have earned a total of " + value + " points!");
                         System.out.print("\n");
                         break;
 
                     case "2":
-                        System.out.print("Enter your member No.:"); //Do at login
-                        String memberNo = scanner.nextLine();
-                        if (!memberIsExists(memberNo)) {
-                            System.out.println("User not found\n");
-                            break;
-                        }
                         List<Earning> earnings = CSVWrite.getAllEarnings();
 
                         List<Earning> filteredList = new ArrayList<>();
@@ -261,64 +244,11 @@ public class Main {
                         break;
 
                     case "3":
-                        // Code to display the report
-                        printAdminReportMenu();
-                        String reportChoice = scanner.nextLine();
-                        while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
-                            System.out.println("Invalid input!");
-                            System.out.print("Enter your choice: ");
-                            reportChoice = scanner.nextLine();
-                        }
-                        Reporting reporting = new Reporting();
-
-                        switch (reportChoice) {
-                            case "1":
-                                //to view the most popular gift redeem
-                                reporting.displayTopRedeemedItem();
-                                break;
-                            case "2":
-                                //to view the least gift redeem
-                                reporting.displayLowRedeemedItem();
-                                break;
-                            case "3":
-                                //to view user profile status
-                                reporting.userProfileStatus();
-                                break;
-                        }
-                        System.out.println(" ");
-                        break;
-                    case "4":
                         //viewprofile from useraccount
                         userAccount.viewProfile();
                         break;
-                    case "5":
+                    case "4":
                         userAccount.showReferees();
-                        break;
-                    case "6":
-                        try {
-                            open(new File("earning.csv"));
-                            System.out.println(" ");
-
-                        } catch (IOException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        break;
-                    case "7":
-                        validate = false;
-                        while (!validate) {
-                            System.out.print("Update the expiration durations in months (01-12):");
-                            expiryMonths = scanner.nextLine();
-                            // System.out.println(policy.validateMonth(expiryMonths));
-                            if (policy.validateMonth(expiryMonths)) {
-                                System.out.println("Updated!Current earning points have " + expiryMonths + " months expiry.");
-                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-                                //System.out.println(policy.getExpiryMonths());
-                                validate = true;
-
-                            } else {
-                                System.err.println("Invalid input!");
-                            }
-                        }
                         break;
                     case "0":
                         isRunning = false;
@@ -334,32 +264,7 @@ public class Main {
 
     }
 
-    public static boolean memberIsExists(String memberID) {
-        boolean found = false;
 
-        // validate member ID
-        try (InputStream input = Files.newInputStream(Paths.get("user.txt")); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-            String membershipNumber = memberID;
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] user = line.split(" ");
-                if (user[4].equals(membershipNumber)) {
-                    found = true;
-                }
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: user.txt not found.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Error reading user accounts: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return found;
-
-    }
 }
 
 class EarningComparator implements java.util.Comparator<Earning> {
@@ -369,3 +274,60 @@ class EarningComparator implements java.util.Comparator<Earning> {
         return a.getEarningDate().isBefore(b.getEarningDate()) ? -1 : 1;
     }
 }
+
+//                        // Code to display the report
+//                        printAdminReportMenu();
+//                        String reportChoice = scanner.nextLine();
+//                        while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
+//                            System.out.println("Invalid input!");
+//                            System.out.print("Enter your choice: ");
+//                            reportChoice = scanner.nextLine();
+//                        }
+//                        Reporting reporting = new Reporting();
+//
+//                        switch (reportChoice) {
+//                            case "1":
+//                                //to view the most popular gift redeem
+//                                reporting.displayTopRedeemedItem();
+//                                break;
+//                            case "2":
+//                                //to view the least gift redeem
+//                                reporting.displayLowRedeemedItem();
+//                                break;
+//                            case "3":
+//                                //to view user profile status
+//                                reporting.userProfileStatus();
+//                                break;
+//                        }
+//                        System.out.println(" ");
+//                        break;
+
+
+//                    case "5":
+//                        
+//                    case "6":
+//                        try {
+//                            open(new File("earning.csv"));
+//                            System.out.println(" ");
+//
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        break;
+//                    case "7":
+//                        validate = false;
+//                        while (!validate) {
+//                            System.out.print("Update the expiration durations in months (01-12):");
+//                            expiryMonths = scanner.nextLine();
+//                            // System.out.println(policy.validateMonth(expiryMonths));
+//                            if (policy.validateMonth(expiryMonths)) {
+//                                System.out.println("Updated!Current earning points have " + expiryMonths + " months expiry.");
+//                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
+//                                //System.out.println(policy.getExpiryMonths());
+//                                validate = true;
+//
+//                            } else {
+//                                System.err.println("Invalid input!");
+//                            }
+//                        }
+//                        break;

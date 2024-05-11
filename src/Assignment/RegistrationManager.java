@@ -9,8 +9,12 @@ package Assignment;
  * @author munchun
  */
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +25,7 @@ import java.util.Scanner;
 public class RegistrationManager {
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
+    String memberNo;
 
     public void createAccountUser() {
 
@@ -62,10 +67,10 @@ public class RegistrationManager {
                     continue;
                 }
 
-                System.out.print("Reffered by (Member ID) (Empty to skip): ");
+                System.out.print("Reffered by (Member No) (Empty to skip): ");
                 String referrer = scanner.nextLine();
                 if (referrer.length() > 0) {
-                    boolean validMember = Main.memberIsExists(referrer);
+                    boolean validMember = memberIsExists(referrer);
                     if (!validMember && referrer.length() > 0) {
                         System.out.println("Member does not exist");
                         continue;
@@ -82,10 +87,10 @@ public class RegistrationManager {
 
                 Random random = new Random();
                 int randomNumber = random.nextInt(10000);
-                String membershipNumber = "ABC" + String.format("%04d", randomNumber);
-                System.out.println("Your membership number is: " + membershipNumber);
+                memberNo = "ABC" + String.format("%04d", randomNumber);
+                System.out.println("Your membership number is: " + memberNo);
                 System.out.println("RANNNNNNN");
-                writer.write(username + " " + email + " " + phone + " " + password + " " + membershipNumber + " " + "0"
+                writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + "0"
                         + " " + referrer);
                 writer.newLine();
 
@@ -193,5 +198,37 @@ public class RegistrationManager {
         }
 
     }
+    
+        public static boolean memberIsExists(String memberNo) {
+        boolean found = false;
+
+        // validate member ID
+        try (InputStream input = Files.newInputStream(Paths.get("user.txt")); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+            String membershipNumber = memberNo;
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] user = line.split(" ");
+                if (user[4].equals(membershipNumber)) {
+                    found = true;
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: user.txt not found.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error reading user accounts: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return found;
+
+    }
+
+    public String getMemberNo() {
+        return memberNo;
+    }
+        
 
 }
