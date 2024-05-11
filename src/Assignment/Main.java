@@ -93,6 +93,7 @@ public class Main {
 
         AccountOperations userAccount; // Use the interface type
         userAccount = new UserAccount();
+        userAccount.displayMenu();
 
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
@@ -101,9 +102,9 @@ public class Main {
         Loyalty loyalty = new Loyalty();
         Policy policy = new Policy();
         String expiryMonths;
+        
         while (isRunning) {
             try {
-
                 System.out.println(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system \n" +ANSI_RESET);
 
                 //System.out.println("Welcome to our rewards system\n");
@@ -112,9 +113,8 @@ public class Main {
                 System.out.println("1. Earn rewards");
                 System.out.println("2. Redeem rewards");
                 System.out.println("3. Report");
-                System.out.println("4. Accounts");
+                System.out.println("4. View Profile");
                 System.out.println("5. Show my referees");
-
                 System.out.println("6. Open full earning history in external window");
                 System.out.println("7. Update Expiration Duration");
 
@@ -250,7 +250,8 @@ public class Main {
                         System.out.println(" ");
                         break;
                     case "4":
-                        userAccount.displayMenu(); // Invoke methods through the interface
+                        //viewprofile from useraccount
+                        userAccount.viewProfile();
                         break;
                     case "5":
                         userAccount.showReferees();

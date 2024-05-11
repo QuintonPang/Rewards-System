@@ -5,7 +5,6 @@
 package Assignment;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,13 +21,15 @@ import java.util.logging.Logger;
 public class UserAccount extends Account implements AccountOperations {
 
     private static final String filename = "user.txt";
-    private Scanner scanner;
+    Scanner scanner = new Scanner(System.in);
     private String memberId;
+    
 
     public UserAccount() {
         super(null, null, null, null, null, null); // Set initial values to null
         scanner = new Scanner(System.in);
     }
+    
 
     @Override
     public void displayMenu() {
@@ -46,10 +46,10 @@ public class UserAccount extends Account implements AccountOperations {
         String choice = scanner.nextLine();
         switch (choice) {
             case "1":
-                createAccount();
+            displayRegisterUser();
                 break;
             case "2":
-                login();
+                displayLoginMenu();
                 break;
             case "3": {
                 try {
@@ -70,10 +70,67 @@ public class UserAccount extends Account implements AccountOperations {
         }
     }
 
+    //menu for user and admin
+    public void displayRegisterUser() {
+        System.out.println("------------------------------");
+        System.out.println("|         Main Menu          |");
+        System.out.println("------------------------------");
+        System.out.println("| 1. Customer Register       |");
+        System.out.println("| 2. Admin Register          |");
+        System.out.println("| 3. Exit                    |");
+        System.out.println("------------------------------");
+        System.out.print("Enter your choice: ");
+
+        String choice = scanner.nextLine();
+        switch (choice) {
+            case "1":
+                createAccount();
+                break;
+            case "2":
+                RegistrationManager registrationManager = new RegistrationManager();
+                registrationManager.createAccountStaff();
+                break;
+            case "3":
+                displayMenu();
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                displayRegisterUser();
+        }
+    }
+
+    public void displayLoginMenu(){
+        System.out.println("------------------------------");
+        System.out.println("|         Main Menu          |");
+        System.out.println("------------------------------");
+        System.out.println("| 1. Customer Login          |");
+        System.out.println("| 2. Admin Login             |");
+        System.out.println("| 3. Exit                    |");
+        System.out.println("------------------------------");
+        System.out.print("Enter your choice: ");
+
+        String choice = scanner.nextLine();
+        switch (choice) {
+            case "1":
+                login();
+                break;
+            case "2":
+                LoginManager loginManager = new LoginManager();
+                loginManager.loginStaff();
+                break;
+            case "3":
+                displayMenu();
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                displayRegisterUser();
+        }
+    }
+
     @Override
     public void createAccount() {
         RegistrationManager registrationManager = new RegistrationManager();
-        registrationManager.createAccount();
+        registrationManager.createAccountUser();
     }
 
     @Override
@@ -82,8 +139,7 @@ public class UserAccount extends Account implements AccountOperations {
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
             System.out.print("\nEnter your Membership Number: ");
-            Scanner s = new Scanner(System.in);
-            String membershipNumber = s.nextLine();
+            String membershipNumber = scanner.nextLine();
             String line;
 
             System.out.println("\nMy Referees: ");
@@ -116,14 +172,12 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-
     public void login() {
         LoginManager loginManager = new LoginManager();
         loginManager.login();
     }
 
     public void forgot() throws IOException {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n Forgot Password \n");
         System.out.print("Enter your username: ");
@@ -159,121 +213,95 @@ public class UserAccount extends Account implements AccountOperations {
         if (updated) {
             Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Password reset successful.");
-            displayMenuOption();
+            displayMenu();
         } else {
             System.out.println("Username or email not found.");
         }
 
     }
+    
+    public void viewProfile() {
+            System.out.println("View Profile");
 
-    public void displayMenuOption() {
-        System.out.println("------------------------------");
-        System.out.println("|         Main Menu          |");
-        System.out.println("------------------------------");
-        System.out.println("| 1. Update User Details     |");
-        System.out.println("| 2. Exit                    |");
-        System.out.println("------------------------------");
-        System.out.print("Enter your choice: ");
+            try (InputStream input = Files.newInputStream(Paths.get(filename));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "1":
-                viewProfile();
-                break;
-            case "2":
-                break;
-            //System.exit(0);
-            default:
-                System.out.println("Invalid choice.");
-                displayMenuOption();
-        }
-    }
+                System.out.println("\nEnter your Membership Number: ");
+                String membershipNumber = scanner.nextLine();
+                String line;
 
-    public String viewProfile() {
-        System.out.println("View Profile");
+                while ((line = reader.readLine()) != null) {
+                    String[] user = line.split(" ");
+                    if (user[4].equals(membershipNumber)) {
+                        System.out.println("Username: " + user[0]);
+                        System.out.println("Email: " + user[1]);
+                        System.out.println("Phone: " + user[2]);
+                        System.out.println("Membership Number: " + user[4]);
+                        System.out.println("Transaction Record: " + user[5]);
 
-        try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+                        // Prompt the user outside of the loop
+                        boolean modifyDetails = promptModifyDetails();
+                        if (modifyDetails) {
+                            updateAccount(membershipNumber);
+                        } else {
+                            return;
+                        }
 
-            //   System.out.println("\nEnter your Membership Number: ");
-            // based on logged in user
-            String membershipNumber = memberId;
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] user = line.split(" ");
-                if (user[4].equals(membershipNumber)) {
-                    System.out.println("Username: " + user[0]);
-                    System.out.println("Email: " + user[1]);
-                    System.out.println("Phone: " + user[2]);
-                    System.out.println("Membership Number: " + user[4]);
-                    System.out.println("Transaction Record: " + user[5]);
-
-                    // Prompt the user outside of the loop
-                    boolean modifyDetails = promptModifyDetails();
-                    if (modifyDetails) {
-                        updateAccount(membershipNumber);
-                    } else {
-                        displayMenuOption();
+                        return; // Return if the profile is found
                     }
-
-                    return membershipNumber; // Return the membership number if the profile is found
                 }
+
+                System.out.println("User not found.");
+
+            } catch (FileNotFoundException e) {
+                System.out.println("Error: user.txt not found.");
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("Error reading user accounts: " + e.getMessage());
+                e.printStackTrace();
             }
-
-            System.out.println("User not found.");
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: user.txt not found.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Error reading user accounts: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return null; // Return null if the profile is not found
     }
 
-    private boolean promptModifyDetails() {
+      private boolean promptModifyDetails() {
         System.out.println("Do you want to modify your account details? (Y/N): ");
         String choice = scanner.nextLine();
         return choice.equalsIgnoreCase("Y");
-    }
-
-    public void updateAccount(String membershipNumber) {
+      }
+    
+      public void updateAccount(String membershipNumber) {
         System.out.println("Which details do you want to modify?");
         System.out.println("1. Username");
         System.out.println("2. Email");
         System.out.println("3. Phone");
         System.out.println("4. Password");
-        //  System.out.println("5. Transaction Record");
-        System.out.println("5. Go back to main menu");
+        System.out.println("5. Transaction Record");
+        System.out.println("6. Go back to main menu");
         System.out.print("Enter your choice: ");
-
+    
         String choice = scanner.nextLine();
         switch (choice) {
-            case "1":
-                updateUsername(membershipNumber); // Pass membershipNumber to updateUsername
-                break;
-            case "2":
-                updateEmail(membershipNumber);
-                break;
-            case "3":
-                updatePhone(membershipNumber);
-                break;
-            case "4":
-                updatePassword(membershipNumber);
-                break;
-//      case "5":
-//        updateTransactionRecord(membershipNumber);
-            case "5":
-                displayMenuOption();
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                updateAccount(membershipNumber); // Pass membershipNumber to recursive call
+          case "1":
+            updateUsername(membershipNumber); // Pass membershipNumber to updateUsername
+            break;
+          case "2":
+            updateEmail(membershipNumber);
+            break;
+          case "3":
+            updatePhone(membershipNumber);
+            break;
+          case "4":
+            updatePassword(membershipNumber);
+            break;
+          case "5":
+            updateTransactionRecord(membershipNumber);
+          case "6":
+        
+            break;
+          default:
+            System.out.println("Invalid choice.");
+            updateAccount(membershipNumber); // Pass membershipNumber to recursive call
         }
-    }
-
+      }
     private boolean isValidUsername(String username) {
         return username.length() >= 6 && username.length() <= 20 && !username.matches("[^a-zA-Z0-9]");
     }
@@ -483,5 +511,9 @@ public class UserAccount extends Account implements AccountOperations {
         }
 
     }
+
+  
+
+
 
 }

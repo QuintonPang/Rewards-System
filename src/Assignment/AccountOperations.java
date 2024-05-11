@@ -9,7 +9,8 @@ public interface AccountOperations {
     void displayMenu();
     void createAccount();
     void login();
-       void showReferees();
+    void showReferees();
+    void viewProfile();
 
     
 }
