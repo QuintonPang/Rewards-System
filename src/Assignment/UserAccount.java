@@ -145,7 +145,8 @@ public class UserAccount extends Account implements AccountOperations {
             int total = 0;
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
-                if (user.length >= 7 && user[6].equals(memberNo)) {
+                if (user.length >= 6 && user[5].equals(memberNo)) {
+                    //cannot run here
                     total += 1;
                     System.out.println("Username: " + user[0]);
                     System.out.println("Membership Number: " + user[4]);
