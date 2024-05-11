@@ -43,6 +43,11 @@ public class Loyalty {
     }
 
     public String getCustomerGrade(String customerId) throws FileNotFoundException {
+        int totalPoints = calculateAccumulatedPoint(customerId);
+        return determineGrade(totalPoints); // Default grade is Bronze
+    }
+
+    public int calculateAccumulatedPoint(String customerId) throws FileNotFoundException{
         List<Earning> earnings = CSVWrite.getAllEarnings();
         int totalPoints = 0;
         for (Earning earn : earnings) {
@@ -52,10 +57,23 @@ public class Loyalty {
                 totalPoints += earn.getOriValue();
             }
         }
-        return determineGrade(totalPoints); // Default grade is Bronze
+        return totalPoints;
     }
-
-
+    
+    public int calculateNextTierNeeded(String customerId) throws FileNotFoundException{
+        int accumulatedPoint = calculateAccumulatedPoint(customerId);
+        if (accumulatedPoint >= 3000){
+            return 0;
+        }else if(accumulatedPoint >= 2000){
+            return 3000 - accumulatedPoint;
+        }else if(accumulatedPoint >= 1000){
+            return 2000 - accumulatedPoint;
+        }else{
+            return 1000 - accumulatedPoint;
+        }
+        
+    }
+    
     public double getMultiplier(String customerId) throws FileNotFoundException {
         return tierMultipliers.get(getCustomerGrade(customerId));
     }
@@ -63,7 +81,8 @@ public class Loyalty {
     //toString Customer Grade Details
     public String toString(String customerId) throws FileNotFoundException {
         String grade = getCustomerGrade(customerId);
-        return "Current Grade : " + grade +"(Earning Points x " + getMultiplier(customerId) + ")";
+        return "Current Grade : " + grade +"(Earning Points x " + getMultiplier(customerId) + ")" + 
+                "\n Next Tier : ";
     }
 
     public static void main(String[] args) throws FileNotFoundException {
