@@ -205,7 +205,7 @@ public class UserAccount extends Account implements AccountOperations {
                     break;
                 } else {
                     System.out.println("Passwords do not match. Try again.");
-                    return; // Exit the method if passwords do not match
+                    displayMenu();
                 }
             }
         }
@@ -216,6 +216,7 @@ public class UserAccount extends Account implements AccountOperations {
             displayMenu();
         } else {
             System.out.println("Username or email not found.");
+            displayMenu();
         }
 
     }
