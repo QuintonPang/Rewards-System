@@ -28,7 +28,7 @@ public class LoginManager {
         scanner = new Scanner(System.in);
     }
 
-    public void login() {
+    public boolean login() {
         try {
             Path path = Paths.get(filename);
             InputStream input = Files.newInputStream(path);
@@ -51,7 +51,8 @@ public class LoginManager {
                         // Direct to the user menu
                         System.out.println("Press any key to continue...");
                         loginSuccessful = true; // Set the flag to true upon successful login
-                        continue; 
+                        return loginSuccessful;
+                        //continue; 
                     }
                 }
                 if (!loginSuccessful) { // Check login status before displaying invalid message
@@ -59,31 +60,32 @@ public class LoginManager {
                     while (invalidInput) {
                         System.out.println("\nInvalid username or password.");
                         System.out.println("-------------------------------");
-                        // Ask user to re-login or exit to menu
-                        System.out.println("1. Re-login");
-                        System.out.println("2. Exit to menu");
-                        System.out.print("Enter your choice: ");
-                        String choiceStr = scanner.nextLine();
-                        if (choiceStr.matches("[12]")) {
-                            int choice = Integer.parseInt(choiceStr);
-                            switch (choice) {
-                                case 1:
-                                    // Re-login
-                                    login();
-                                    invalidInput = false; // Break out of the loop after successful re-login
-                                    break;
-                                case 2:
-                                    userAccount.displayLoginMenu();
-                                    invalidInput = false; // Break out of the loop after exiting to menu
-                                    break;
-                                default:
-                                    System.out.println("Invalid choice. Exiting to menu.");
-                                    userAccount.displayLoginMenu();
-                                    break;
-                            }
-                        } else {
-                            System.out.println("Invalid choice. Please enter 1 or 2.");
-                        }
+                        return false;
+//                        // Ask user to re-login or exit to menu
+//                        System.out.println("1. Re-login");
+//                        System.out.println("2. Exit to menu");
+//                        System.out.print("Enter your choice: ");
+//                        String choiceStr = scanner.nextLine();
+//                        if (choiceStr.matches("[12]")) {
+//                            int choice = Integer.parseInt(choiceStr);
+//                            switch (choice) {
+//                                case 1:
+//                                    // Re-login
+//                                    login();
+//                                    invalidInput = false; // Break out of the loop after successful re-login
+//                                    break;
+//                                case 2:
+//                                    userAccount.displayLoginMenu();
+//                                    invalidInput = false; // Break out of the loop after exiting to menu
+//                                    break;
+//                                default:
+//                                    System.out.println("Invalid choice. Exiting to menu.");
+//                                    userAccount.displayLoginMenu();
+//                                    break;
+//                            }
+//                        } else {
+//                            System.out.println("Invalid choice. Please enter 1 or 2.");
+//                        }
                     }
                 }
             } catch (IOException ex) {
@@ -103,11 +105,13 @@ public class LoginManager {
         } catch (Exception ex) {
             System.out.print(ex.getMessage());
             ex.printStackTrace();
+            return false;
         }
+        return false;
     }
     
 
-    public void loginStaff() {
+    public boolean loginStaff() {
         try {
             Path path = Paths.get("staff.txt");
             InputStream input = Files.newInputStream(path);
@@ -126,15 +130,17 @@ public class LoginManager {
                         found = true;
                         System.out.println("Login successful.");
                         System.out.println("-------------------------------");
+                        return true;
                         // Direct to the staff menu
-                        AdminDashBoard adminDashBoard = new AdminDashBoard();
-                        adminDashBoard.display();
+//                        AdminDashBoard adminDashBoard = new AdminDashBoard();
+//                        adminDashBoard.display();
                     }
                 }
                 if (!found) {
                     System.out.println("Invalid username or password.");
                     System.out.println("-------------------------------");
-                    userAccount.displayLoginMenu();
+                    return false;
+//                    userAccount.displayLoginMenu();
                     
                 }
                 
@@ -159,6 +165,7 @@ public class LoginManager {
             System.out.print(ex.getMessage());
             ex.printStackTrace();
         }
+        return false;
     }
 
     public String getMemberNo() {

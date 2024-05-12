@@ -25,8 +25,10 @@ public class Loyalty {
 
     //display to admin to modify
     public void printTierMultipliers() {
+        int counter = 1;
         for (Map.Entry<String, Double> entry : tierMultipliers.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            System.out.println(counter + ". " + entry.getKey() + ": " + entry.getValue());
+            counter++;
         }
     }
 

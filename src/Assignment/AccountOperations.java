@@ -8,7 +8,7 @@ package Assignment;
 public interface AccountOperations {
     void displayMenu();
     void createAccount();
-    void login();
+    boolean login();
     void showReferees();
     void viewProfile();
     String getMemberNo();

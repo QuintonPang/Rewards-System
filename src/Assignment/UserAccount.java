@@ -173,10 +173,15 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-    public void login() {
+    public boolean login() {
         LoginManager loginManager = new LoginManager();
-        loginManager.login();
-        memberNo = loginManager.getMemberNo();
+        if(loginManager.login()){
+            memberNo = loginManager.getMemberNo();
+            return true;
+        }else {
+            return false;
+        }
+        
     }
 
     public void forgot() throws IOException {

@@ -115,10 +115,7 @@ public class RegistrationManager {
 
         } catch (IOException ex) {
             System.out.println("Error creating account: " + ex.getMessage());
-        } finally {
-            System.out.println("-------------------------------");
-            useraccount.displayRegisterUser();
-        }
+        } 
     }
 
     private void sortUserAccountsByUsername(String filename) {
@@ -203,17 +200,14 @@ public class RegistrationManager {
 
                 System.out.println("Staff account created successfully.");
                 // If needed, you can add further logic here to redirect to the admin dashboard
-                AdminDashBoard adminDashBoard = new AdminDashBoard();
-                adminDashBoard.display();
+                //AdminDashBoard adminDashBoard = new AdminDashBoard();
+                //adminDashBoard.display();
 
                 break; // Break out of the while loop after successfully creating the staff account
             }
 
         } catch (IOException ex) {
             System.out.println("Error creating account: " + ex.getMessage());
-        } finally {
-            System.out.println("-------------------------------");
-            useraccount.displayRegisterUser();
         }
     }
 

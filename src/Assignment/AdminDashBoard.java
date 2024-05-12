@@ -26,14 +26,18 @@ import java.util.Scanner;
  *
  * @author munchun
  */
-
 public class AdminDashBoard {
+
     private static final String filename = "user.txt";
     private String memberNo;
+    Loyalty loyalty = new Loyalty();
+    Policy policy = new Policy();
+    UserAccount userAccount = new UserAccount();
 
     public static void main(String[] args) {
         AdminDashBoard adminDashBoard = new AdminDashBoard();
         adminDashBoard.display();
+        
     }
 
     public void display() {
@@ -45,6 +49,8 @@ public class AdminDashBoard {
         System.out.println("4. Top redeemed Item from customer");
         System.out.println("5. Least redeemed Item from Customer");
         System.out.println("6. User Activity Checking");
+        System.out.println("7. Update TierMultiplier");
+        System.out.println("8. Update Expiration Duration");
         System.out.print("  Enter your choice: ");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
@@ -52,6 +58,7 @@ public class AdminDashBoard {
         switch (choice) {
             case 0:
                 System.out.println("Exiting...");
+                userAccount.displayMenu();
                 break;
             case 1:
                 checkCustomerDetails();
@@ -77,6 +84,53 @@ public class AdminDashBoard {
                 ActivityTracking();
                 display();
                 break;
+            case 7:
+                loyalty.printTierMultipliers();
+                scanner.nextLine();
+                System.out.print("Enter the tier you want to modify: ");
+                String tierChoice = scanner.nextLine();
+                ;
+                System.out.print("Enter the new multiplier: ");
+                double multiplier = scanner.nextDouble();
+
+                switch (tierChoice) {
+                    case "1":
+                        loyalty.updateMultiplier("Bronze", multiplier);
+                        break;
+                    case "2":
+                        loyalty.updateMultiplier("Silver", multiplier);
+                        break;
+                    case "3":
+                        loyalty.updateMultiplier("Gold", multiplier);
+                        break;
+                    case "4":
+                        loyalty.updateMultiplier("Platinium", multiplier);
+                        break;
+                    default:
+                        System.out.println("Error Selection");
+                        break;
+                }
+                display();
+                break;
+            case 8:
+                String expiryMonths;
+                boolean validate = false;
+                while (!validate) {
+                    scanner.nextLine();
+                    System.out.println("Update the expiration durations in months (01-12)");
+                    expiryMonths = scanner.nextLine();
+                    if (policy.validateMonth(expiryMonths)) {
+                        policy.setExpiryMonths(Integer.parseInt(expiryMonths));
+                        System.out.println("New expiration durations : " + policy.getExpiryMonths());
+                        validate = true;
+
+                    } else {
+                        System.err.println("Invalid");
+                    }
+
+                }
+                display();
+                break;
             default:
                 System.out.println("Invalid choice!");
         }
@@ -85,8 +139,7 @@ public class AdminDashBoard {
 
     public void checkCustomerDetails() {
         System.out.println("View Customer Details");
-        try (InputStream input = Files.newInputStream(Paths.get(filename));
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter membership number: ");
@@ -120,7 +173,7 @@ public class AdminDashBoard {
         }
     }
 
-    private String getCurrentValueFromCSV() {
+    public String getCurrentValueFromCSV() {
         try (BufferedReader csvReader = new BufferedReader(new FileReader("earning.csv"))) {
             String row;
             // Skip header row
