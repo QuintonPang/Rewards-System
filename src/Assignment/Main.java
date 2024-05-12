@@ -377,7 +377,6 @@ public class Main {
                                                     break;
                                                 case "7":
                                                     loyalty.printTierMultipliers();
-                                                    scanner.nextLine();
                                                     System.out.print("Enter the tier you want to modify: ");
                                                     String tierChoice = scanner.nextLine();
                                                     ;
@@ -405,7 +404,6 @@ public class Main {
                                                 case "8":
                                                     validate = false;
                                                     while (!validate) {
-                                                        scanner.nextLine();
                                                         System.out.println("Update the expiration durations in months (01-12)");
                                                         expiryMonths = scanner.nextLine();
                                                         if (policy.validateMonth(expiryMonths)) {
