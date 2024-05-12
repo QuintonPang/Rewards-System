@@ -25,11 +25,16 @@ public class Loyalty {
 
     //display to admin to modify
     public void printTierMultipliers() {
+
         int counter = 1;
+        System.out.println("---------------------------------");
+        System.out.println("|     Tier Multiplier Menu      |");
+        System.out.println("---------------------------------");
         for (Map.Entry<String, Double> entry : tierMultipliers.entrySet()) {
-            System.out.println(counter + ". " + entry.getKey() + ": " + entry.getValue());
+            System.out.println("| " + counter + ". " + entry.getKey() + "\t: " + entry.getValue() + "\t\t|");
             counter++;
         }
+        System.out.println("---------------------------------");
     }
 
     //return grade level

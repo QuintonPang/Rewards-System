@@ -123,16 +123,19 @@ public class Main {
     }
 
     public static void printAdminMainMenu() {
-        System.out.println("\n Admin Main Menu \n");
-        System.out.println("0 : Exit");
-        System.out.println("1. Check Customer Details");
-        System.out.println("2. View all products");
-        System.out.println("3. Check Earning file");
-        System.out.println("4. Top redeemed Item from customer");
-        System.out.println("5. Least redeemed Item from Customer");
-        System.out.println("6. User Activity Checking");
-        System.out.println("7. Update TierMultiplier");
-        System.out.println("8. Update Expiration Duration");
+        System.out.println("-----------------------------------------");
+        System.out.println("|            Admin Main Menu            |");
+        System.out.println("-----------------------------------------");
+        System.out.println("| 0. Exit                               |");
+        System.out.println("| 1. Check Customer Details             |");
+        System.out.println("| 2. View all products                  |");
+        System.out.println("| 3. Check Earning file                 |");
+        System.out.println("| 4. Top redeemed Item from customer    |");
+        System.out.println("| 5. Least redeemed Item from Customer  |");
+        System.out.println("| 6. User Activity Checking             |");
+        System.out.println("| 7. Update TierMultiplier              |");
+        System.out.println("| 8. Update Expiration Duration         |");
+        System.out.println("-----------------------------------------");
         System.out.print("  Enter your choice: ");
     }
 
@@ -377,44 +380,58 @@ public class Main {
                                                     break;
                                                 case "7":
                                                     loyalty.printTierMultipliers();
-                                                    System.out.print("Enter the tier you want to modify: ");
-                                                    String tierChoice = scanner.nextLine();
-                                                    ;
-                                                    System.out.print("Enter the new multiplier: ");
-                                                    double multiplier = scanner.nextDouble();
+                                                    System.out.print("Do you want to modify?(Y/N):");
+                                                    String tierMultipliersChoice = scanner.nextLine();
+                                                    if (tierMultipliersChoice.equalsIgnoreCase("Y")) {
+                                                        System.out.print("Enter the tier you want to modify: ");
+                                                        String tierChoice = scanner.nextLine();
+                                                        System.out.print("Enter the new multiplier: ");
+                                                        double multiplier = scanner.nextDouble();
 
-                                                    switch (tierChoice) {
-                                                        case "1":
-                                                            loyalty.updateMultiplier("Bronze", multiplier);
-                                                            break;
-                                                        case "2":
-                                                            loyalty.updateMultiplier("Silver", multiplier);
-                                                            break;
-                                                        case "3":
-                                                            loyalty.updateMultiplier("Gold", multiplier);
-                                                            break;
-                                                        case "4":
-                                                            loyalty.updateMultiplier("Platinium", multiplier);
-                                                            break;
-                                                        default:
-                                                            System.out.println("Error Selection");
-                                                            break;
+                                                        switch (tierChoice) {
+                                                            case "1":
+                                                                loyalty.updateMultiplier("Bronze", multiplier);
+                                                                break;
+                                                            case "2":
+                                                                loyalty.updateMultiplier("Silver", multiplier);
+                                                                break;
+                                                            case "3":
+                                                                loyalty.updateMultiplier("Gold", multiplier);
+                                                                break;
+                                                            case "4":
+                                                                loyalty.updateMultiplier("Platinium", multiplier);
+                                                                break;
+                                                            default:
+                                                                System.out.println("Error Selection");
+                                                                break;
+                                                        }
                                                     }
                                                     break;
                                                 case "8":
-                                                    validate = false;
-                                                    while (!validate) {
-                                                        System.out.println("Update the expiration durations in months (01-12)");
-                                                        expiryMonths = scanner.nextLine();
-                                                        if (policy.validateMonth(expiryMonths)) {
-                                                            policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-                                                            System.out.println("New expiration durations : " + policy.getExpiryMonths());
-                                                            validate = true;
+                                                    System.out.println("-------------------------------------------------");
+                                                    if (policy.getExpiryMonths() > 1) {
+                                                        System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Months\t|");
+                                                    } else {
+                                                        System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Month \t|");
+                                                    }
+                                                    System.out.println("-------------------------------------------------");
+                                                    System.out.print("Do you want to update expiration duration?(Y/N):");
+                                                    String expirationDurationChoice = scanner.nextLine();
+                                                    if (expirationDurationChoice.equalsIgnoreCase("Y")) {
+                                                        validate = false;
+                                                        while (!validate) {
+                                                            System.out.print("Update the expiration durations in months (01-12) :");
+                                                            expiryMonths = scanner.nextLine();
+                                                            if (policy.validateMonth(expiryMonths)) {
+                                                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
+                                                                System.out.println("--------------------------------");
+                                                                System.out.println("New expiration durations : " + policy.getExpiryMonths());
+                                                                validate = true;
 
-                                                        } else {
-                                                            System.err.println("Invalid");
+                                                            } else {
+                                                                System.err.println("Invalid");
+                                                            }
                                                         }
-
                                                     }
 
                                                     break;
