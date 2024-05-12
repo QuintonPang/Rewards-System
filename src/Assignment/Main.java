@@ -243,14 +243,13 @@ public class Main {
                     case "2":
                         loginMenuChoice = "";
                         while (!loginMenuChoice.equals("3") && !loginMenuChoice.equals("exit")) {
-                            System.err.println("test in loginmenu");
                             printLoginMenu();
                             loginMenuChoice = scanner.nextLine();
                             switch (loginMenuChoice) {
                                 case "1":
                                     if (userAccount.login()) {
                                         memberNo = userAccount.getMemberNo();
-                                        System.out.println("MemberNo in login : " + memberNo);
+                                        //System.out.println("MemberNo in login : " + memberNo);
                                         customerMainMenuChoice = "";
                                         while (!customerMainMenuChoice.equals("0") && !customerMainMenuChoice.equals("exit")) {
                                             printCustomerMainMenu();
@@ -453,14 +452,14 @@ public class Main {
 
                         break;
 
-                    case "3": {
-//                        try {
-//                            forgot();
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-                    }
-                    break;
+                    case "3":
+                        try {
+                            userAccount.forgot();
+                        } catch (IOException ex) {
+                            Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        break;
 
                     case "4":
                         System.exit(0);
@@ -473,109 +472,6 @@ public class Main {
 
             }
 
-//            try {
-//                System.err.println("Test");//Remove before submit
-//                scanner.nextLine();
-//                printCustomerMainMenu();
-//                String choice = scanner.nextLine();
-//                switch (choice) {
-//                    case "1":
-//                        System.out.print("Enter your invoice NO.: ");
-//                        String invoiceNo = scanner.nextLine();
-//                        System.out.print("Enter the total payment amount: ");
-//                        int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
-//                        new Earning(invoiceNo, value, memberNo);
-//                        policy.updateExpiryDate();
-//                        System.out.println("You have earned a total of " + value + " points!");
-//                        System.out.print("\n");
-//                        break;
-//
-//                    case "2":
-//                        List<Earning> earnings = CSVWrite.getAllEarnings();
-//
-//                        List<Earning> filteredList = new ArrayList<>();
-//                        List<Earning> otherMembers = new ArrayList<>();
-//
-//                        for (Earning earn : earnings) {
-//
-//                            if (earn.getMemberNo().equals(memberNo)) {
-//
-//                                filteredList.add(earn);
-//                            } else {
-//                                otherMembers.add(earn);
-//                            }
-//                        }
-//                        Collections.sort(filteredList, new EarningComparator());
-//                        int totalPoints = 0;
-//                        for (Earning e : filteredList) { // for each Player p in list         
-//                            totalPoints += e.getValue();
-//                        }
-//                        System.out.print("Current points: " + totalPoints + '\n');
-//
-//                        System.out.println("What would you like to redeem?");
-//
-//                        int total = 0;
-//                        for (int i = 0; i < redemptionItems.length; i++) {
-//                            if (redemptionItems[i].getRedemptionValue() <= totalPoints) {
-//                                total++;
-//                                System.out.printf("%d %s (%d points)\n", i + 1, redemptionItems[i].getName(), redemptionItems[i].getRedemptionValue());
-//                            }
-//
-//                        }
-//
-//                        if (total <= 0) {
-//                            System.out.println("Sorry, you have insufficient points to redeem any item\n");
-//                            break;
-//                        }
-//
-//                        System.out.print("Enter your choice:");
-//                        String redemptionChoice = scanner.nextLine();
-//
-//                        while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
-//                            System.out.println("Invalid input!");
-//                            System.out.print("Enter your choice:");
-//                            redemptionChoice = scanner.nextLine();
-//
-//                        }
-//
-//                         {
-//                            try {
-//                                // write to txt file
-//                                writeToRedemptionHistory(redemptionItems[Integer.parseInt(redemptionChoice) - 1], memberNo);
-//                            } catch (IOException ex) {
-//                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
-//                        }
-//
-//                        deductPoints(redemptionItems[Integer.parseInt(redemptionChoice) - 1].getRedemptionValue(), filteredList);
-//
-////                        for (Earning test : filteredList) {
-////                            System.out.println(test.getValue());
-////                        }
-//                        List<Earning> newEarnings = new ArrayList<>();
-//                        newEarnings.addAll(filteredList);
-//                        newEarnings.addAll(otherMembers);
-//                        Earning.rewriteToFile(newEarnings);
-//                        System.out.println("Redemption successful!\n");
-//                        break;
-//
-//                    case "3":
-//                        //viewprofile from useraccount
-//                        userAccount.viewProfile();
-//                        break;
-//                    case "4":
-//                        userAccount.showReferees();
-//                        break;
-//                    case "0":
-//                        isRunning = false;
-//                        break;
-//                    default:
-//                        System.out.println("Invalid input!");
-//
-//                }
-//            } catch (FileNotFoundException ex) {
-//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         }
 
     }
@@ -589,185 +485,3 @@ class EarningComparator implements java.util.Comparator<Earning> {
         return a.getEarningDate().isBefore(b.getEarningDate()) ? -1 : 1;
     }
 }
-
-//                        // Code to display the report
-//                        printAdminReportMenu();
-//                        String reportChoice = scanner.nextLine();
-//                        while (!isNumeric(reportChoice) || Integer.parseInt(reportChoice) < 1 || Integer.parseInt(reportChoice) > 3) {
-//                            System.out.println("Invalid input!");
-//                            System.out.print("Enter your choice: ");
-//                            reportChoice = scanner.nextLine();
-//                        }
-//                        Reporting reporting = new Reporting();
-//
-//                        switch (reportChoice) {
-//                            case "1":
-//                                //to view the most popular gift redeem
-//                                reporting.displayTopRedeemedItem();
-//                                break;
-//                            case "2":
-//                                //to view the least gift redeem
-//                                reporting.displayLowRedeemedItem();
-//                                break;
-//                            case "3":
-//                                //to view user profile status
-//                                reporting.userProfileStatus();
-//                                break;
-//                        }
-//                        System.out.println(" ");
-//                        break;
-//                    case "5":
-//                        
-//                    case "6":
-//                        try {
-//                            open(new File("earning.csv"));
-//                            System.out.println(" ");
-//
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                        break;
-//                    case "7":
-//                        validate = false;
-//                        while (!validate) {
-//                            System.out.print("Update the expiration durations in months (01-12):");
-//                            expiryMonths = scanner.nextLine();
-//                            // System.out.println(policy.validateMonth(expiryMonths));
-//                            if (policy.validateMonth(expiryMonths)) {
-//                                System.out.println("Updated!Current earning points have " + expiryMonths + " months expiry.");
-//                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-//                                //System.out.println(policy.getExpiryMonths());
-//                                validate = true;
-//
-//                            } else {
-//                                System.err.println("Invalid input!");
-//                            }
-//                        }
-//                        break;
-//Admin Main menu 
-//        Scanner scanner = new Scanner(System.in);
-//        int choice = scanner.nextInt();
-//
-//        switch (choice) {
-//            case 0:
-//                System.out.println("Exiting...");
-//                userAccount.displayMenu();
-//                break;
-//            case 1:
-//                checkCustomerDetails();
-//                break;
-//            case 2:
-//                // Call viewAllProducts() method
-//                viewAllProducts();
-//                display();
-//                break;
-//            case 3:
-//                getCurrentValueFromCSV();
-//                display();
-//                break;
-//            case 4:
-//                displayTopRedeemedItem();
-//                display();
-//                break;
-//            case 5:
-//                displayLowRedeemedItem();
-//                display();
-//                break;
-//            case 6:
-//                ActivityTracking();
-//                display();
-//                break;
-//            case 7:
-//                loyalty.printTierMultipliers();
-//                scanner.nextLine();
-//                System.out.print("Enter the tier you want to modify: ");
-//                String tierChoice = scanner.nextLine();
-//                ;
-//                System.out.print("Enter the new multiplier: ");
-//                double multiplier = scanner.nextDouble();
-//
-//                switch (tierChoice) {
-//                    case "1":
-//                        loyalty.updateMultiplier("Bronze", multiplier);
-//                        break;
-//                    case "2":
-//                        loyalty.updateMultiplier("Silver", multiplier);
-//                        break;
-//                    case "3":
-//                        loyalty.updateMultiplier("Gold", multiplier);
-//                        break;
-//                    case "4":
-//                        loyalty.updateMultiplier("Platinium", multiplier);
-//                        break;
-//                    default:
-//                        System.out.println("Error Selection");
-//                        break;
-//                }
-//                display();
-//                break;
-//            case 8:
-//                String expiryMonths;
-//                boolean validate = false;
-//                while (!validate) {
-//                    scanner.nextLine();
-//                    System.out.println("Update the expiration durations in months (01-12)");
-//                    expiryMonths = scanner.nextLine();
-//                    if (policy.validateMonth(expiryMonths)) {
-//                        policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-//                        System.out.println("New expiration durations : " + policy.getExpiryMonths());
-//                        validate = true;
-//
-//                    } else {
-//                        System.err.println("Invalid");
-//                    }
-//
-//                }
-//                display();
-//                break;
-//            default:
-//                System.out.println("Invalid choice!");
-//Print Start Menu 
-//        String choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1":
-//                displayRegisterUser();
-//                break;
-//            case "2":
-//                displayLoginMenu();
-//                break;
-//            case "3": {
-//                try {
-//                    forgot();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            break;
-//
-//            case "4":
-//                //System.exit(0);
-//                //  System.out.println("ran");
-//                break;
-//            default:
-//                System.out.println("Invalid choice.");
-//                displayMenu();
-//        }
-//Print login menu
-//
-//        String choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1":
-//                login();
-//                break;
-//            case "2":
-//                LoginManager loginManager = new LoginManager();
-//                loginManager.loginStaff();
-//                memberNo = loginManager.getMemberNo();
-//                break;
-//            case "3":
-//                displayMenu();
-//                break;
-//            default:
-//                System.out.println("Invalid choice.");
-//                displayLoginMenu();
-//        }

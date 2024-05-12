@@ -211,8 +211,7 @@ public class UserAccount extends Account implements AccountOperations {
                     updated = true;
                     break;
                 } else {
-                    System.out.println("Passwords do not match. Try again.");
-                    displayMenu();
+                    System.out.println("Passwords do not match.");
                 }
             }
         }
@@ -220,10 +219,8 @@ public class UserAccount extends Account implements AccountOperations {
         if (updated) {
             Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Password reset successful.");
-            displayMenu();
         } else {
             System.out.println("Username or email not found.");
-            displayMenu();
         }
 
     }

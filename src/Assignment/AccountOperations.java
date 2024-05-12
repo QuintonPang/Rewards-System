@@ -4,6 +4,8 @@
  */
 package Assignment;
 
+import java.io.IOException;
+
 
 public interface AccountOperations {
     void displayMenu();
@@ -12,5 +14,6 @@ public interface AccountOperations {
     void showReferees();
     void viewProfile();
     String getMemberNo();
+    void forgot() throws IOException;
     
 }
