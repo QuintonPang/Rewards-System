@@ -462,8 +462,8 @@ public class Main {
                         break;
 
                     case "4":
-                        System.exit(0);
-                        System.out.println("ran");
+                        EndingPage endingPage = new EndingPage();
+                        endingPage.ending();
                         break;
                     default:
                         System.out.println("Invalid choice.");
