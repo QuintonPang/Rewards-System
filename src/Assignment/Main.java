@@ -364,7 +364,7 @@ public class Main {
                                                     adminDashBoard.viewAllProducts();
                                                     break;
                                                 case "3":
-                                                    adminDashBoard.getCurrentValueFromCSV();
+                                                    adminDashBoard.checkEarningFile();
                                                     break;
                                                 case "4":
                                                     adminDashBoard.displayTopRedeemedItem();
