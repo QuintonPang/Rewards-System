@@ -8,7 +8,7 @@ import java.io.IOException;
 
 
 public interface AccountOperations {
-    void displayMenu();
+    void printStartMenu();
     void createAccount();
     boolean login();
     void showReferees();

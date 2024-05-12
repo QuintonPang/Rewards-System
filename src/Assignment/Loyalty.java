@@ -90,13 +90,4 @@ public class Loyalty {
                 + "\nNext Tier : " + nextTiers;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-
-//        Loyalty loyalty = new Loyalty();
-//
-//        String memberNo = "m1001";
-//        System.out.println(loyalty.toString(memberNo));
-//        System.out.println(loyalty.getMultiplier(memberNo));
-    }
-
 }

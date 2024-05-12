@@ -32,9 +32,9 @@ public class UserAccount extends Account implements AccountOperations {
     }
 
     @Override
-    public void displayMenu() {
+    public void printStartMenu() {
         System.out.println("------------------------------");
-        System.out.println("|         Main Menu          |");
+        System.out.println("|         Start Menu         |");
         System.out.println("------------------------------");
         System.out.println("| 1. Create User Account     |");
         System.out.println("| 2. Login                   |");
@@ -43,90 +43,90 @@ public class UserAccount extends Account implements AccountOperations {
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
 
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "1":
-                displayRegisterUser();
-                break;
-            case "2":
-                displayLoginMenu();
-                break;
-            case "3": {
-                try {
-                    forgot();
-                } catch (IOException ex) {
-                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            break;
-
-            case "4":
-                //System.exit(0);
-                //  System.out.println("ran");
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                displayMenu();
-        }
+//        String choice = scanner.nextLine();
+//        switch (choice) {
+//            case "1":
+//                displayRegisterUser();
+//                break;
+//            case "2":
+//                displayLoginMenu();
+//                break;
+//            case "3": {
+//                try {
+//                    forgot();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            break;
+//
+//            case "4":
+//                //System.exit(0);
+//                //  System.out.println("ran");
+//                break;
+//            default:
+//                System.out.println("Invalid choice.");
+//                displayMenu();
+//        }
     }
 
     //menu for user and admin
-    public void displayRegisterUser() {
-        System.out.println("------------------------------");
-        System.out.println("|         Main Menu          |");
-        System.out.println("------------------------------");
-        System.out.println("| 1. Customer Register       |");
-        System.out.println("| 2. Admin Register          |");
-        System.out.println("| 3. Exit                    |");
-        System.out.println("------------------------------");
-        System.out.print("Enter your choice: ");
+//    public void displayRegisterUser() {
+//        System.out.println("------------------------------");
+//        System.out.println("|         Main Menu          |");
+//        System.out.println("------------------------------");
+//        System.out.println("| 1. Customer Register       |");
+//        System.out.println("| 2. Admin Register          |");
+//        System.out.println("| 3. Exit                    |");
+//        System.out.println("------------------------------");
+//        System.out.print("Enter your choice: ");
+//
+//        String choice = scanner.nextLine();
+//        switch (choice) {
+//            case "1":
+//                createAccount();
+//                break;
+//            case "2":
+//                RegistrationManager registrationManager = new RegistrationManager();
+//                registrationManager.createAccountStaff();
+//                break;
+//            case "3":
+//                displayMenu();
+//                break;
+//            default:
+//                System.out.println("Invalid choice.");
+//                displayRegisterUser();
+//        }
+//    }
 
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "1":
-                createAccount();
-                break;
-            case "2":
-                RegistrationManager registrationManager = new RegistrationManager();
-                registrationManager.createAccountStaff();
-                break;
-            case "3":
-                displayMenu();
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                displayRegisterUser();
-        }
-    }
-
-    public void displayLoginMenu() {
-        System.out.println("------------------------------");
-        System.out.println("|         Main Menu          |");
-        System.out.println("------------------------------");
-        System.out.println("| 1. Customer Login          |");
-        System.out.println("| 2. Admin Login             |");
-        System.out.println("| 3. Exit                    |");
-        System.out.println("------------------------------");
-        System.out.print("Enter your choice: ");
-
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "1":
-                login();
-                break;
-            case "2":
-                LoginManager loginManager = new LoginManager();
-                loginManager.loginStaff();
-                memberNo = loginManager.getMemberNo();
-                break;
-            case "3":
-                displayMenu();
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                displayLoginMenu();
-        }
-    }
+//    public void displayLoginMenu() {
+//        System.out.println("------------------------------");
+//        System.out.println("|         Main Menu          |");
+//        System.out.println("------------------------------");
+//        System.out.println("| 1. Customer Login          |");
+//        System.out.println("| 2. Admin Login             |");
+//        System.out.println("| 3. Exit                    |");
+//        System.out.println("------------------------------");
+//        System.out.print("Enter your choice: ");
+//
+//        String choice = scanner.nextLine();
+//        switch (choice) {
+//            case "1":
+//                login();
+//                break;
+//            case "2":
+//                LoginManager loginManager = new LoginManager();
+//                loginManager.loginStaff();
+//                memberNo = loginManager.getMemberNo();
+//                break;
+//            case "3":
+//                displayMenu();
+//                break;
+//            default:
+//                System.out.println("Invalid choice.");
+//                displayLoginMenu();
+//        }
+//    }
 
     @Override
     public void createAccount() {
@@ -481,6 +481,7 @@ public void viewProfile() {
 
     }
 
+    @Override
     public String getMemberNo() {
         return memberNo;
     }
