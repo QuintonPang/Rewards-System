@@ -8,6 +8,7 @@ import java.util.Map;
 public class Loyalty {
 
     private Map<String, Double> tierMultipliers; // Mapping between tier and multiplier
+    private String nextTiers;
 
     public Loyalty() {
         //initialize the tierMultiplier
@@ -47,7 +48,7 @@ public class Loyalty {
         return determineGrade(totalPoints); // Default grade is Bronze
     }
 
-    public int calculateAccumulatedPoint(String customerId) throws FileNotFoundException{
+    public int calculateAccumulatedPoint(String customerId) throws FileNotFoundException {
         List<Earning> earnings = CSVWrite.getAllEarnings();
         int totalPoints = 0;
         for (Earning earn : earnings) {
@@ -59,21 +60,7 @@ public class Loyalty {
         }
         return totalPoints;
     }
-    
-    public int calculateNextTierNeeded(String customerId) throws FileNotFoundException{
-        int accumulatedPoint = calculateAccumulatedPoint(customerId);
-        if (accumulatedPoint >= 3000){
-            return 0;
-        }else if(accumulatedPoint >= 2000){
-            return 3000 - accumulatedPoint;
-        }else if(accumulatedPoint >= 1000){
-            return 2000 - accumulatedPoint;
-        }else{
-            return 1000 - accumulatedPoint;
-        }
-        
-    }
-    
+
     public double getMultiplier(String customerId) throws FileNotFoundException {
         return tierMultipliers.get(getCustomerGrade(customerId));
     }
@@ -81,18 +68,28 @@ public class Loyalty {
     //toString Customer Grade Details
     public String toString(String customerId) throws FileNotFoundException {
         String grade = getCustomerGrade(customerId);
-        return "Current Grade : " + grade +"(Earning Points x " + getMultiplier(customerId) + ")" + 
-                "\n Next Tier : ";
+        int accumulatedPoint = calculateAccumulatedPoint(customerId);
+        if (accumulatedPoint >= 3000) {
+            nextTiers = "No more tiers";
+        } else if (accumulatedPoint >= 2000) {
+            nextTiers = String.valueOf(accumulatedPoint) + "/3000" + " Platinium";
+        } else if (accumulatedPoint >= 1000) {
+            nextTiers = String.valueOf(accumulatedPoint) + "/2000" + " Gold";
+        } else {
+            nextTiers = String.valueOf(accumulatedPoint) + "/2000" + " Sliver";
+        }
+
+        return "Current Grade : " + grade + "(Earning Points x " + String.valueOf(getMultiplier(customerId)) + ")"
+                + "\nNext Tier : " + nextTiers;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        Loyalty loyalty = new Loyalty();
-
-        String memberNo = "m1001";
-        System.out.println(loyalty.toString(memberNo));
-        System.out.println(loyalty.getMultiplier(memberNo));
-
+//        Loyalty loyalty = new Loyalty();
+//
+//        String memberNo = "m1001";
+//        System.out.println(loyalty.toString(memberNo));
+//        System.out.println(loyalty.getMultiplier(memberNo));
     }
 
 }
