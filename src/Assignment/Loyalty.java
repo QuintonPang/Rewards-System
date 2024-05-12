@@ -86,8 +86,8 @@ public class Loyalty {
             nextTiers = String.valueOf(accumulatedPoint) + "/2000" + " Sliver";
         }
 
-        return "Current Grade : " + grade + "(Earning Points x " + String.valueOf(getMultiplier(customerId)) + ")"
-                + "\nNext Tier : " + nextTiers;
+        return "Current Grade\t\t: " + grade + "(Earning Points x " + String.valueOf(getMultiplier(customerId)) + ")\t|"
+                + "\n| Next Tier\t\t: " + nextTiers + "\t\t\t\t|";
     }
 
 }

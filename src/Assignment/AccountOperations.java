@@ -4,6 +4,7 @@
  */
 package Assignment;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -12,7 +13,7 @@ public interface AccountOperations {
     void createAccount();
     boolean login();
     void showReferees();
-    void viewProfile();
+    void viewProfile() throws FileNotFoundException;
     String getMemberNo();
     void forgot() throws IOException;
     

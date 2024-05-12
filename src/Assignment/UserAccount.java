@@ -14,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -98,7 +100,6 @@ public class UserAccount extends Account implements AccountOperations {
 //                displayRegisterUser();
 //        }
 //    }
-
 //    public void displayLoginMenu() {
 //        System.out.println("------------------------------");
 //        System.out.println("|         Main Menu          |");
@@ -127,7 +128,6 @@ public class UserAccount extends Account implements AccountOperations {
 //                displayLoginMenu();
 //        }
 //    }
-
     @Override
     public void createAccount() {
         RegistrationManager registrationManager = new RegistrationManager();
@@ -141,18 +141,20 @@ public class UserAccount extends Account implements AccountOperations {
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
             String line;
-
-            System.out.println("\nMy Referees: ");
+            System.out.println();
+            System.out.println("-----------------------------------------");
+            System.out.println("|             My Referees               |");
+            System.out.println("-----------------------------------------");
             int total = 0;
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
                 if (user.length >= 6 && user[5].equals(memberNo)) {
-                    //cannot run here
-                    total += 1;
-                    System.out.println("Username: " + user[0]);
-                    System.out.println("Membership Number: " + user[4]);
 
-                    System.out.println("-----------------------------------");
+                    total += 1;
+                    System.out.println("| Username\t\t: " + user[0] + "\t|");
+                    System.out.println("| Membership Number\t: " + user[4] +"\t|");
+
+                    System.out.println("-----------------------------------------");
 
                 }
             }
@@ -175,13 +177,13 @@ public class UserAccount extends Account implements AccountOperations {
 
     public boolean login() {
         LoginManager loginManager = new LoginManager();
-        if(loginManager.login()){
+        if (loginManager.login()) {
             memberNo = loginManager.getMemberNo();
             return true;
-        }else {
+        } else {
             return false;
         }
-        
+
     }
 
     public void forgot() throws IOException {
@@ -225,49 +227,72 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-public void viewProfile() {
-    System.out.println("View Profile");
+    public void viewProfile() throws FileNotFoundException {
 
-    // Assuming getMemberId() returns the correct membership number
-    String membershipNumber = getMemberNo(); 
+        // Assuming getMemberId() returns the correct membership number
+        String membershipNumber = getMemberNo();
+        List<Earning> earnings = CSVWrite.getAllEarnings();
 
-    try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
-        String line;
+        List<Earning> filteredList = new ArrayList<>();
+        List<Earning> otherMembers = new ArrayList<>();
 
-        while ((line = reader.readLine()) != null) {
-            String[] user = line.split(" ");
-            if (user.length >= 5 && user[4].equals(membershipNumber)) {
-                System.out.println("Username: " + user[0]);
-                System.out.println("Email: " + user[1]);
-                System.out.println("Phone: " + user[2]);
-                System.out.println("Membership Number: " + user[4]);
-                System.out.println(loyalty.toString(memberNo));
+        for (Earning earn : earnings) {
 
-                // Prompt the user outside of the loop
-                boolean modifyDetails = promptModifyDetails();
-                if (modifyDetails) {
-                    updateAccount(membershipNumber);
-                } else {
-                    return;
-                }
+            if (earn.getMemberNo().equals(memberNo)) {
 
-                return; // Return if the profile is found
+                filteredList.add(earn);
+            } else {
+                otherMembers.add(earn);
             }
         }
+        Collections.sort(filteredList, new EarningComparator());
+        int totalPoints = 0;
+        for (Earning e : filteredList) { // for each Player p in list         
+            totalPoints += e.getValue();
+        }
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("|                         View Profile                          |");
+        System.out.println("-----------------------------------------------------------------");
 
-        System.out.println("User not found.");
+        try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
+            String line;
 
-    } catch (FileNotFoundException e) {
-        System.out.println("Error: user.txt not found.");
-        e.printStackTrace();
-    } catch (IOException e) {
-        System.out.println("Error reading user accounts: " + e.getMessage());
-        e.printStackTrace();
+            while ((line = reader.readLine()) != null) {
+                String[] user = line.split(" ");
+                if (user.length >= 5 && user[4].equals(membershipNumber)) {
+                    System.out.println("| Username\t\t: " + user[0] + "\t\t\t\t|");
+                    System.out.println("| Email\t\t\t: " + user[1] + "\t\t\t|");
+                    System.out.println("| Phone\t\t\t: " + user[2] + "\t\t\t\t|");
+                    System.out.println("| Membership Number\t: " + user[4] + "\t\t\t\t|");
+                    System.out.println("| Current Point\t\t: " + totalPoints + "\t\t\t\t\t|");
+                    System.out.println("| " + loyalty.toString(memberNo));
+                    System.out.println("-----------------------------------------------------------------");
+
+                    // Prompt the user outside of the loop
+                    boolean modifyDetails = promptModifyDetails();
+                    if (modifyDetails) {
+                        updateAccount(membershipNumber);
+                    } else {
+                        return;
+                    }
+
+                    return; // Return if the profile is found
+                }
+            }
+
+            System.out.println("User not found.");
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: user.txt not found.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error reading user accounts: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-}
 
     private boolean promptModifyDetails() {
-        System.out.println("Do you want to modify your account details? (Y/N): ");
+        System.out.print("Do you want to modify your account details? (Y/N): ");
         String choice = scanner.nextLine();
         return choice.equalsIgnoreCase("Y");
     }

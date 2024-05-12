@@ -86,6 +86,8 @@ public class RegistrationManager {
                         policy.updateExpiryDate();
                         
                     }
+                }else {
+                    referrer = "0";
                 }
 
                 // Check if the username, email, or phone already exist in the file

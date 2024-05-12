@@ -139,18 +139,6 @@ public class Main {
         System.out.print("  Enter your choice: ");
     }
 
-    public static void printStartMenu() {
-        System.out.println("------------------------------");
-        System.out.println("|         Start Menu         |");
-        System.out.println("------------------------------");
-        System.out.println("| 1. Create User Account     |");
-        System.out.println("| 2. Login                   |");
-        System.out.println("| 3. Forgot Password         |");
-        System.out.println("| 4. Exit                    |");
-        System.out.println("------------------------------");
-        System.out.print("Enter your choice: ");
-    }
-
     public static void printRegisterMenu() {
         System.out.println("------------------------------");
         System.out.println("|       Register Menu        |");
@@ -213,7 +201,7 @@ public class Main {
         while (isRunning) {
             startMenuChoice = "";
             while (!startMenuChoice.equals("0")) {
-                printStartMenu();
+                userAccount.printStartMenu();
                 startMenuChoice = scanner.nextLine();
                 switch (startMenuChoice) {
                     case "1":
@@ -287,18 +275,22 @@ public class Main {
                                                     for (Earning e : filteredList) { // for each Player p in list         
                                                         totalPoints += e.getValue();
                                                     }
-                                                    System.out.print("Current points: " + totalPoints + '\n');
-
-                                                    System.out.println("What would you like to redeem?");
 
                                                     int total = 0;
+                                                    System.out.println("\n\n-----------------------------------------------------");
+                                                    System.out.println("|                 Available Product                 |");
+                                                    System.out.println("-----------------------------------------------------");
                                                     for (int i = 0; i < redemptionItems.length; i++) {
                                                         if (redemptionItems[i].getRedemptionValue() <= totalPoints) {
                                                             total++;
-                                                            System.out.printf("%d %s (%d points)\n", i + 1, redemptionItems[i].getName(), redemptionItems[i].getRedemptionValue());
+                                                            System.out.printf("%d. %s (%d points)\n", i + 1, redemptionItems[i].getName(), redemptionItems[i].getRedemptionValue());
                                                         }
 
                                                     }
+                                                    System.out.println("-----------------------------------------------------");
+                                                    System.out.print("Current points: " + totalPoints + '\n');
+
+                                                    System.out.println("What would you like to redeem?");
 
                                                     if (total <= 0) {
                                                         System.out.println("Sorry, you have insufficient points to redeem any item\n");
