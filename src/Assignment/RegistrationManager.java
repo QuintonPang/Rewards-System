@@ -25,10 +25,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RegistrationManager {
-     // Define ANSI escape codes for red color
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String filename = "user.txt";
+     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
     
@@ -49,28 +46,28 @@ public class RegistrationManager {
                 String username = scanner.nextLine();
 
                 if (!isValidUsername(username)) {
-                    System.out.println("Invalid username format should be (6-20 characters, no special characters)");
+                    System.out.println("\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
                     continue;
                 }
 
                 System.out.print("Enter your email: ");
                 String email = scanner.nextLine();
                 if (!isValidEmail(email)) {
-                    System.out.println("Invalid email format should be (format: xxxxxx@yyy.zzz)");
+                    System.out.println("\u001B[31mIInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
                     continue;
                 }
 
                 System.out.print("Enter your phone number: ");
                 String phone = scanner.nextLine();
                 if (!isValidPhone(phone)) {
-                    System.out.println("Invalid phone number format should be (digits only)");
+                    System.out.println("\u001B[31mIInvalid phone number format should be (digits only)! \u001B[0m");
                     continue;
                 }
 
                 System.out.print("Enter your password: ");
                 String password = scanner.nextLine();
                 if (!isValidPassword(password)) {
-                    System.out.println("Invalid password format should be (6-20 characters)");
+                    System.out.println("\u001B[31mIInvalid password format should be (6-20 characters)! \u001B[0m");
                     continue;
                 }
 
@@ -79,7 +76,7 @@ public class RegistrationManager {
                 if (referrer.length() > 0) {
                     boolean validMember = memberIsExists(referrer);
                     if (!validMember && referrer.length() > 0) {
-                        System.out.println("Member does not exist");
+                        System.out.println("\u001B[31mIMember does not exist! \u001B[0m");
                         continue;
                     } else {
                         new Earning("Referral", 10, referrer);
@@ -92,7 +89,7 @@ public class RegistrationManager {
 
                 // Check if the username, email, or phone already exist in the file
                 if (isAlreadyRegistered(username, email, phone)) {
-                    System.out.println("Username, email, or phone number already exists. Please try again.");
+                    System.out.println("\u001B[31mIUsername, email, or phone number already exists. Please try again! \u001B[0m");
                     continue;
                 }
 
@@ -146,7 +143,7 @@ public class RegistrationManager {
             System.out.print("Enter your authentication key: ");
             String key = scanner.nextLine();
             if (!key.equals("A123")) {
-                System.out.println("Invalid authentication key");
+                System.out.println("\u001B[31mInvalid authentication key! \u001B[0m");
                 writer.close(); // Close the writer before returning
                 return;
 
@@ -157,34 +154,34 @@ public class RegistrationManager {
                 String username = scanner.nextLine();
 
                 if (!isValidUsername(username)) {
-                    System.out.println("Invalid username format should be (6-20 characters, no special characters)");
+                    System.out.println("\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
                     continue;
                 }
 
                 System.out.print("Enter your email: ");
                 String email = scanner.nextLine();
                 if (!isValidEmail(email)) {
-                    System.out.println("Invalid email format should be (format: xxxxxx@yyy.zzz)");
+                    System.out.println("\u001B[31mInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
                     continue;
                 }
 
                 System.out.print("Enter your phone number: ");
                 String phone = scanner.nextLine();
                 if (!isValidPhone(phone)) {
-                    System.out.println("Invalid phone number format should be (digits only)");
+                    System.out.println("\u001B[31mInvalid phone number format should be (digits only)! \u001B[0m");
                     continue;
                 }
 
                 System.out.print("Enter your password: ");
                 String password = scanner.nextLine();
                 if (!isValidPassword(password)) {
-                    System.out.println("Invalid password format should be (6-20 characters)");
+                    System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
                     continue;
                 }
 
                 // Check if the username, email, or phone already exist in the file
                 if (isAlreadyRegisteredStaff(username, email, phone)) {
-                    System.out.println("Username, email, or phone number already exists. Please try again.");
+                    System.out.println("\u001B[31mUsername, email, or phone number already exists. Please try again! \u001B[0m");
                     writer.close(); // Close the writer before returning
                     return;
                 }

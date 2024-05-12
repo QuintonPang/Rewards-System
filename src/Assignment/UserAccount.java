@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserAccount extends Account implements AccountOperations {
 
@@ -166,7 +164,7 @@ public class UserAccount extends Account implements AccountOperations {
             System.in.read(); // PAUSE THE PROGRAM UNTIL USER PRESSE
 
         } catch (FileNotFoundException e) {
-            System.out.println("Error: user.txt not found.");
+            System.out.println("\u001B[31mError: user.txt not found!\u001B[0m");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error reading user accounts: " + e.getMessage());
@@ -213,7 +211,7 @@ public class UserAccount extends Account implements AccountOperations {
                     updated = true;
                     break;
                 } else {
-                    System.out.println("Passwords do not match.");
+                    System.out.println("\u001B[31m Passwords do not match! \u001B[0m");
                 }
             }
         }
@@ -222,7 +220,8 @@ public class UserAccount extends Account implements AccountOperations {
             Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Password reset successful.");
         } else {
-            System.out.println("Username or email not found.");
+            System.out.println("\u001B[31m Username or email not found! \u001B[0m");
+
         }
 
     }
@@ -360,7 +359,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new username is valid
                     if (!isValidUsername(newUsername)) {
-                        System.out.println("Invalid username format should be (6-20 characters, no special characters)");
+                        System.out.println("\u001B[31m Invalid username format should be (6-20 characters, no special characters)! \u001B[0m");
                         return; // Exit the method if the username is invalid
                     }
 
@@ -376,7 +375,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Username updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31m Membership number not found! \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating username: " + ex.getMessage());
@@ -395,7 +394,7 @@ public class UserAccount extends Account implements AccountOperations {
                 if (user.length >= 5 && user[4].equals(membershipNumber)) {
                     String newEmail = promptForValidEmail(); // Validate and get new email from user input
                     if (newEmail == null) {
-                        System.out.println("Invalid email format. Email not updated.");
+                        System.out.println("\u001B[31m Invalid email format! Email not updated. \u001B[0m");
                         return; // Exit if the user input is invalid
                     }
 
@@ -410,7 +409,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Email updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31m Membership number not found! \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating email: " + ex.getMessage());
@@ -424,7 +423,7 @@ public class UserAccount extends Account implements AccountOperations {
             if (isValidEmail(newEmail)) {
                 return newEmail;
             }
-            System.out.println("Invalid email format. Please try again.");
+            System.out.println("\u001B[31m Invalid email format! Please try again. \u001B[0m");
         }
     }
 
@@ -443,7 +442,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new phone number is valid
                     if (!isValidPhone(newPhone)) {
-                        System.out.println("Invalid phone number format should be (digits only)");
+                        System.out.println("\u001B[31m Invalid phone number format should be (digits only) \u001B[0m");
                         return; // Exit the method if the phone number is invalid
                     }
 
@@ -459,7 +458,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Phone number updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31m Membership number not found \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating phone number: " + ex.getMessage());
@@ -482,7 +481,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new password is valid
                     if (!isValidPassword(newPassword)) {
-                        System.out.println("Invalid password format should be (6-20 characters)");
+                        System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
                         return; // Exit the method if the password is invalid
                     }
 
@@ -498,7 +497,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Password updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31mMembership Number not found! \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating password: " + ex.getMessage());

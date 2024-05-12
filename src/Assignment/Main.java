@@ -222,7 +222,7 @@ public class Main {
                                 case "3":
                                     break;
                                 default:
-                                    System.out.println("Invalid choice.");
+                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
                             }
 
                         }
@@ -336,7 +336,7 @@ public class Main {
                                                     break;
 
                                                 default:
-                                                    System.out.println("Invalid input!");
+                                                System.out.println("\u001B[31mInvalid Input.\u001B[0m");
                                             }
                                         }
 
@@ -393,8 +393,8 @@ public class Main {
                                                                 loyalty.updateMultiplier("Platinium", multiplier);
                                                                 break;
                                                             default:
-                                                                System.out.println("Error Selection");
-                                                                break;
+                                                            System.out.println("\u001B[31mError Selection!\u001B[0m");
+                                                            break;
                                                         }
                                                     }
                                                     break;
@@ -420,15 +420,15 @@ public class Main {
                                                                 validate = true;
 
                                                             } else {
-                                                                System.err.println("Invalid");
+                                                                System.err.println("\u001B[31mInvalid!\u001B[0m");
                                                             }
                                                         }
                                                     }
 
                                                     break;
                                                 default:
-                                                    System.out.println("Invalid choice!");
-                                                    break;
+                                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                                break;
                                             }
                                         }
                                     }
@@ -436,7 +436,7 @@ public class Main {
                                 case "3":
                                     break;
                                 default:
-                                    System.out.println("Invalid choice.");
+                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
                                 //displayLoginMenu();
                             }
 
@@ -458,7 +458,7 @@ public class Main {
                         endingPage.ending();
                         break;
                     default:
-                        System.out.println("Invalid choice.");
+                    System.out.println("\u001B[31mInvalid choice.\u001B[0m");
                     //displayMenu();
                 }
 
