@@ -1,8 +1,8 @@
-
 package Assignment;
 
 import javax.swing.JOptionPane;
 import java.awt.*;
+import java.util.Scanner;
 
 public class EndingPage {
     // ANSI escape codes for color
@@ -14,7 +14,7 @@ public class EndingPage {
         return ANSI_RED + str + ANSI_RESET;
     }
     
-    public void ending() throws InterruptedException {
+    public void ending() {
         // ASCII art
         String ending =
             "              ,n888888n,\n" +
@@ -34,7 +34,7 @@ public class EndingPage {
             "          /  / )   ~\\     ,888888/~' /  / / 8'\n" +
             "       .-(  / / / |) )-----------(/ ~  / /  |---.\n" +
             "______ | (   '    /_/ Mickey Mouse (__/     /   |_______\n" +
-            "\\      |   (_(_ ( /~ for President  \\___/_/'    |      /\n" +
+            "\\      |   (_(_ ( /~ For President  \\___/_/'    |      /\n" +
             " \\     |  Thanks to our Amazing Reward System ! |     /\n" +
             " /     (________________________________________)     \\\n" +
             "/__________)     __--|~mb  ,g8888b.         (__________\\\n" +
@@ -46,16 +46,14 @@ public class EndingPage {
             "              `\\          )  \"-_           `|\n" +
             "                \\__    __/      ~-__   __--~\n" +
             "                   ~~\"~             ~~~";
-
+    
         // Rainbowify the ASCII art with red color
         String redEnding = colorizeRed(ending);
         // Print red ASCII art
         System.out.println(redEnding);
-        // After printing the ASCII art, display a message dialog
-        EventQueue.invokeLater(() -> {
-            JOptionPane.showMessageDialog(null, "Thank you!", "Message", JOptionPane.INFORMATION_MESSAGE);
-            // Exit the program after the message dialog is closed
-            System.exit(0);
-        });
+        // Display JOptionPane
+        JOptionPane.showMessageDialog(null, "Thank you!", "Message", JOptionPane.INFORMATION_MESSAGE);
+        // Exit the program after the message dialog is closed
+        System.exit(0);
     }
 }
