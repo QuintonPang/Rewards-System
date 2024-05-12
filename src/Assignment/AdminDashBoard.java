@@ -309,7 +309,7 @@ public class AdminDashBoard {
             String line;
             System.out.printf("%-20s %-20s %-30s %-10s%n", "Date", "Time", "Redeemed Item", "Quantity");
             while ((line = reader.readLine()) != null) {
-                if (line.contains("Member No: " + memberNo)) {
+                if (line.contains("Member No: " + memberNo + ",")) {
                     String[] parts = line.split(", ");
                     String dateTime = parts[0].replace("Date: ", "");
                     String[] dateTimeParts = dateTime.split(" ");
