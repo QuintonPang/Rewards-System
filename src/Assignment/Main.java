@@ -84,6 +84,7 @@ public class Main {
         System.out.println("| 2. Redeem rewards                                    |");
         System.out.println("| 3. View Profile                                      |");
         System.out.println("| 4. Show my referees                                  |");
+        System.out.println("| 5. Customer Service                                  |");
         System.out.println("--------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
@@ -135,6 +136,7 @@ public class Main {
         System.out.println("| 6. User Activity Checking             |");
         System.out.println("| 7. Update TierMultiplier              |");
         System.out.println("| 8. Update Expiration Duration         |");
+        System.out.println("| 9. Live Server                        |");
         System.out.println("-----------------------------------------");
         System.out.print("  Enter your choice: ");
     }
@@ -334,6 +336,10 @@ public class Main {
                                                 case "4":
                                                     userAccount.showReferees();
                                                     break;
+                                                case "5":
+                                                Client client = new Client("127.0.0.1", 5000);
+                                                client.handleConnection();
+                                                break;
 
                                                 default:
                                                 System.out.println("\u001B[31mInvalid Input.\u001B[0m");
@@ -424,8 +430,12 @@ public class Main {
                                                             }
                                                         }
                                                     }
-
+                                                    case "9":
+                                                    Server server = new Server(5000);
+                                                    server.handleConnection();
                                                     break;
+
+                                            
                                                 default:
                                                 System.out.println("\u001B[31mInvalid choice.\u001B[0m");
                                                 break;
@@ -435,6 +445,8 @@ public class Main {
                                     break;
                                 case "3":
                                     break;
+                          
+
                                 default:
                                 System.out.println("\u001B[31mInvalid choice.\u001B[0m");
                                 //displayLoginMenu();
