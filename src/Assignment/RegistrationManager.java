@@ -25,19 +25,18 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RegistrationManager extends Account {
-    private static final String filename = "user.txt";
+    private static final String FILENAME = "user.txt";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_RESET = "\u001B[0m";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
 
     Policy policy = new Policy();
-    MemberDashBoard memberDashBoard = new MemberDashBoard();
     
  public void createAccountUser() {
 
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get(FILENAME);
             if (!Files.exists(path)) {
                 Files.createFile(path);
             }
@@ -137,18 +136,18 @@ public class RegistrationManager extends Account {
             writer.close();
 
             // Sort the user accounts based on username
-            sortUserAccountsByUsername(filename);
+            sortUserAccountsByUsername(FILENAME);
 
         } catch (IOException ex) {
             System.out.println("Error creating account: " + ex.getMessage());
         }
     }
 
-    private void sortUserAccountsByUsername(String filename) {
+    private void sortUserAccountsByUsername(String FILENAME) {
         try {
-            List<String> lines = Files.readAllLines(Paths.get(filename));
+            List<String> lines = Files.readAllLines(Paths.get(FILENAME));
             Collections.sort(lines); // Sort the lines
-            Files.write(Paths.get(filename), lines, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(Paths.get(FILENAME), lines, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException ex) {
             System.out.println("Error sorting user accounts: " + ex.getMessage());
         }
@@ -253,7 +252,7 @@ public class RegistrationManager extends Account {
     }
 
     private boolean isAlreadyRegistered(String username, String email, String phone) throws IOException {
-        Path path = Paths.get(filename);
+        Path path = Paths.get(FILENAME);
         if (Files.exists(path)) {
             try (Scanner fileScanner = new Scanner(path)) {
                 while (fileScanner.hasNextLine()) {
