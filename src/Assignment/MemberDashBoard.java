@@ -83,10 +83,6 @@ public class MemberDashBoard {
 
             System.out.println("Total: " + total);
 
-            System.out.println("Press any key to continue");
-
-            System.in.read(); // PAUSE THE PROGRAM UNTIL USER PRESSE
-
         } catch (FileNotFoundException e) {
             System.out.println("\u001B[31mError: user.txt not found!\u001B[0m");
             e.printStackTrace();

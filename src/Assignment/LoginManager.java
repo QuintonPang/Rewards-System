@@ -29,64 +29,6 @@ public class LoginManager {
         scanner = new Scanner(System.in);
     }
 
-    public boolean login() {
-        try {
-            Path path = Paths.get(filename);
-            InputStream input = Files.newInputStream(path);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            System.out.println("\n===========================================");
-            System.out.println("|                   Login                   |");
-            System.out.println("===========================================\n");
-            System.out.print("Enter your username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter your password: ");
-            String password = scanner.nextLine();
-            boolean loginSuccessful = false; // Flag to track login status
-            try {
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    String[] user = line.split(" ");
-                    if (user[0].equals(username) && user[3].equals(password)) {
-                        memberNo = user[4];
-                        // Additional logic if login is successful
-                        System.out.println("Login successful.");
-                        System.out.println("-------------------------------");
-                        // Direct to the user menu
-                        System.out.println("Press any key to continue...");
-                        loginSuccessful = true; // Set the flag to true upon successful login
-                        return loginSuccessful;
-                        //continue; 
-                    }
-                }
-                if (!loginSuccessful) { // Check login status before displaying invalid message
-                    boolean invalidInput = true;
-                    while (invalidInput) {
-                        System.out.println("\nInvalid username or password.");
-                        System.out.println("-------------------------------");
-                        return false;
-                    }
-                }
-            } catch (IOException ex) {
-                System.out.println("Error reading user accounts: " + ex.getMessage());
-            } finally {
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                    if (input != null) {
-                        input.close();
-                    }
-                } catch (IOException ex) {
-                    System.out.println("Error closing reader or input stream: " + ex.getMessage());
-                }
-            }
-        } catch (Exception ex) {
-            System.out.print(ex.getMessage());
-            ex.printStackTrace();
-            return false;
-        }
-        return false;
-    }
 
     public String getMemberNo() {
         return memberNo;
@@ -103,7 +45,7 @@ public class LoginManager {
             InputStream input = Files.newInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             System.out.println("\n===========================================");
-            System.out.println("|               Login (Staff)               |");
+            System.out.println("|               Login (Staff)              |");
             System.out.println("===========================================\n");
             System.out.print("Enter your username: ");
             String username = scanner.nextLine();
@@ -118,7 +60,7 @@ public class LoginManager {
                         found = true;
                         AdminInfo adminInfo = new AdminInfo(user[0], user[1], user[2], user[3], user[4]);
                         System.out.println("Login successful.");
-                        System.out.println("-------------------------------");
+                        System.out.println("-------------------------------\n");
                         return adminInfo;
                     }
                 }
@@ -156,7 +98,9 @@ public class LoginManager {
             Path path = Paths.get(filename);
             InputStream input = Files.newInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            System.out.println("\n Login \n");
+            System.out.println("\n===========================================");
+            System.out.println("|             Login (Customer)             |");
+            System.out.println("===========================================\n");
             System.out.print("Enter your username: ");
             String username = scanner.nextLine();
             System.out.print("Enter your password: ");
@@ -171,8 +115,6 @@ public class LoginManager {
                         // Additional logic if login is successful
                         System.out.println("Login successful.");
                         System.out.println("-------------------------------");
-                        // Direct to the user menu
-                        System.out.println("Press any key to continue...");
                         loginSuccessful = true; // Set the flag to true upon successful login
                         MemberInfo memberInfo = new MemberInfo(user[0], user[1], user[2], user[3], user[4], user[5]);
 

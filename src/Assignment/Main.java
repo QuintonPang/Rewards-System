@@ -77,10 +77,10 @@ public class Main {
         System.out.println("------------------------------");
         System.out.println("|         Start Menu         |");
         System.out.println("------------------------------");
+        System.out.println("| 0. Exit                    |");
         System.out.println("| 1. Create User Account     |");
         System.out.println("| 2. Login                   |");
         System.out.println("| 3. Forgot Password         |");
-        System.out.println("| 4. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
         }
@@ -89,9 +89,9 @@ public class Main {
         System.out.println("------------------------------");
         System.out.println("|       Register Menu        |");
         System.out.println("------------------------------");
+        System.out.println("| 0. Exit                    |");
         System.out.println("| 1. Customer Register       |");
         System.out.println("| 2. Admin Register          |");
-        System.out.println("| 3. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
     }
@@ -100,9 +100,9 @@ public class Main {
         System.out.println("------------------------------");
         System.out.println("|         Login Menu         |");
         System.out.println("------------------------------");
+        System.out.println("| 0. Exit                    |");
         System.out.println("| 1. Customer Login          |");
         System.out.println("| 2. Admin Login             |");
-        System.out.println("| 3. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
     }
@@ -154,7 +154,7 @@ public class Main {
                 switch (startMenuChoice) {
                     case "1":
                         registerMenuChoice = "";
-                        while (!registerMenuChoice.equals("3") && !registerMenuChoice.equals("exit")) {
+                        while (!registerMenuChoice.equals("0") && !registerMenuChoice.equals("exit")) {
                             printRegisterMenu();
                             registerMenuChoice = scanner.nextLine();
                             switch (registerMenuChoice) {
@@ -169,7 +169,7 @@ public class Main {
                                     registerMenuChoice = "exit";
                                     //continue handling
                                     break;
-                                case "3":
+                                case "0":
                                     break;
                                 default:
                                 System.out.println("\u001B[31mInvalid choice! \n\u001B[0m");
@@ -180,7 +180,7 @@ public class Main {
                         break;
                     case "2":
                         loginMenuChoice = "";
-                        while (!loginMenuChoice.equals("3") && !loginMenuChoice.equals("exit")) {
+                        while (!loginMenuChoice.equals("0") && !loginMenuChoice.equals("exit")) {
                             printLoginMenu();
                             loginMenuChoice = scanner.nextLine();
                             switch (loginMenuChoice) {
@@ -409,7 +409,7 @@ public class Main {
                                         }
                                     }
                                     break;
-                                case "3":
+                                case "0":
                                     break;
                           
 
@@ -432,7 +432,7 @@ public class Main {
 
                         break;
 
-                    case "4":
+                    case "0":
                         EndingPage endingPage = new EndingPage();
                         endingPage.ending();
                         break;
