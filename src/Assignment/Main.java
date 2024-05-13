@@ -74,98 +74,25 @@ public class Main {
         }
     }
 
-    // Main Reward System Menu
-    // Delete here , added in dashboard already
-    public static void printCustomerMainMenu() {
-        System.out.println("\n--------------------------------------------------------");
-        System.out.print("|           ");
-        System.out.print(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system " + ANSI_RESET);
-        System.out.println("            |");
-        System.out.println("--------------------------------------------------------");
-        System.out.println("| 0. Exit                                              |");
-        System.out.println("| 1. Earn rewards                                      |");
-        System.out.println("| 2. Redeem rewards                                    |");
-        System.out.println("| 3. View Profile                                      |");
-        System.out.println("| 4. Show my referees                                  |");
-        System.out.println("| 5. Customer Service                                  |");
-        System.out.println("--------------------------------------------------------");
-
-        System.out.print("Enter your choice: ");
-        // if (!scanner.hasNextLine()) {
-        // System.out.println("STOP");
-        // }
-
-        // remove 3report
-        // remove 6openg earning
-        // remove 7update expiration
-    }
-
     public static void printStartMenu() {
         System.out.println("------------------------------");
         System.out.println("|         Start Menu         |");
         System.out.println("------------------------------");
+        System.out.println("| 0. Exit                    |");
         System.out.println("| 1. Create User Account     |");
         System.out.println("| 2. Login                   |");
         System.out.println("| 3. Forgot Password         |");
-        System.out.println("| 4. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
-    }
-
-    // public static void printAdminMainMenu() {
-    // System.out.println("\n--------------------------------------------------------");
-    // System.out.println("| Admin Dashboard |");
-    // System.out.println("--------------------------------------------------------");
-    // System.out.println("| 1. Check Customer Details |");
-    // System.out.println("| 2. View all products |");
-    // System.out.println("| 3. Show Report |"); // Added option to show report
-    // System.out.println("| 4. View all reviews |");
-    // System.out.println("| 5. Open full earning history in external window |");
-    // System.out.println("| 6. Update Expiration Durations |");
-    // System.out.println("| 7. Logout |");
-    // System.out.println("--------------------------------------------------------");
-    // System.out.print("Enter your choice: ");
-    //
-    // }
-
-    // remove
-    public static void printAdminReportMenu() {
-        System.out.println("\n-----------------------------------------");
-        System.out.println("|              Report Menu              |");
-        System.out.println("-----------------------------------------");
-        System.out.println("| 1. View the most popular gift redeem  |");
-        System.out.println("| 2. View the least gift redeem         |");
-        System.out.println("| 3. User profile status                |");
-        System.out.println("-----------------------------------------");
-        System.out.print("Enter your choice: ");
-    }
-
-    // remove
-    public static void printAdminMainMenu() {
-        System.out.println("-----------------------------------------");
-        System.out.println("|            Admin Main Menu            |");
-        System.out.println("-----------------------------------------");
-        System.out.println("| 0. Exit                               |");
-        System.out.println("| 1. Check Customer Details             |");
-        System.out.println("| 2. View all products                  |");
-        System.out.println("| 3. Check Earning file                 |");
-        System.out.println("| 4. Top redeemed Item from customer    |");
-        System.out.println("| 5. Least redeemed Item from Customer  |");
-        System.out.println("| 6. User Activity Checking             |");
-        System.out.println("| 7. Update TierMultiplier              |");
-        System.out.println("| 8. Update Expiration Duration         |");
-        System.out.println("| 9. Live Server                        |");
-        System.out.println("-----------------------------------------");
-        System.out.print("  Enter your choice: ");
     }
 
     public static void printRegisterMenu() {
         System.out.println("------------------------------");
         System.out.println("|       Register Menu        |");
         System.out.println("------------------------------");
+        System.out.println("| 0. Exit                    |");
         System.out.println("| 1. Customer Register       |");
         System.out.println("| 2. Admin Register          |");
-        System.out.println("| 3. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
     }
@@ -174,9 +101,9 @@ public class Main {
         System.out.println("------------------------------");
         System.out.println("|         Login Menu         |");
         System.out.println("------------------------------");
+        System.out.println("| 0. Exit                    |");
         System.out.println("| 1. Customer Login          |");
         System.out.println("| 2. Admin Login             |");
-        System.out.println("| 3. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
     }
@@ -228,7 +155,7 @@ public class Main {
                 switch (startMenuChoice) {
                     case "1":
                         registerMenuChoice = "";
-                        while (!registerMenuChoice.equals("3") && !registerMenuChoice.equals("exit")) {
+                        while (!registerMenuChoice.equals("0") && !registerMenuChoice.equals("exit")) {
                             printRegisterMenu();
                             registerMenuChoice = scanner.nextLine();
                             switch (registerMenuChoice) {
@@ -243,7 +170,7 @@ public class Main {
                                     registerMenuChoice = "exit";
                                     // continue handling
                                     break;
-                                case "3":
+                                case "0":
                                     break;
                                 default:
                                     System.out.println("\u001B[31mInvalid choice! \n\u001B[0m");
@@ -254,7 +181,7 @@ public class Main {
                         break;
                     case "2":
                         loginMenuChoice = "";
-                        while (!loginMenuChoice.equals("3") && !loginMenuChoice.equals("exit")) {
+                        while (!loginMenuChoice.equals("0") && !loginMenuChoice.equals("exit")) {
                             printLoginMenu();
                             loginMenuChoice = scanner.nextLine();
                             switch (loginMenuChoice) {
@@ -266,24 +193,37 @@ public class Main {
                                         while (!customerMainMenuChoice.equals("0")
                                                 && !customerMainMenuChoice.equals("exit")) {
                                             member.printMemberMainMenu();
-                                            // printCustomerMainMenu();
                                             customerMainMenuChoice = scanner.nextLine();
                                             switch (customerMainMenuChoice) {
                                                 case "0":
                                                     break;
                                                 case "1":
-                                                    System.out.print("Enter your invoice NO.: ");
+                                                    System.out.print("Enter your invoice NO. (starting with ABC): ");
                                                     String invoiceNo = scanner.nextLine();
-                                                    System.out.print("Enter the total payment amount: ");
-                                                    int value = (int) (Math.round(
-                                                            Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM)
-                                                            * loyalty.getMultiplier(memberNo));
+
+                                                    // Validate and format the invoice number
+                                                    if (!invoiceNo.matches("ABC\\d{4,}")) {
+                                                        System.out.println("\u001B[31mInvalid invoice number format. It should start with ABC followed by 4 or more digits (e.g., ABC1234)\u001B[0m");
+                                                        continue; // Continue to prompt the user until a valid invoice number is provided
+                                                    }
+                                                    String paymentAmount;
+                                                    do {
+                                                        System.out.print("Enter the total payment amount: ");
+                                                        paymentAmount = scanner.nextLine();
+                                                        if (!isNumeric(paymentAmount)) {
+                                                            System.err.println("Please enter number only.");
+                                                        } else if (Double.parseDouble(paymentAmount) <= 0) {
+                                                            System.err.println("Please enter a positive number.");
+                                                        }
+                                                    } while (!isNumeric(paymentAmount) || Double.parseDouble(paymentAmount) <= 0);
+                                                    int value = (int) (Math.round(Double.parseDouble(paymentAmount) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
                                                     new Earning(invoiceNo, value, memberNo);
                                                     policy.updateExpiryDate();
                                                     System.out.println(
                                                             "You have earned a total of " + value + " points!");
                                                     System.out.print("\n");
                                                     break;
+
                                                 case "2":
                                                     List<Earning> earnings = CSVWrite.getAllEarnings();
 
@@ -336,14 +276,16 @@ public class Main {
                                                     System.out.print("Enter your choice:");
                                                     String redemptionChoice = scanner.nextLine();
 
-                                                    while (!isNumeric(redemptionChoice)
-                                                            || Integer.parseInt(redemptionChoice) < 1
-                                                            || Integer.parseInt(
-                                                                    redemptionChoice) > redemptionItems.length) {
+                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 2 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
                                                         System.out.println("Invalid input!");
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
+                                                    }
 
+                                                    System.out.println("Do you want to go back to the menu? (yes/no)");
+                                                    String backToMenuChoice = scanner.nextLine();
+                                                    if (backToMenuChoice.equalsIgnoreCase("yes")) {
+                                                        break;
                                                     }
 
                                                 {
@@ -472,8 +414,7 @@ public class Main {
                                                                 loyalty.updateMultiplier("Platinum", multiplier);
                                                                 break;
                                                             default:
-                                                                System.out
-                                                                        .println("\u001B[31mError Selection!\u001B[0m");
+                                                                System.out.println("\u001B[31mError Selection!\u001B[0m");
                                                                 break;
                                                         }
                                                     }
@@ -523,12 +464,12 @@ public class Main {
                                         }
                                     }
                                     break;
-                                case "3":
+                                case "0":
                                     break;
 
                                 default:
                                     System.out.println("\u001B[31mInvalid choice.\u001B[0m");
-                                    // displayLoginMenu();
+                                //displayLoginMenu();
                             }
 
                         }
@@ -545,13 +486,13 @@ public class Main {
 
                         break;
 
-                    case "4":
+                    case "0":
                         EndingPage endingPage = new EndingPage();
                         endingPage.ending();
                         break;
                     default:
                         System.out.println("\u001B[31mInvalid choice! \n \u001B[0m");
-                        // displayMenu();
+                    //displayMenu();
                 }
 
             }

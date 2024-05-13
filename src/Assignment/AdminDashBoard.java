@@ -30,9 +30,6 @@ public class AdminDashBoard {
 
     private static final String filename = "user.txt";
     private String memberNo;
-    Loyalty loyalty = new Loyalty();
-    Policy policy = new Policy();
-    MemberDashBoard userAccount = new MemberDashBoard();
 
     public void printAdminMainMenu() {
         System.out.println("-----------------------------------------");
@@ -62,102 +59,6 @@ public class AdminDashBoard {
         System.out.print("Enter your choice: ");
     }
 
-//    public void display() {
-//        System.out.println("\n Admin Dashboard \n");
-//        System.out.println("0 : Exit");
-//        System.out.println("1. Check Customer Details");
-//        System.out.println("2. View all products");
-//        System.out.println("3. Check Earning file");
-//        System.out.println("4. Top redeemed Item from customer");
-//        System.out.println("5. Least redeemed Item from Customer");
-//        System.out.println("6. User Activity Checking");
-//        System.out.println("7. Update TierMultiplier");
-//        System.out.println("8. Update Expiration Duration");
-//        System.out.print("  Enter your choice: ");
-//        Scanner scanner = new Scanner(System.in);
-//        int choice = scanner.nextInt();
-//
-//        switch (choice) {
-//            case 0:
-//                System.out.println("Exiting...");
-//                userAccount.displayMenu();
-//                break;
-//            case 1:
-//                checkCustomerDetails();
-//                break;
-//            case 2:
-//                // Call viewAllProducts() method
-//                viewAllProducts();
-//                display();
-//                break;
-//            case 3:
-//                checkEarningFile();
-//                display();
-//                break;
-//            case 4:
-//                displayTopRedeemedItem();
-//                display();
-//                break;
-//            case 5:
-//                displayLowRedeemedItem();
-//                display();
-//                break;
-//            case 6:
-//                ActivityTracking();
-//                display();
-//                break;
-//            case 7:
-//                loyalty.printTierMultipliers();
-//                scanner.nextLine();
-//                System.out.print("Enter the tier you want to modify: ");
-//                String tierChoice = scanner.nextLine();
-//                ;
-//                System.out.print("Enter the new multiplier: ");
-//                double multiplier = scanner.nextDouble();
-//
-//                switch (tierChoice) {
-//                    case "1":
-//                        loyalty.updateMultiplier("Bronze", multiplier);
-//                        break;
-//                    case "2":
-//                        loyalty.updateMultiplier("Silver", multiplier);
-//                        break;
-//                    case "3":
-//                        loyalty.updateMultiplier("Gold", multiplier);
-//                        break;
-//                    case "4":
-//                        loyalty.updateMultiplier("Platinium", multiplier);
-//                        break;
-//                    default:
-//                        System.out.println("Error Selection");
-//                        break;
-//                }
-//                display();
-//                break;
-//            case 8:
-//                String expiryMonths;
-//                boolean validate = false;
-//                while (!validate) {
-//                    scanner.nextLine();
-//                    System.out.println("Update the expiration durations in months (01-12)");
-//                    expiryMonths = scanner.nextLine();
-//                    if (policy.validateMonth(expiryMonths)) {
-//                        policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-//                        System.out.println("New expiration durations : " + policy.getExpiryMonths());
-//                        validate = true;
-//
-//                    } else {
-//                        System.err.println("Invalid");
-//                    }
-//
-//                }
-//                display();
-//                break;
-//            default:
-//                System.out.println("Invalid choice!");
-//        }
-//
-//    }
     public void checkCustomerDetails() {
         System.out.println("--------------------------------");
         System.out.println("View Customer Details");

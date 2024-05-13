@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
 import java.io.BufferedReader;
@@ -32,11 +29,6 @@ public class MemberDashBoard {
     // Declaring ANSI_RESET so that we can reset the color 
     public static final String ANSI_RESET = "\u001B[0m";
 
-//    public UserAccount() {
-//        super(null, null, null, null, null, null); // Set initial values to null
-//        scanner = new Scanner(System.in);
-//    }
-    //put in main
     public void printStartMenu() {
         System.out.println("------------------------------");
         System.out.println("|         Start Menu         |");
@@ -47,32 +39,6 @@ public class MemberDashBoard {
         System.out.println("| 4. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
-
-//        String choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1":
-//                displayRegisterUser();
-//                break;
-//            case "2":
-//                displayLoginMenu();
-//                break;
-//            case "3": {
-//                try {
-//                    forgot();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            break;
-//
-//            case "4":
-//                //System.exit(0);
-//                //  System.out.println("ran");
-//                break;
-//            default:
-//                System.out.println("Invalid choice.");
-//                displayMenu();
-//        }
     }
 
     public void printMemberMainMenu() {
@@ -89,77 +55,9 @@ public class MemberDashBoard {
         System.out.println("--------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
-//                if (!scanner.hasNextLine()) {
-//                    System.out.println("STOP");
-//                }
 
-        //remove 3report
-        //remove 6openg earning
-        //remove 7update expiration
     }
 
-    //menu for user and admin
-//    public void displayRegisterUser() {
-//        System.out.println("------------------------------");
-//        System.out.println("|         Main Menu          |");
-//        System.out.println("------------------------------");
-//        System.out.println("| 1. Customer Register       |");
-//        System.out.println("| 2. Admin Register          |");
-//        System.out.println("| 3. Exit                    |");
-//        System.out.println("------------------------------");
-//        System.out.print("Enter your choice: ");
-//
-//        String choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1":
-//                createAccount();
-//                break;
-//            case "2":
-//                RegistrationManager registrationManager = new RegistrationManager();
-//                registrationManager.createAccountStaff();
-//                break;
-//            case "3":
-//                displayMenu();
-//                break;
-//            default:
-//                System.out.println("Invalid choice.");
-//                displayRegisterUser();
-//        }
-//    }
-//    public void displayLoginMenu() {
-//        System.out.println("------------------------------");
-//        System.out.println("|         Main Menu          |");
-//        System.out.println("------------------------------");
-//        System.out.println("| 1. Customer Login          |");
-//        System.out.println("| 2. Admin Login             |");
-//        System.out.println("| 3. Exit                    |");
-//        System.out.println("------------------------------");
-//        System.out.print("Enter your choice: ");
-//
-//        String choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1":
-//                login();
-//                break;
-//            case "2":
-//                LoginManager loginManager = new LoginManager();
-//                loginManager.loginStaff();
-//                memberNo = loginManager.getMemberNo();
-//                break;
-//            case "3":
-//                displayMenu();
-//                break;
-//            default:
-//                System.out.println("Invalid choice.");
-//                displayLoginMenu();
-//        }
-//    }
-//    @Override
-//    public void createAccount() {
-//        RegistrationManager registrationManager = new RegistrationManager();
-//        registrationManager.createAccountUser();
-//        memberNo = registrationManager.getMemberNo();
-//    }
     public void showReferees() {
 
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
@@ -185,10 +83,6 @@ public class MemberDashBoard {
 
             System.out.println("Total: " + total);
 
-            System.out.println("Press any key to continue");
-
-            System.in.read(); // PAUSE THE PROGRAM UNTIL USER PRESSE
-
         } catch (FileNotFoundException e) {
             System.out.println("\u001B[31mError: user.txt not found!\u001B[0m");
             e.printStackTrace();
@@ -199,17 +93,6 @@ public class MemberDashBoard {
 
     }
 
-//    public boolean login() {
-//        LoginManager loginManager = new LoginManager();
-//        if (loginManager.login()) {
-//            memberNo = loginManager.getMemberNo();
-//            return true;
-//        } else {
-//            return false;
-//        }
-//
-//    }
-    //Put in Member.java
     public void forgot() throws IOException {
 
         System.out.println("\n Forgot Password \n");

@@ -11,8 +11,6 @@ public class Account  {
   private String email;
   private String phone;
   private String password;
-  //private String membershipNumber;
-  //private Account referrer;
 
   public Account(String username, String email, String phone, String password) {
       this.username = username;
@@ -25,14 +23,7 @@ public class Account  {
       
   }
 
-//  public Account getReferrer() {
-//      return referrer;
-//  }
 
-//  public void setReferrer(Account referrer) {
-//      this.referrer = referrer;
-//  }
-  
   // Getters and setters
   public String getUsername() {
       return username;
@@ -77,42 +68,12 @@ public class Account  {
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
 
-//        String choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1":
-//                displayRegisterUser();
-//                break;
-//            case "2":
-//                displayLoginMenu();
-//                break;
-//            case "3": {
-//                try {
-//                    forgot();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            break;
-//
-//            case "4":
-//                //System.exit(0);
-//                //  System.out.println("ran");
-//                break;
-//            default:
-//                System.out.println("Invalid choice.");
-//                displayMenu();
-//        }
+
     }
   
 }
 
-//  public String getMembershipNumber() {
-//      return membershipNumber;
-//  }
-//
-//  public void setMembershipNumber(String membershipNumber) {
-//      this.membershipNumber = membershipNumber;
-//  }
+
 
 
   
