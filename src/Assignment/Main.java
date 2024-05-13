@@ -274,15 +274,35 @@ public class Main {
                                                         break;
                                                     }
 
-                                                    System.out.print("Enter your choice:");
-                                                    String redemptionChoice = scanner.nextLine();
+                                                    String redemptionChoice = " ";
 
-                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
-                                                        System.out.println("Invalid input!");
+                                                    while (true) {
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
-
+                                                    
+                                                        if (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
+                                                            System.out.println("Invalid input!");
+                                                            System.out.print("Do you want to go back to the menu? (Y/N): ");
+                                                            String backToMenuChoice = scanner.nextLine();
+                                                            while (!backToMenuChoice.equalsIgnoreCase("Y") && !backToMenuChoice.equalsIgnoreCase("N")) {
+                                                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                                                System.out.print("Do you want to go back to the menu? (Y/N): ");
+                                                                backToMenuChoice = scanner.nextLine();
+                                                            }
+                                                        
+                                                            if (backToMenuChoice.equalsIgnoreCase("Y")) {
+                                                                // Assuming member.printMemberMainMenu() takes the user back to the main menu
+                                                                member.printMemberMainMenu();
+                                                                break; // Exit the redemption loop
+                                                            }
+                                                        }
+                                                    
+                                                        // Handle the valid redemption choice here
+                                                    
+                                                       
                                                     }
+                                                    
+                                                  
 
                                                 {
                                                     try {
