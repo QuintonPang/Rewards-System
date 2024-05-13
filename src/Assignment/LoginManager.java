@@ -34,7 +34,9 @@ public class LoginManager {
             Path path = Paths.get(filename);
             InputStream input = Files.newInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            System.out.println("\n Login \n");
+            System.out.println("\n===========================================");
+            System.out.println("|                   Login                   |");
+            System.out.println("===========================================\n");
             System.out.print("Enter your username: ");
             String username = scanner.nextLine();
             System.out.print("Enter your password: ");
@@ -181,7 +183,9 @@ public class LoginManager {
             Path path = Paths.get("staff.txt");
             InputStream input = Files.newInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            System.out.println("\n Login Staff \n");
+            System.out.println("\n===========================================");
+            System.out.println("|               Login (Staff)               |");
+            System.out.println("===========================================\n");
             System.out.print("Enter your username: ");
             String username = scanner.nextLine();
             System.out.print("Enter your password: ");
