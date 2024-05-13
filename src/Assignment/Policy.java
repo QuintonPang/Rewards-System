@@ -65,7 +65,6 @@ public class Policy {
                     // Write the updated line to the output file
                     writer.write(updatedLine);
                     writer.newLine();
-                    System.out.println("Date updated successfully for the last record.");
                 } else {
                     // Handle malformed last line
                     System.out.println("Malformed last line: " + lastLine);

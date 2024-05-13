@@ -26,6 +26,8 @@ import java.util.Scanner;
 
 public class RegistrationManager extends Account {
     private static final String filename = "user.txt";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_RESET = "\u001B[0m";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
 
@@ -123,6 +125,9 @@ public class RegistrationManager extends Account {
             int randomNumber = random.nextInt(10000);
             memberNo = "ABC" + String.format("%04d", randomNumber);
             System.out.println("Your membership number is: " + memberNo);
+
+            //Account creation message
+            System.out.println(ANSI_GREEN + "\nAccount Creation\n" + ANSI_RESET);
 
             // Write the user account details to the file
             writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + referrer);
