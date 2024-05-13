@@ -38,3 +38,4 @@ Date: 2024-05-14 00:18:05, Member No: ABC5558, Redeemed Item: Toothpaste, Quanti
 Date: 2024-05-14 00:18:13, Member No: ABC5558, Redeemed Item: Year end sale voucher, Quantity: 1
 Date: 2024-05-14 00:18:18, Member No: ABC5558, Redeemed Item: Gold voucher, Quantity: 1
 Date: 2024-05-14 00:18:21, Member No: ABC5558, Redeemed Item: Shampoo, Quantity: 1
+Date: 2024-05-14 01:09:42, Member No: ABC9550, Redeemed Item: Umbrella, Quantity: 1

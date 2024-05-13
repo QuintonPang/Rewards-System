@@ -72,31 +72,6 @@ public class Main {
         }
     }
 
-    //Main Reward System Menu
-    //Delete here , added in dashboard already
-    public static void printCustomerMainMenu() {
-        System.out.println("\n--------------------------------------------------------");
-        System.out.print("|           ");
-        System.out.print(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system " + ANSI_RESET);
-        System.out.println("            |");
-        System.out.println("--------------------------------------------------------");
-        System.out.println("| 0. Exit                                              |");
-        System.out.println("| 1. Earn rewards                                      |");
-        System.out.println("| 2. Redeem rewards                                    |");
-        System.out.println("| 3. View Profile                                      |");
-        System.out.println("| 4. Show my referees                                  |");
-        System.out.println("| 5. Customer Service                                  |");
-        System.out.println("--------------------------------------------------------");
-
-        System.out.print("Enter your choice: ");
-//                if (!scanner.hasNextLine()) {
-//                    System.out.println("STOP");
-//                }
-
-        //remove 3report
-        //remove 6openg earning
-        //remove 7update expiration
-    }
     
         public static void printStartMenu() {
         System.out.println("------------------------------");
@@ -109,53 +84,6 @@ public class Main {
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
         }
-
-//    public static void printAdminMainMenu() {
-//        System.out.println("\n--------------------------------------------------------");
-//        System.out.println("|                  Admin Dashboard                     |");
-//        System.out.println("--------------------------------------------------------");
-//        System.out.println("| 1. Check Customer Details                            |");
-//        System.out.println("| 2. View all products                                 |");
-//        System.out.println("| 3. Show Report                                       |"); // Added option to show report
-//        System.out.println("| 4. View all reviews                                  |");
-//        System.out.println("| 5. Open full earning history in external window      |");
-//        System.out.println("| 6. Update Expiration Durations                       |");
-//        System.out.println("| 7. Logout                                            |");
-//        System.out.println("--------------------------------------------------------");
-//        System.out.print("Enter your choice: ");
-//
-//    }
-        
-        //remove
-    public static void printAdminReportMenu() {
-        System.out.println("\n-----------------------------------------");
-        System.out.println("|              Report Menu              |");
-        System.out.println("-----------------------------------------");
-        System.out.println("| 1. View the most popular gift redeem  |");
-        System.out.println("| 2. View the least gift redeem         |");
-        System.out.println("| 3. User profile status                |");
-        System.out.println("-----------------------------------------");
-        System.out.print("Enter your choice: ");
-    }
-
-    //remove
-    public static void printAdminMainMenu() {
-        System.out.println("-----------------------------------------");
-        System.out.println("|            Admin Main Menu            |");
-        System.out.println("-----------------------------------------");
-        System.out.println("| 0. Exit                               |");
-        System.out.println("| 1. Check Customer Details             |");
-        System.out.println("| 2. View all products                  |");
-        System.out.println("| 3. Check Earning file                 |");
-        System.out.println("| 4. Top redeemed Item from customer    |");
-        System.out.println("| 5. Least redeemed Item from Customer  |");
-        System.out.println("| 6. User Activity Checking             |");
-        System.out.println("| 7. Update TierMultiplier              |");
-        System.out.println("| 8. Update Expiration Duration         |");
-        System.out.println("| 9. Live Server                        |");
-        System.out.println("-----------------------------------------");
-        System.out.print("  Enter your choice: ");
-    }
 
     public static void printRegisterMenu() {
         System.out.println("------------------------------");
@@ -263,7 +191,7 @@ public class Main {
                                         customerMainMenuChoice = "";
                                         while (!customerMainMenuChoice.equals("0") && !customerMainMenuChoice.equals("exit")) {
                                             member.printMemberMainMenu();
-                                            //printCustomerMainMenu();
+                                            
                                             customerMainMenuChoice = scanner.nextLine();
                                             switch (customerMainMenuChoice) {
                                                 case "0":
@@ -271,8 +199,18 @@ public class Main {
                                                 case "1":
                                                     System.out.print("Enter your invoice NO.: ");
                                                     String invoiceNo = scanner.nextLine();
-                                                    System.out.print("Enter the total payment amount: ");
-                                                    int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
+                                                    String paymentAmount;
+                                                    do {     
+                                                        System.out.print("Enter the total payment amount: ");
+                                                        paymentAmount = scanner.nextLine();
+                                                        if(!isNumeric(paymentAmount)){
+                                                            System.err.println("Please enter number only.");
+                                                        }else if(Double.parseDouble(paymentAmount) <= 0){
+                                                            System.err.println("Please enter a positive number.");
+                                                        }
+                                                    } while (!isNumeric(paymentAmount) || Double.parseDouble(paymentAmount) <= 0);
+                                                    
+                                                    int value = (int) (Math.round(Double.parseDouble(paymentAmount) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
                                                     new Earning(invoiceNo, value, memberNo);
                                                     policy.updateExpiryDate();
                                                     System.out.println("You have earned a total of " + value + " points!");
