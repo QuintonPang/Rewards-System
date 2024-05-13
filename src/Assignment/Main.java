@@ -212,8 +212,6 @@ public class Main {
         String customerMainMenuChoice = "";
         String adminMainMenuCHoice = "";
         
-        
-        
 
         String memberNo = "";
 
@@ -336,6 +334,12 @@ public class Main {
                                                         System.out.println("Invalid input!");
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
+                                                    }
+
+                                                    System.out.println("Do you want to go back to the menu? (yes/no)");
+                                                    String backToMenuChoice = scanner.nextLine();
+                                                    if (backToMenuChoice.equalsIgnoreCase("yes")) {
+                                                        break;
                                                     }
                                                     
 
