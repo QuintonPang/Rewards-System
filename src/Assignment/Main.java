@@ -192,25 +192,24 @@ public class Main {
                                                 case "0":
                                                     break;
                                                 case "1":
-                                                    System.out.print("Enter your invoice NO.: ");
-                                                    String invoiceNo = scanner.nextLine();
-                                                    String paymentAmount;
-                                                    do {
-                                                        System.out.print("Enter the total payment amount: ");
-                                                        paymentAmount = scanner.nextLine();
-                                                        if (!isNumeric(paymentAmount)) {
-                                                            System.err.println("Please enter number only.");
-                                                        } else if (Double.parseDouble(paymentAmount) <= 0) {
-                                                            System.err.println("Please enter a positive number.");
-                                                        }
-                                                    } while (!isNumeric(paymentAmount) || Double.parseDouble(paymentAmount) <= 0);
-
-                                                    int value = (int) (Math.round(Double.parseDouble(paymentAmount) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
-                                                    new Earning(invoiceNo, value, memberNo);
-                                                    policy.updateExpiryDate();
-                                                    System.out.println("You have earned a total of " + value + " points!");
-                                                    System.out.print("\n");
-                                                    break;
+                                                System.out.print("Enter your invoice NO. (starting with ABC): ");
+                                                String invoiceNo = scanner.nextLine();
+                                                
+                                                // Validate and format the invoice number
+                                                if (!invoiceNo.matches("ABC\\d{4,}")) {
+                                                    System.out.println("\u001B[31mInvalid invoice number format. It should start with ABC followed by 4 or more digits (e.g., ABC1234)\u001B[0m");
+                                                    continue; // Continue to prompt the user until a valid invoice number is provided
+                                                }
+                                                
+                                                
+                                                System.out.print("Enter the total payment amount: ");
+                                                int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
+                                                new Earning(invoiceNo, value, memberNo);
+                                                policy.updateExpiryDate();
+                                                System.out.println("You have earned a total of " + value + " points!");
+                                                System.out.print("\n");
+                                                break;
+                                                
                                                 case "2":
                                                     List<Earning> earnings = CSVWrite.getAllEarnings();
 
@@ -256,12 +255,18 @@ public class Main {
                                                     System.out.print("Enter your choice:");
                                                     String redemptionChoice = scanner.nextLine();
 
-                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
+                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 2 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
                                                         System.out.println("Invalid input!");
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
-
                                                     }
+
+                                                    System.out.println("Do you want to go back to the menu? (yes/no)");
+                                                    String backToMenuChoice = scanner.nextLine();
+                                                    if (backToMenuChoice.equalsIgnoreCase("yes")) {
+                                                        break;
+                                                    }
+                                                    
 
                                                      {
                                                         try {

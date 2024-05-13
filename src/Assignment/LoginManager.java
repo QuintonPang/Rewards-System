@@ -113,8 +113,9 @@ public class LoginManager {
                     if (user[0].equals(username) && user[3].equals(password)) {
                         memberNo = user[4];
                         // Additional logic if login is successful
-                        System.out.println("Login successful.");
-                        System.out.println("-------------------------------");
+                        System.out.println("\nLogin successful");
+                        System.out.println("-------------------------------\n");
+                        // Direct to the user menu
                         loginSuccessful = true; // Set the flag to true upon successful login
                         MemberInfo memberInfo = new MemberInfo(user[0], user[1], user[2], user[3], user[4], user[5]);
 
