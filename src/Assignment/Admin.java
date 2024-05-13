@@ -81,9 +81,6 @@ public class Admin extends Account {
         return loginManager.getStaffNo();
     }
     
-    public void setUsername(){
-        
-    }
     
     public static void main(String[] args) {
         Admin admin = new Admin();

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author munchun
  */
-public class AdminDashBoard{
+public class AdminDashBoard {
 
     private static final String filename = "user.txt";
     private String memberNo;
@@ -50,7 +50,7 @@ public class AdminDashBoard{
         System.out.println("-----------------------------------------");
         System.out.print("  Enter your choice: ");
     }
-    
+
     public void printAdminReportMenu() {
         System.out.println("\n-----------------------------------------");
         System.out.println("|              Report Menu              |");
@@ -177,12 +177,9 @@ public class AdminDashBoard{
                     System.out.println("Membership Number: " + user[4]);
 
                     // Extract current value from earning.csv
-                    String currentValue = getCurrentValueFromCSV();
-                    if (currentValue != null) {
+                    int currentValue = getCurrentValueFromCSV();
                         System.out.println("Current Value: " + currentValue);
-                    } else {
-                        System.out.println("Current value not found.");
-                    }
+
 
                     break;
                 }
@@ -194,22 +191,27 @@ public class AdminDashBoard{
         }
     }
 
-    public String getCurrentValueFromCSV() {
+    public int getCurrentValueFromCSV() {
+        int currentValue = 0;
         try (BufferedReader csvReader = new BufferedReader(new FileReader("earning.csv"))) {
             String row;
             // Skip header row
             csvReader.readLine();
             // Read the next row containing the current value
-            if ((row = csvReader.readLine()) != null) {
+            while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
-                // Assuming the current value is the third column
-                return data[2].trim();
+                if(data[0].equals(memberNo)){
+                    currentValue += (Integer.parseInt(data[2]));
+                }
+                
+
             }
         } catch (IOException e) {
             System.out.println("Error reading earning.csv: " + e.getMessage());
             e.printStackTrace();
         }
-        return null;
+        
+        return currentValue;
     }
 
     public static void open(File document) throws IOException {

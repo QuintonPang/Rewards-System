@@ -370,7 +370,7 @@ public class Main {
                                     }
                                     break;
                                 case "2":
-                                    if (true) {//loginManager.loginStaff()
+                                    if (admin.login()) {
                                         adminMainMenuCHoice = "";
                                         while (!adminMainMenuCHoice.equals("0") && !adminMainMenuCHoice.equals("exit")) {
                                             admin.printAdminMainMenu();
