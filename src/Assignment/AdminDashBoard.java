@@ -60,32 +60,40 @@ public class AdminDashBoard {
     }
 
     public void checkCustomerDetails() {
+        System.out.println("--------------------------------");
         System.out.println("View Customer Details");
+                    System.out.println("--------------------------------");
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
             Scanner scanner = new Scanner(System.in);
+            
+
             System.out.print("Enter membership number: ");
             memberNo = scanner.nextLine();
+            System.out.println("");
+
 
             String line;
 
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
                 if (user.length >= 5 && user[4].equals(memberNo)) {
+                    
                     System.out.println("Username: " + user[0]);
                     System.out.println("Email: " + user[1]);
                     System.out.println("Phone: " + user[2]);
                     System.out.println("Membership Number: " + user[4]);
+                    
 
                     // Extract current value from earning.csv
                     int currentValue = getCurrentValueFromCSV();
                         System.out.println("Current Value: " + currentValue);
-
+                        System.out.println("");
 
                     break;
                 }
             }
-            System.out.println("Customer details not found for membership number: " + memberNo);
+
         } catch (Exception e) {
             System.out.println("Error viewing customer details: " + e.getMessage());
             e.printStackTrace();
@@ -152,6 +160,7 @@ public class AdminDashBoard {
                 System.out.printf("| %-28s | %-18d |%n", entry.getKey(), entry.getValue());
                 System.out.println("-----------------------------------------------------");
             }
+            System.out.println();
 
         } catch (IOException e) {
             System.out.println("Error reading redemptionHistory.txt: " + e.getMessage());
@@ -213,8 +222,10 @@ public class AdminDashBoard {
 
         List<Map.Entry<String, Integer>> list = new ArrayList<>(redeemedItems.entrySet());
         list.sort(Map.Entry.comparingByValue());
-
-        System.out.println("3 least redeemed items:");
+        
+        System.out.println("-------------------------");
+        System.out.println("Top 3 least redeemed items:");
+        System.out.println("-------------------------");
         for (int i = 0; i < Math.min(list.size(), 3); i++) {
             System.out.println((i + 1) + ". " + list.get(i).getKey());
         }
@@ -228,7 +239,9 @@ public class AdminDashBoard {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("redemptionHistory.txt"));
             String line;
+            System.out.println("---------------------------------------------------------------------------------");
             System.out.printf("%-20s %-20s %-30s %-10s%n", "Date", "Time", "Redeemed Item", "Quantity");
+            System.out.println("---------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {
                 if (line.contains("Member No: " + memberNo + ",")) {
                     String[] parts = line.split(", ");
@@ -241,6 +254,7 @@ public class AdminDashBoard {
                     System.out.printf("%-20s %-20s %-30s %-10s %n", date, time, itemName, quantity);
                 }
             }
+            System.out.println("---------------------------------------------------------------------------------");
             reader.close();
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file.");
