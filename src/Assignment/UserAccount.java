@@ -323,7 +323,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                 break;
             default:
-                System.out.println("Invalid choice.");
+                System.out.println("Invalid choice!\n");
                 updateAccount(memberNo); // Pass membershipNumber to recursive call
         }
     }
@@ -359,7 +359,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new username is valid
                     if (!isValidUsername(newUsername)) {
-                        System.out.println("\u001B[31m Invalid username format should be (6-20 characters, no special characters)! \u001B[0m");
+                        System.out.println("\u001B[31m Invalid username format should be (6-20 characters && no special characters)! \u001B[0m");
                         return; // Exit the method if the username is invalid
                     }
 
@@ -394,7 +394,7 @@ public class UserAccount extends Account implements AccountOperations {
                 if (user.length >= 5 && user[4].equals(membershipNumber)) {
                     String newEmail = promptForValidEmail(); // Validate and get new email from user input
                     if (newEmail == null) {
-                        System.out.println("\u001B[31m Invalid email format! Email not updated. \u001B[0m");
+                        System.out.println("\u001B[31m Invalid email format! Email not updated! \u001B[0m");
                         return; // Exit if the user input is invalid
                     }
 
@@ -423,7 +423,7 @@ public class UserAccount extends Account implements AccountOperations {
             if (isValidEmail(newEmail)) {
                 return newEmail;
             }
-            System.out.println("\u001B[31m Invalid email format! Please try again. \u001B[0m");
+            System.out.println("\u001B[31m Invalid email format! Please try again! \u001B[0m");
         }
     }
 
@@ -442,7 +442,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new phone number is valid
                     if (!isValidPhone(newPhone)) {
-                        System.out.println("\u001B[31m Invalid phone number format should be (digits only) \u001B[0m");
+                        System.out.println("\u001B[31m Invalid phone number format should be (digits only)! \u001B[0m");
                         return; // Exit the method if the phone number is invalid
                     }
 

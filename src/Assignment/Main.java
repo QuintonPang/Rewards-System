@@ -224,7 +224,7 @@ public class Main {
                                 case "3":
                                     break;
                                 default:
-                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                System.out.println("\u001B[31mInvalid choice! \n\u001B[0m");
                             }
 
                         }
@@ -470,7 +470,7 @@ public class Main {
                         endingPage.ending();
                         break;
                     default:
-                    System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                    System.out.println("\u001B[31mInvalid choice! \n \u001B[0m");
                     //displayMenu();
                 }
 
