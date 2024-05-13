@@ -73,6 +73,7 @@ public class Main {
     }
 
     //Main Reward System Menu
+    //Delete here , added in dashboard already
     public static void printCustomerMainMenu() {
         System.out.println("\n--------------------------------------------------------");
         System.out.print("|           ");
@@ -95,6 +96,18 @@ public class Main {
         //remove 6openg earning
         //remove 7update expiration
     }
+    
+        public static void printStartMenu() {
+        System.out.println("------------------------------");
+        System.out.println("|         Start Menu         |");
+        System.out.println("------------------------------");
+        System.out.println("| 1. Create User Account     |");
+        System.out.println("| 2. Login                   |");
+        System.out.println("| 3. Forgot Password         |");
+        System.out.println("| 4. Exit                    |");
+        System.out.println("------------------------------");
+        System.out.print("Enter your choice: ");
+        }
 
 //    public static void printAdminMainMenu() {
 //        System.out.println("\n--------------------------------------------------------");
@@ -111,6 +124,8 @@ public class Main {
 //        System.out.print("Enter your choice: ");
 //
 //    }
+        
+        //remove
     public static void printAdminReportMenu() {
         System.out.println("\n-----------------------------------------");
         System.out.println("|              Report Menu              |");
@@ -122,6 +137,7 @@ public class Main {
         System.out.print("Enter your choice: ");
     }
 
+    //remove
     public static void printAdminMainMenu() {
         System.out.println("-----------------------------------------");
         System.out.println("|            Admin Main Menu            |");
@@ -175,8 +191,8 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        AccountOperations userAccount; // Use the interface type
-        userAccount = new UserAccount();
+        //AccountOperations userAccount; // Use the interface type
+        //userAccount = new MemberDashBoard();
         //userAccount.displayMenu();
 
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
@@ -185,23 +201,25 @@ public class Main {
         boolean validate = false;
         Loyalty loyalty = new Loyalty();
         Policy policy = new Policy();
+        Admin admin = new Admin();
+        Member member = new Member();
         String expiryMonths;
         String startMenuChoice = "";
         String registerMenuChoice = "";
         String loginMenuChoice = "";
         String customerMainMenuChoice = "";
         String adminMainMenuCHoice = "";
-        LoginManager loginManager = new LoginManager();
-        AdminDashBoard adminDashBoard = new AdminDashBoard();
-        RegistrationManager registrationManager = new RegistrationManager();
+        
+        
+        
 
-        String memberNo = userAccount.getMemberNo();
+        String memberNo = "";
 
         //System.out.println("MemberNo: " + memberNo); //Checking purpose, remove before submit
         while (isRunning) {
             startMenuChoice = "";
             while (!startMenuChoice.equals("0")) {
-                userAccount.printStartMenu();
+                printStartMenu();
                 startMenuChoice = scanner.nextLine();
                 switch (startMenuChoice) {
                     case "1":
@@ -211,11 +229,13 @@ public class Main {
                             registerMenuChoice = scanner.nextLine();
                             switch (registerMenuChoice) {
                                 case "1":
-                                    userAccount.createAccount();
+                                    member.createAccount();
+                                    //userAccount.createAccount();
                                     registerMenuChoice = "exit";
                                     break;
                                 case "2":
-                                    registrationManager.createAccountStaff();
+                                    admin.createAccount();
+                                    //registrationManager.createAccountStaff();
                                     registerMenuChoice = "exit";
                                     //continue handling
                                     break;
@@ -235,12 +255,13 @@ public class Main {
                             loginMenuChoice = scanner.nextLine();
                             switch (loginMenuChoice) {
                                 case "1":
-                                    if (userAccount.login()) {
-                                        memberNo = userAccount.getMemberNo();
+                                    if (member.login()) {
+                                        memberNo = member.getMemberNo();
                                         //System.out.println("MemberNo in login : " + memberNo);
                                         customerMainMenuChoice = "";
                                         while (!customerMainMenuChoice.equals("0") && !customerMainMenuChoice.equals("exit")) {
-                                            printCustomerMainMenu();
+                                            member.printMemberMainMenu();
+                                            //printCustomerMainMenu();
                                             customerMainMenuChoice = scanner.nextLine();
                                             switch (customerMainMenuChoice) {
                                                 case "0":
@@ -329,10 +350,10 @@ public class Main {
                                                     break;
 
                                                 case "3":
-                                                    userAccount.viewProfile();
+                                                    member.viewProfile();
                                                     break;
                                                 case "4":
-                                                    userAccount.showReferees();
+                                                    member.showReferees();
                                                     break;
 
                                                 default:
@@ -343,31 +364,38 @@ public class Main {
                                     }
                                     break;
                                 case "2":
-                                    if (loginManager.loginStaff()) {
+                                    if (true) {//loginManager.loginStaff()
                                         adminMainMenuCHoice = "";
                                         while (!adminMainMenuCHoice.equals("0") && !adminMainMenuCHoice.equals("exit")) {
-                                            printAdminMainMenu();
+                                            admin.printAdminMainMenu();
+                                            //printAdminMainMenu();
                                             adminMainMenuCHoice = scanner.nextLine();
                                             switch (adminMainMenuCHoice) {
                                                 case "0":
                                                     break;
                                                 case "1":
-                                                    adminDashBoard.checkCustomerDetails();
+                                                    admin.checkCustomerDetails();
+                                                    //adminDashBoard.checkCustomerDetails();
                                                     break;
                                                 case "2":
-                                                    adminDashBoard.viewAllProducts();
+                                                    admin.viewAllProducts();
+                                                    //adminDashBoard.viewAllProducts();
                                                     break;
                                                 case "3":
-                                                    adminDashBoard.checkEarningFile();
+                                                    admin.checkEarningFile();
+                                                    //adminDashBoard.checkEarningFile();
                                                     break;
                                                 case "4":
-                                                    adminDashBoard.displayTopRedeemedItem();
+                                                    admin.displayTopRedeemedItem();
+                                                    //adminDashBoard.displayTopRedeemedItem();
                                                     break;
                                                 case "5":
-                                                    adminDashBoard.displayLowRedeemedItem();
+                                                    admin.displayLowRedeemedItem();
+                                                    //adminDashBoard.displayLowRedeemedItem();
                                                     break;
                                                 case "6":
-                                                    adminDashBoard.ActivityTracking();
+                                                    admin.ActivityTracking();
+                                                    //adminDashBoard.ActivityTracking();
                                                     break;
                                                 case "7":
                                                     loyalty.printTierMultipliers();
@@ -446,9 +474,10 @@ public class Main {
 
                     case "3":
                         try {
-                            userAccount.forgot();
+                            member.forgot();
+                            //userAccount.forgot();//member.forgot()
                         } catch (IOException ex) {
-                            Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(MemberDashBoard.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         break;

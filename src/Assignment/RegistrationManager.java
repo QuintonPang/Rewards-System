@@ -30,7 +30,7 @@ public class RegistrationManager {
     String memberNo;
     
     Policy policy = new Policy();
-    UserAccount useraccount = new UserAccount();
+    MemberDashBoard useraccount = new MemberDashBoard();
     
  public void createAccountUser() {
         try {

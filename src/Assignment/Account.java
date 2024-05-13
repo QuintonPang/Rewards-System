@@ -5,35 +5,33 @@
 package Assignment;
 
 
-public abstract class Account  {
+public class Account  {
 
   private String username;
   private String email;
   private String phone;
   private String password;
-  private String membershipNumber;
-  private Account referrer;
+  //private String membershipNumber;
+  //private Account referrer;
 
-  public Account(String username, String email, String phone, String password, String membershipNumber,Account referrer) {
+  public Account(String username, String email, String phone, String password) {
       this.username = username;
       this.email = email;
       this.phone = phone;
       this.password = password;
-      this.membershipNumber = membershipNumber;
-      this.referrer = referrer;
   }
   
   public Account(){
       
   }
 
-  public Account getReferrer() {
-      return referrer;
-  }
+//  public Account getReferrer() {
+//      return referrer;
+//  }
 
-  public void setReferrer(Account referrer) {
-      this.referrer = referrer;
-  }
+//  public void setReferrer(Account referrer) {
+//      this.referrer = referrer;
+//  }
   
   // Getters and setters
   public String getUsername() {
@@ -67,17 +65,55 @@ public abstract class Account  {
   public void setPassword(String password) {
       this.password = password;
   }
+  
+      public void printStartMenu() {
+        System.out.println("------------------------------");
+        System.out.println("|         Start Menu         |");
+        System.out.println("------------------------------");
+        System.out.println("| 1. Create User Account     |");
+        System.out.println("| 2. Login                   |");
+        System.out.println("| 3. Forgot Password         |");
+        System.out.println("| 4. Exit                    |");
+        System.out.println("------------------------------");
+        System.out.print("Enter your choice: ");
 
-  public String getMembershipNumber() {
-      return membershipNumber;
-  }
+//        String choice = scanner.nextLine();
+//        switch (choice) {
+//            case "1":
+//                displayRegisterUser();
+//                break;
+//            case "2":
+//                displayLoginMenu();
+//                break;
+//            case "3": {
+//                try {
+//                    forgot();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            break;
+//
+//            case "4":
+//                //System.exit(0);
+//                //  System.out.println("ran");
+//                break;
+//            default:
+//                System.out.println("Invalid choice.");
+//                displayMenu();
+//        }
+    }
+  
+}
 
-  public void setMembershipNumber(String membershipNumber) {
-      this.membershipNumber = membershipNumber;
-  }
+//  public String getMembershipNumber() {
+//      return membershipNumber;
+//  }
+//
+//  public void setMembershipNumber(String membershipNumber) {
+//      this.membershipNumber = membershipNumber;
+//  }
 
-    public abstract void printStartMenu();
-  }
 
   
   

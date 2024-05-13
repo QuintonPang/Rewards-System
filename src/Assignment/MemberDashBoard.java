@@ -19,19 +19,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserAccount extends Account implements AccountOperations {
+//public class User    Account extends Account implements AccountOperations
+public class MemberDashBoard {
 
     private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     private String memberNo;
     Loyalty loyalty = new Loyalty();
+    private final static String ANSI_COLORNAME = "\u001B[37m";
+    private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
 
-    public UserAccount() {
-        super(null, null, null, null, null, null); // Set initial values to null
-        scanner = new Scanner(System.in);
-    }
+    // Declaring ANSI_RESET so that we can reset the color 
+    public static final String ANSI_RESET = "\u001B[0m";
 
-    @Override
+//    public UserAccount() {
+//        super(null, null, null, null, null, null); // Set initial values to null
+//        scanner = new Scanner(System.in);
+//    }
+    //put in main
     public void printStartMenu() {
         System.out.println("------------------------------");
         System.out.println("|         Start Menu         |");
@@ -68,6 +73,29 @@ public class UserAccount extends Account implements AccountOperations {
 //                System.out.println("Invalid choice.");
 //                displayMenu();
 //        }
+    }
+
+    public void printMemberMainMenu() {
+        System.out.println("\n--------------------------------------------------------");
+        System.out.print("|           ");
+        System.out.print(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system " + ANSI_RESET);
+        System.out.println("            |");
+        System.out.println("--------------------------------------------------------");
+        System.out.println("| 0. Exit                                              |");
+        System.out.println("| 1. Earn rewards                                      |");
+        System.out.println("| 2. Redeem rewards                                    |");
+        System.out.println("| 3. View Profile                                      |");
+        System.out.println("| 4. Show my referees                                  |");
+        System.out.println("--------------------------------------------------------");
+
+        System.out.print("Enter your choice: ");
+//                if (!scanner.hasNextLine()) {
+//                    System.out.println("STOP");
+//                }
+
+        //remove 3report
+        //remove 6openg earning
+        //remove 7update expiration
     }
 
     //menu for user and admin
@@ -126,14 +154,12 @@ public class UserAccount extends Account implements AccountOperations {
 //                displayLoginMenu();
 //        }
 //    }
-    @Override
-    public void createAccount() {
-        RegistrationManager registrationManager = new RegistrationManager();
-        registrationManager.createAccountUser();
-        memberNo = registrationManager.getMemberNo();
-    }
-
-    @Override
+//    @Override
+//    public void createAccount() {
+//        RegistrationManager registrationManager = new RegistrationManager();
+//        registrationManager.createAccountUser();
+//        memberNo = registrationManager.getMemberNo();
+//    }
     public void showReferees() {
 
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
@@ -150,7 +176,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     total += 1;
                     System.out.println("| Username\t\t: " + user[0] + "\t|");
-                    System.out.println("| Membership Number\t: " + user[4] +"\t|");
+                    System.out.println("| Membership Number\t: " + user[4] + "\t|");
 
                     System.out.println("-----------------------------------------");
 
@@ -173,17 +199,17 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-    public boolean login() {
-        LoginManager loginManager = new LoginManager();
-        if (loginManager.login()) {
-            memberNo = loginManager.getMemberNo();
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
+//    public boolean login() {
+//        LoginManager loginManager = new LoginManager();
+//        if (loginManager.login()) {
+//            memberNo = loginManager.getMemberNo();
+//            return true;
+//        } else {
+//            return false;
+//        }
+//
+//    }
+    //Put in Member.java
     public void forgot() throws IOException {
 
         System.out.println("\n Forgot Password \n");
@@ -226,10 +252,10 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-    public void viewProfile() throws FileNotFoundException {
+    public void viewProfile(String memberNo) throws FileNotFoundException {
 
         // Assuming getMemberId() returns the correct membership number
-        String membershipNumber = getMemberNo();
+        String membershipNumber = memberNo;
         List<Earning> earnings = CSVWrite.getAllEarnings();
 
         List<Earning> filteredList = new ArrayList<>();
@@ -503,11 +529,6 @@ public class UserAccount extends Account implements AccountOperations {
             System.out.println("Error updating password: " + ex.getMessage());
         }
 
-    }
-
-    @Override
-    public String getMemberNo() {
-        return memberNo;
     }
 
 }

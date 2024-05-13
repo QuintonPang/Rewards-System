@@ -32,7 +32,35 @@ public class AdminDashBoard {
     private String memberNo;
     Loyalty loyalty = new Loyalty();
     Policy policy = new Policy();
-    UserAccount userAccount = new UserAccount();
+    MemberDashBoard userAccount = new MemberDashBoard();
+
+    public void printAdminMainMenu() {
+        System.out.println("-----------------------------------------");
+        System.out.println("|            Admin Main Menu            |");
+        System.out.println("-----------------------------------------");
+        System.out.println("| 0. Exit                               |");
+        System.out.println("| 1. Check Customer Details             |");
+        System.out.println("| 2. View all products                  |");
+        System.out.println("| 3. Check Earning file                 |");
+        System.out.println("| 4. Top redeemed Item from customer    |");
+        System.out.println("| 5. Least redeemed Item from Customer  |");
+        System.out.println("| 6. User Activity Checking             |");
+        System.out.println("| 7. Update TierMultiplier              |");
+        System.out.println("| 8. Update Expiration Duration         |");
+        System.out.println("-----------------------------------------");
+        System.out.print("  Enter your choice: ");
+    }
+    
+    public void printAdminReportMenu() {
+        System.out.println("\n-----------------------------------------");
+        System.out.println("|              Report Menu              |");
+        System.out.println("-----------------------------------------");
+        System.out.println("| 1. View the most popular gift redeem  |");
+        System.out.println("| 2. View the least gift redeem         |");
+        System.out.println("| 3. User profile status                |");
+        System.out.println("-----------------------------------------");
+        System.out.print("Enter your choice: ");
+    }
 
 //    public void display() {
 //        System.out.println("\n Admin Dashboard \n");
@@ -130,11 +158,9 @@ public class AdminDashBoard {
 //        }
 //
 //    }
-
     public void checkCustomerDetails() {
         System.out.println("View Customer Details");
-        try (InputStream input = Files.newInputStream(Paths.get(filename));
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter membership number: ");
