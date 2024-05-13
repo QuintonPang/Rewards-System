@@ -269,15 +269,24 @@ public class Main {
                                                 case "0":
                                                     break;
                                                 case "1":
-                                                    System.out.print("Enter your invoice NO.: ");
-                                                    String invoiceNo = scanner.nextLine();
-                                                    System.out.print("Enter the total payment amount: ");
-                                                    int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
-                                                    new Earning(invoiceNo, value, memberNo);
-                                                    policy.updateExpiryDate();
-                                                    System.out.println("You have earned a total of " + value + " points!");
-                                                    System.out.print("\n");
-                                                    break;
+                                                System.out.print("Enter your invoice NO. (starting with ABC): ");
+                                                String invoiceNo = scanner.nextLine();
+                                                
+                                                // Validate and format the invoice number
+                                                if (!invoiceNo.matches("ABC\\d{4,}")) {
+                                                    System.out.println("\u001B[31mInvalid invoice number format. It should start with ABC followed by 4 or more digits (e.g., ABC1234)\u001B[0m");
+                                                    continue; // Continue to prompt the user until a valid invoice number is provided
+                                                }
+                                                
+                                                
+                                                System.out.print("Enter the total payment amount: ");
+                                                int value = (int) (Math.round(Double.parseDouble(scanner.nextLine()) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
+                                                new Earning(invoiceNo, value, memberNo);
+                                                policy.updateExpiryDate();
+                                                System.out.println("You have earned a total of " + value + " points!");
+                                                System.out.print("\n");
+                                                break;
+                                                
                                                 case "2":
                                                     List<Earning> earnings = CSVWrite.getAllEarnings();
 
@@ -323,12 +332,12 @@ public class Main {
                                                     System.out.print("Enter your choice:");
                                                     String redemptionChoice = scanner.nextLine();
 
-                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
+                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 2 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
                                                         System.out.println("Invalid input!");
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
-
                                                     }
+                                                    
 
                                                      {
                                                         try {
