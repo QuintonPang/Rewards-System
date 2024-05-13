@@ -142,6 +142,7 @@ public class Main {
         String loginMenuChoice = "";
         String customerMainMenuChoice = "";
         String adminMainMenuCHoice = "";
+        
 
         String memberNo = "";
 
@@ -276,16 +277,11 @@ public class Main {
                                                     System.out.print("Enter your choice:");
                                                     String redemptionChoice = scanner.nextLine();
 
-                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 2 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
+                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
                                                         System.out.println("Invalid input!");
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
-                                                    }
 
-                                                    System.out.println("Do you want to go back to the menu? (yes/no)");
-                                                    String backToMenuChoice = scanner.nextLine();
-                                                    if (backToMenuChoice.equalsIgnoreCase("yes")) {
-                                                        break;
                                                     }
 
                                                 {
