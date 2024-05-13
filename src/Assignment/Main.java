@@ -262,16 +262,10 @@ public class Main {
                                                     System.out.print("Enter your choice:");
                                                     String redemptionChoice = scanner.nextLine();
 
-                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 2 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
+                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
                                                         System.out.println("Invalid input!");
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
-                                                    }
-
-                                                    System.out.println("Do you want to go back to the menu? (yes/no)");
-                                                    String backToMenuChoice = scanner.nextLine();
-                                                    if (backToMenuChoice.equalsIgnoreCase("yes")) {
-                                                        break;
                                                     }
 
                                                      {
@@ -351,29 +345,45 @@ public class Main {
                                                     loyalty.printTierMultipliers();
                                                     System.out.print("Do you want to modify?(Y/N):");
                                                     String tierMultipliersChoice = scanner.nextLine();
+                                                    String tier = "";
+                                                    String tierChoice;
+                                                    String multiplier;
                                                     if (tierMultipliersChoice.equalsIgnoreCase("Y")) {
-                                                        System.out.print("Enter the tier you want to modify: ");
-                                                        String tierChoice = scanner.nextLine();
-                                                        System.out.print("Enter the new multiplier: ");
-                                                        double multiplier = scanner.nextDouble();
+                                                        do {
+                                                            System.out.print("Enter the tier you want to modify(1-4): ");
+                                                            tierChoice = scanner.nextLine();
+                                                            if(!isNumeric(tierChoice) || Integer.parseInt(tierChoice) < 1 || Integer.parseInt(tierChoice) > 4){
+                                                                System.err.println("Please enter valid tier number!");
+                                                            }
+                                                        } while (!isNumeric(tierChoice) || Integer.parseInt(tierChoice) < 1 || Integer.parseInt(tierChoice) > 4);
+                                                        do {
+                                                            System.out.print("Enter the new multiplier: ");
+                                                            multiplier = scanner.nextLine();
+                                                            if()
+                                                        } while (!isNumeric(multiplier) || Double.parseDouble(multiplier) < 1);
 
                                                         switch (tierChoice) {
                                                             case "1":
-                                                                loyalty.updateMultiplier("Bronze", multiplier);
+                                                                loyalty.updateMultiplier("Bronze", Double.parseDouble(multiplier));
+                                                                tier = "Bronze";
                                                                 break;
                                                             case "2":
-                                                                loyalty.updateMultiplier("Silver", multiplier);
+                                                                loyalty.updateMultiplier("Silver", Double.parseDouble(multiplier));
+                                                                tier = "Silver";
                                                                 break;
                                                             case "3":
-                                                                loyalty.updateMultiplier("Gold", multiplier);
+                                                                loyalty.updateMultiplier("Gold", Double.parseDouble(multiplier));
+                                                                tier = "Gold";
                                                                 break;
                                                             case "4":
-                                                                loyalty.updateMultiplier("Platinium", multiplier);
+                                                                loyalty.updateMultiplier("Platinium", Double.parseDouble(multiplier));
+                                                                tier = "Platinium";
                                                                 break;
                                                             default:
                                                                 System.out.println("\u001B[31mError Selection!\u001B[0m");
                                                                 break;
                                                         }
+                                                        System.out.println("The new multiplier for " + tier + " is updated to " + multiplier);
                                                     }
                                                     break;
                                                 case "8":
