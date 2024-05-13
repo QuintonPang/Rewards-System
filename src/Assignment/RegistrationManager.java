@@ -24,97 +24,118 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RegistrationManager {
-     private static final String filename = "user.txt";
+public class RegistrationManager extends Account {
+    private static final String filename = "user.txt";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
-    
+
     Policy policy = new Policy();
     UserAccount useraccount = new UserAccount();
-    
- public void createAccountUser() {
+
+    public void createAccountUser() {
         try {
             Path path = Paths.get(filename);
             if (!Files.exists(path)) {
                 Files.createFile(path);
             }
+            // Check if the file is empty
+            boolean fileIsEmpty = Files.size(path) == 0;
+
             BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND);
 
-            System.out.println("\n Create User Account \n");
-            while (true) {
-                System.out.print("Enter your username: ");
-                String username = scanner.nextLine();
-
-                if (!isValidUsername(username)) {
-                    System.out.println("\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
-                    continue;
-                }
-
-                System.out.print("Enter your email: ");
-                String email = scanner.nextLine();
-                if (!isValidEmail(email)) {
-                    System.out.println("\u001B[31mIInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
-                    continue;
-                }
-
-                System.out.print("Enter your phone number: ");
-                String phone = scanner.nextLine();
-                if (!isValidPhone(phone)) {
-                    System.out.println("\u001B[31mIInvalid phone number format should be (digits only)! \u001B[0m");
-                    continue;
-                }
-
-                System.out.print("Enter your password: ");
-                String password = scanner.nextLine();
-                if (!isValidPassword(password)) {
-                    System.out.println("\u001B[31mIInvalid password format should be (6-20 characters)! \u001B[0m");
-                    continue;
-                }
-
-                System.out.print("Referred by (Member No) (Empty to skip): ");
-                String referrer = scanner.nextLine();
-                if (referrer.length() > 0) {
-                    boolean validMember = memberIsExists(referrer);
-                    if (!validMember && referrer.length() > 0) {
-                        System.out.println("\u001B[31mIMember does not exist! \u001B[0m");
-                        continue;
-                    } else {
-                        new Earning("Referral", 10, referrer);
-                        policy.updateExpiryDate();
-                        
-                    }
-                }else {
-                    referrer = "0";
-                }
-
-                // Check if the username, email, or phone already exist in the file
-                if (isAlreadyRegistered(username, email, phone)) {
-                    System.out.println("\u001B[31mIUsername, email, or phone number already exists. Please try again! \u001B[0m");
-                    continue;
-                }
-
-                // Generate a random membership number
-                Random random = new Random();
-                int randomNumber = random.nextInt(10000);
-                memberNo = "ABC" + String.format("%04d", randomNumber);
-                System.out.println("Your membership number is: " + memberNo);
-
-                // Write the user account details to the file
-                writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + referrer);
+            // Write the header line only if the file is empty
+            if (fileIsEmpty) {
+                writer.write("Username Email PhoneNo Password MemberNo Referral");
                 writer.newLine();
-
-                // Close the writer
-                writer.close();
-
-                // Sort the user accounts based on username
-                sortUserAccountsByUsername(filename);
-
-                break; // Exit the loop after successfully creating the account
             }
+
+            System.out.println("\n===========================================");
+            System.out.println("|          Create User Account            |");
+            System.out.println("===========================================\n");
+
+            // Collect user input
+            String username = "";
+            String email = "";
+            String phone = "";
+            String password = "";
+
+            System.out.print("Username: ");
+            username = scanner.nextLine();
+
+            System.out.print("Enter your email: ");
+            email = scanner.nextLine();
+
+            System.out.print("Enter your phone number: ");
+            phone = scanner.nextLine();
+
+            System.out.print("Enter your password: ");
+            password = scanner.nextLine();
+
+            String referrer = "";
+
+            System.out.print("Referred by (Member No) (Empty to skip): ");
+            referrer = scanner.nextLine();
+            if (referrer.length() > 0) {
+                boolean validMember = memberIsExists(referrer);
+                if (!validMember) {
+                    System.out.println("\u001B[31mMember does not exist! \u001B[0m");
+                    return; // Return to the menu
+                } else {
+                    new Earning("Referral", 10, referrer);
+                    policy.updateExpiryDate();
+                }
+            } else {
+                referrer = "0";
+            }
+
+            // Validate input
+            if (!isValidUsername(username)) {
+                System.out.println(
+                        "\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            if (!isValidEmail(email)) {
+                System.out.println("\u001B[31mInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            if (!isValidPhone(phone)) {
+                System.out.println("\u001B[31mInvalid phone number format should be (digits only)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            if (!isValidPassword(password)) {
+                System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            // Check if the username, email, or phone already exist in the file
+            if (isAlreadyRegistered(username, email, phone)) {
+                System.out.println(
+                        "\u001B[31mUsername, email, or phone number already exists. Please try again! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            // Generate a random membership number
+            Random random = new Random();
+            int randomNumber = random.nextInt(10000);
+            memberNo = "ABC" + String.format("%04d", randomNumber);
+            System.out.println("Your membership number is: " + memberNo);
+
+            // Write the user account details to the file
+            writer.write(username + " " + email + " " + phone + " " + password + " " + memberNo + " " + referrer);
+            writer.newLine();
+
+            // Close the writer
+            writer.close();
+
+            // Sort the user accounts based on username
+            sortUserAccountsByUsername(filename);
 
         } catch (IOException ex) {
             System.out.println("Error creating account: " + ex.getMessage());
-        } 
+        }
     }
 
     private void sortUserAccountsByUsername(String filename) {
@@ -127,18 +148,26 @@ public class RegistrationManager {
         }
     }
 
-
-    
-
     public void createAccountStaff() {
         try {
             Path path = Paths.get("staff.txt");
             if (!Files.exists(path)) {
                 Files.createFile(path);
             }
+            // Check if the file is empty
+            boolean fileIsEmpty = Files.size(path) == 0;
+
             BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND);
 
-            System.out.println("\n Create Staff Account \n");
+            // Write the header line only if the file is empty
+            if (fileIsEmpty) {
+                writer.write("Username Email PhoneNo Password StaffID");
+                writer.newLine();
+            }
+
+            System.out.println("\n===========================================");
+            System.out.println("|          Create Staff Account            |");
+            System.out.println("===========================================\n");
 
             System.out.print("Enter your authentication key: ");
             String key = scanner.nextLine();
@@ -146,64 +175,71 @@ public class RegistrationManager {
                 System.out.println("\u001B[31mInvalid authentication key! \u001B[0m");
                 writer.close(); // Close the writer before returning
                 return;
-
             }
 
-            while (true) {
-                System.out.print("Enter your username: ");
-                String username = scanner.nextLine();
+            // Collect user input
+            String username = "";
+            String email = "";
+            String phone = "";
+            String password = "";
 
-                if (!isValidUsername(username)) {
-                    System.out.println("\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
-                    continue;
-                }
+            System.out.print("Enter your username: ");
+            username = scanner.nextLine();
 
-                System.out.print("Enter your email: ");
-                String email = scanner.nextLine();
-                if (!isValidEmail(email)) {
-                    System.out.println("\u001B[31mInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
-                    continue;
-                }
+            System.out.print("Enter your email: ");
+            email = scanner.nextLine();
 
-                System.out.print("Enter your phone number: ");
-                String phone = scanner.nextLine();
-                if (!isValidPhone(phone)) {
-                    System.out.println("\u001B[31mInvalid phone number format should be (digits only)! \u001B[0m");
-                    continue;
-                }
+            System.out.print("Enter your phone number: ");
+            phone = scanner.nextLine();
 
-                System.out.print("Enter your password: ");
-                String password = scanner.nextLine();
-                if (!isValidPassword(password)) {
-                    System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
-                    continue;
-                }
+            System.out.print("Enter your password: ");
+            password = scanner.nextLine();
 
-                // Check if the username, email, or phone already exist in the file
-                if (isAlreadyRegisteredStaff(username, email, phone)) {
-                    System.out.println("\u001B[31mUsername, email, or phone number already exists. Please try again! \u001B[0m");
-                    writer.close(); // Close the writer before returning
-                    return;
-                }
-
-                // Generate staffID
-                Random random = new Random();
-                int randomNumber = random.nextInt(10000);
-                String staffID = "STF" + String.format("%04d", randomNumber);
-                System.out.println("Your staff ID is: " + staffID);
-
-                // Write staff details to the staff file
-                writer.write(username + " " + email + " " + phone + " " + password + " " + staffID);
-                writer.newLine();
-                writer.close();
-
-                System.out.println("Staff account created successfully.");
-                // If needed, you can add further logic here to redirect to the admin dashboard
-                //AdminDashBoard adminDashBoard = new AdminDashBoard();
-                //adminDashBoard.display();
-
-                break; // Break out of the while loop after successfully creating the staff account
+            // Validate input
+            if (!isValidUsername(username)) {
+                System.out.println(
+                        "\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
+                return; // Return to the menu
             }
+
+            if (!isValidEmail(email)) {
+                System.out.println("\u001B[31mInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            if (!isValidPhone(phone)) {
+                System.out.println("\u001B[31mInvalid phone number format should be (digits only)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            if (!isValidPassword(password)) {
+                System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
+                return; // Return to the menu
+            }
+
+            // Check if the username, email, or phone already exist in the file
+            if (isAlreadyRegisteredStaff(username, email, phone)) {
+                System.out.println(
+                        "\u001B[31mUsername, email, or phone number already exists. Please try again! \u001B[0m");
+                writer.close(); // Close the writer before returning
+                return;
+            }
+
+            // Generate staffID
+            Random random = new Random();
+            int randomNumber = random.nextInt(10000);
+            String staffID = "STF" + String.format("%04d", randomNumber);
+            System.out.println("Your staff ID is: " + staffID);
+
+            // Write staff details to the staff file
+            writer.write(username + " " + email + " " + phone + " " + password + " " + staffID);
+            writer.newLine();
+            writer.close();
+
+            System.out.println("Staff account created successfully.");
+            // If needed, you can add further logic here to redirect to the admin dashboard
+            // AdminDashBoard adminDashBoard = new AdminDashBoard();
+            // adminDashBoard.display();
 
         } catch (IOException ex) {
             System.out.println("Error creating account: " + ex.getMessage());
@@ -229,23 +265,24 @@ public class RegistrationManager {
 
     private boolean isAlreadyRegisteredStaff(String username, String email, String phone) throws IOException {
         Path path = Paths.get("staff.txt"); // Enclose the file name in quotes
-    
+
         if (Files.exists(path)) {
             try (Scanner fileScanner = new Scanner(path)) {
                 while (fileScanner.hasNextLine()) {
                     String line = fileScanner.nextLine();
                     String[] parts = line.split(" ");
-                    
-                    // Check if the line contains enough parts and matches the given username, email, or phone
-                    if (parts.length >= 4 && 
-                        (parts[0].equals(username) || parts[1].equals(email) || parts[2].equals(phone))) {
+
+                    // Check if the line contains enough parts and matches the given username,
+                    // email, or phone
+                    if (parts.length >= 4 &&
+                            (parts[0].equals(username) || parts[1].equals(email) || parts[2].equals(phone))) {
                         return true; // Username, email, or phone already exists in the file
                     }
                 }
             }
         }
         return false; // Not already registered
-    }    
+    }
 
     private boolean isValidUsername(String username) {
         return username.matches("[a-zA-Z0-9]+") && username.length() >= 6 && username.length() <= 20;
@@ -264,12 +301,12 @@ public class RegistrationManager {
         return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+");
     }
 
-    
-        public static boolean memberIsExists(String memberNo) {
+    public static boolean memberIsExists(String memberNo) {
         boolean found = false;
 
         // validate member ID
-        try (InputStream input = Files.newInputStream(Paths.get("user.txt")); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get("user.txt"));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
             String membershipNumber = memberNo;
             String line;
 
@@ -295,6 +332,5 @@ public class RegistrationManager {
     public String getMemberNo() {
         return memberNo;
     }
-        
 
 }
