@@ -72,8 +72,7 @@ public class Main {
         }
     }
 
-    
-        public static void printStartMenu() {
+    public static void printStartMenu() {
         System.out.println("------------------------------");
         System.out.println("|         Start Menu         |");
         System.out.println("------------------------------");
@@ -83,7 +82,7 @@ public class Main {
         System.out.println("| 3. Forgot Password         |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
-        }
+    }
 
     public static void printRegisterMenu() {
         System.out.println("------------------------------");
@@ -124,7 +123,6 @@ public class Main {
         //AccountOperations userAccount; // Use the interface type
         //userAccount = new MemberDashBoard();
         //userAccount.displayMenu();
-
         RedemptionItem[] redemptionItems = {new Product("Umbrella", 2000, "Calvin Klein"), new Product("Shampoo", 200, "Shokutbutsu"), new Product("Toothpaste", 250, "Colgate"), new Voucher("Year end sale voucher", 100, 50), new Voucher("Gold voucher", 500, 85)};
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
@@ -139,9 +137,6 @@ public class Main {
         String loginMenuChoice = "";
         String customerMainMenuChoice = "";
         String adminMainMenuCHoice = "";
-        
-        
-        
 
         String memberNo = "";
 
@@ -172,7 +167,7 @@ public class Main {
                                 case "0":
                                     break;
                                 default:
-                                System.out.println("\u001B[31mInvalid choice! \n\u001B[0m");
+                                    System.out.println("\u001B[31mInvalid choice! \n\u001B[0m");
                             }
 
                         }
@@ -191,7 +186,7 @@ public class Main {
                                         customerMainMenuChoice = "";
                                         while (!customerMainMenuChoice.equals("0") && !customerMainMenuChoice.equals("exit")) {
                                             member.printMemberMainMenu();
-                                            
+
                                             customerMainMenuChoice = scanner.nextLine();
                                             switch (customerMainMenuChoice) {
                                                 case "0":
@@ -200,16 +195,16 @@ public class Main {
                                                     System.out.print("Enter your invoice NO.: ");
                                                     String invoiceNo = scanner.nextLine();
                                                     String paymentAmount;
-                                                    do {     
+                                                    do {
                                                         System.out.print("Enter the total payment amount: ");
                                                         paymentAmount = scanner.nextLine();
-                                                        if(!isNumeric(paymentAmount)){
+                                                        if (!isNumeric(paymentAmount)) {
                                                             System.err.println("Please enter number only.");
-                                                        }else if(Double.parseDouble(paymentAmount) <= 0){
+                                                        } else if (Double.parseDouble(paymentAmount) <= 0) {
                                                             System.err.println("Please enter a positive number.");
                                                         }
                                                     } while (!isNumeric(paymentAmount) || Double.parseDouble(paymentAmount) <= 0);
-                                                    
+
                                                     int value = (int) (Math.round(Double.parseDouble(paymentAmount) * POINTS_PER_RM) * loyalty.getMultiplier(memberNo));
                                                     new Earning(invoiceNo, value, memberNo);
                                                     policy.updateExpiryDate();
@@ -296,12 +291,12 @@ public class Main {
                                                     member.showReferees();
                                                     break;
                                                 case "5":
-                                                Client client = new Client("127.0.0.1", 5000);
-                                                client.handleConnection();
-                                                break;
+                                                    Client client = new Client("127.0.0.1", 5000);
+                                                    client.handleConnection();
+                                                    break;
 
                                                 default:
-                                                System.out.println("\u001B[31mInvalid Input.\u001B[0m");
+                                                    System.out.println("\u001B[31mInvalid Input.\u001B[0m");
                                             }
                                         }
 
@@ -365,8 +360,8 @@ public class Main {
                                                                 loyalty.updateMultiplier("Platinium", multiplier);
                                                                 break;
                                                             default:
-                                                            System.out.println("\u001B[31mError Selection!\u001B[0m");
-                                                            break;
+                                                                System.out.println("\u001B[31mError Selection!\u001B[0m");
+                                                                break;
                                                         }
                                                     }
                                                     break;
@@ -396,25 +391,23 @@ public class Main {
                                                             }
                                                         }
                                                     }
-                                                    case "9":
+                                                case "9":
                                                     Server server = new Server(5000);
                                                     server.handleConnection();
                                                     break;
 
-                                            
                                                 default:
-                                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
-                                                break;
+                                                    System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                                    break;
                                             }
                                         }
                                     }
                                     break;
                                 case "0":
                                     break;
-                          
 
                                 default:
-                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                    System.out.println("\u001B[31mInvalid choice.\u001B[0m");
                                 //displayLoginMenu();
                             }
 
@@ -437,7 +430,7 @@ public class Main {
                         endingPage.ending();
                         break;
                     default:
-                    System.out.println("\u001B[31mInvalid choice! \n \u001B[0m");
+                        System.out.println("\u001B[31mInvalid choice! \n \u001B[0m");
                     //displayMenu();
                 }
 
