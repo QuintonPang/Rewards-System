@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author munchun
  */
-public class AdminDashBoard {
+public class AdminDashBoard{
 
     private static final String filename = "user.txt";
     private String memberNo;
