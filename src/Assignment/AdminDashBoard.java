@@ -44,6 +44,7 @@ public class AdminDashBoard {
         System.out.println("| 6. User Activity Checking             |");
         System.out.println("| 7. Update TierMultiplier              |");
         System.out.println("| 8. Update Expiration Duration         |");
+        System.out.println("| 9. Live server                        |");
         System.out.println("-----------------------------------------");
         System.out.print("  Enter your choice: ");
     }
@@ -153,12 +154,14 @@ public class AdminDashBoard {
                     productQuantities.put(item, productQuantities.getOrDefault(item, 0) + quantity);
                 }
             }
-            System.out.println("------Product Quantity Redeemed------------");
-            System.out.printf("%-25s %-20s %n", "Product", "Total Quantity");
+            System.out.println("\n-----------------------------------------------------");
+            System.out.printf("| %-28s | %-18s |%n", "Product", "Total Quantity");
+            System.out.println("-----------------------------------------------------");
             for (Map.Entry<String, Integer> entry : productQuantities.entrySet()) {
-                System.out.printf("%-30s %-20d %n", entry.getKey(), entry.getValue());
+                System.out.printf("| %-28s | %-18d |%n", entry.getKey(), entry.getValue());
+                System.out.println("-----------------------------------------------------");
             }
-            System.out.println("--------------------------------------------"+ '\n');
+            System.out.println();
 
         } catch (IOException e) {
             System.out.println("Error reading redemptionHistory.txt: " + e.getMessage());

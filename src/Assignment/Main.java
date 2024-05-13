@@ -386,6 +386,7 @@ public class Main {
                                                     loyalty.printTierMultipliers();
                                                     System.out.print("Do you want to modify?(Y/N):");
                                                     String tierMultipliersChoice = scanner.nextLine();
+                                                    String tier ="";
                                                     while (!tierMultipliersChoice.equalsIgnoreCase("Y")
                                                             && !tierMultipliersChoice.equalsIgnoreCase("N")) {
                                                         System.out.println("\u001B[31mInvalid choice.\u001B[0m");
@@ -419,55 +420,59 @@ public class Main {
                                                         switch (tierChoice) {
                                                             case "1":
                                                                 loyalty.updateMultiplier("Bronze", multiplier);
+                                                                tier = "Bronze";
                                                                 break;
                                                             case "2":
                                                                 loyalty.updateMultiplier("Silver", multiplier);
+                                                                tier = "Silver";
                                                                 break;
                                                             case "3":
                                                                 loyalty.updateMultiplier("Gold", multiplier);
+                                                                tier = "Gold";
                                                                 break;
                                                             case "4":
-                                                                loyalty.updateMultiplier("Platinum", multiplier);
+                                                                loyalty.updateMultiplier("Platinium", multiplier);
+                                                                tier = "Platinium";
                                                                 break;
                                                             default:
                                                                 System.out.println("\u001B[31mError Selection!\u001B[0m");
                                                                 break;
                                                         }
+                                                        System.out.println("The new multiplier for " + tier + " is updated to " + multiplier +".\n");
                                                     }
                                                     break;
-                                                case "8":
-                                                    System.out.println(
-                                                            "-------------------------------------------------");
-                                                    if (policy.getExpiryMonths() > 1) {
-                                                        System.out.println("| Current Expiration Duration : "
-                                                                + policy.getExpiryMonths() + " Months\t|");
-                                                    } else {
-                                                        System.out.println("| Current Expiration Duration : "
-                                                                + policy.getExpiryMonths() + " Month \t|");
-                                                    }
-                                                    System.out.println(
-                                                            "-------------------------------------------------");
-                                                    System.out
-                                                            .print("Do you want to update expiration duration?(Y/N):");
-                                                    String expirationDurationChoice = scanner.nextLine();
-                                                    if (expirationDurationChoice.equalsIgnoreCase("Y")) {
-                                                        validate = false;
-                                                        while (!validate) {
-                                                            System.out.print(
-                                                                    "Update the expiration durations in months (01-12) :");
-                                                            expiryMonths = scanner.nextLine();
-                                                            if (policy.validateMonth(expiryMonths)) {
-                                                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-                                                                System.out.println("--------------------------------");
-                                                                System.out.println("New expiration durations : "
-                                                                        + policy.getExpiryMonths());
-                                                                validate = true;
-
-                                                            } else {
-                                                                System.err.println("\u001B[31mInvalid!\u001B[0m");
+                                                    case "8":
+                                                        System.out.println("-------------------------------------------------");
+                                                        if (policy.getExpiryMonths() > 1) {
+                                                            System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Months\t|");
+                                                        } else {
+                                                            System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Month \t|");
+                                                        }
+                                                        System.out.println("-------------------------------------------------");
+                                                        System.out.print("Do you want to update expiration duration?(Y/N):");
+                                                        String expirationDurationChoice = scanner.nextLine();
+                                                        while (!expirationDurationChoice.equalsIgnoreCase("Y") && !expirationDurationChoice.equalsIgnoreCase("N")) {
+                                                            System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                                            System.out.print("Do you want to update expiration duration?(Y/N):");
+                                                            expirationDurationChoice = scanner.nextLine();
+                                                        }
+                                                        if (expirationDurationChoice.equalsIgnoreCase("Y")) {
+                                                            validate = false;
+                                                            while (!validate) {
+                                                                System.out.print("Update the expiration durations in months (01-12) :");
+                                                                expiryMonths = scanner.nextLine();
+                                                                if (policy.validateMonth(expiryMonths)) {
+                                                                    policy.setExpiryMonths(Integer.parseInt(expiryMonths));
+                                                                    System.out.println("--------------------------------");
+                                                                    System.out.println("New expiration durations : " + policy.getExpiryMonths());
+                                                                    validate = true;
+                                                                } else {
+                                                                    System.err.println("\u001B[31mInvalid!\u001B[0m");
+                                                                }
                                                             }
                                                         }
-                                                    }
+                                                        break;
+
                                                 case "9":
                                                     Server server = new Server(5000);
                                                     server.handleConnection();

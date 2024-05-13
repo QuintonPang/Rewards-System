@@ -40,3 +40,5 @@ Date: 2024-05-14 00:18:18, Member No: ABC5558, Redeemed Item: Gold voucher, Quan
 Date: 2024-05-14 00:18:21, Member No: ABC5558, Redeemed Item: Shampoo, Quantity: 1
 Date: 2024-05-14 01:09:42, Member No: ABC9550, Redeemed Item: Umbrella, Quantity: 1
 Date: 2024-05-14 01:46:36, Member No: ABC6460, Redeemed Item: Year end sale voucher, Quantity: 1
+Date: 2024-05-14 02:19:54, Member No: ABC6460, Redeemed Item: Umbrella, Quantity: 1
+Date: 2024-05-14 02:20:52, Member No: ABC6460, Redeemed Item: Umbrella, Quantity: 1
