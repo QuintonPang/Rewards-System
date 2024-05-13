@@ -366,6 +366,7 @@ public class Main {
                                                     loyalty.printTierMultipliers();
                                                     System.out.print("Do you want to modify?(Y/N):");
                                                     String tierMultipliersChoice = scanner.nextLine();
+                                                    String tier ="";
                                                     while (!tierMultipliersChoice.equalsIgnoreCase("Y")
                                                             && !tierMultipliersChoice.equalsIgnoreCase("N")) {
                                                         System.out.println("\u001B[31mInvalid choice.\u001B[0m");
@@ -399,20 +400,25 @@ public class Main {
                                                         switch (tierChoice) {
                                                             case "1":
                                                                 loyalty.updateMultiplier("Bronze", multiplier);
+                                                                tier = "Bronze";
                                                                 break;
                                                             case "2":
                                                                 loyalty.updateMultiplier("Silver", multiplier);
+                                                                tier = "Silver";
                                                                 break;
                                                             case "3":
                                                                 loyalty.updateMultiplier("Gold", multiplier);
+                                                                tier = "Gold";
                                                                 break;
                                                             case "4":
-                                                                loyalty.updateMultiplier("Platinum", multiplier);
+                                                                loyalty.updateMultiplier("Platinium", multiplier);
+                                                                tier = "Platinium";
                                                                 break;
                                                             default:
                                                                 System.out.println("\u001B[31mError Selection!\u001B[0m");
                                                                 break;
                                                         }
+                                                        System.out.println("The new multiplier for " + tier + " is updated to " + multiplier +".\n");
                                                     }
                                                     break;
                                                     case "8":
