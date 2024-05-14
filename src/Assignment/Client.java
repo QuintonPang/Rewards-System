@@ -39,8 +39,8 @@ public class Client extends NetworkEntity {
     
             // Send messages to the server
             String userInput;
+            System.out.println("Enter a message to send to the server (type 'Over' to stop):\n");
             while (true) {
-                System.out.println("Enter a message to send to the server (type 'Over' to stop):\n");
                 userInput = userInputReader.readLine();
                 if (userInput.equalsIgnoreCase("Over")) {
                     break;  // Exit the loop if user inputs "Over"
@@ -56,8 +56,5 @@ public class Client extends NetworkEntity {
         }
     }
     
-    public static void main(String[] args) {
-        Client client = new Client("127.0.0.1", 5000);
-        client.handleConnection();
-    }
+
 }

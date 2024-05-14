@@ -33,7 +33,7 @@ public class Server extends NetworkEntity {
             while (true) {
                 System.out.println("Waiting for a client ...");
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected: " + clientSocket);
+                System.out.println("Client connected: \n" + clientSocket);
 
                 // Submit the client handling task to the thread pool
                 threadPool.submit(() -> handleClient(clientSocket));
@@ -50,13 +50,13 @@ public class Server extends NetworkEntity {
 
             String clientMessage;
             while ((clientMessage = in.readUTF()) != null) {
-                System.out.println("Client: " + clientMessage);
+                System.out.println("Client: " + clientMessage + "\n");
                 String response = serverInput.readLine();
                 out.writeUTF(response);
                 out.flush();
             }
         } catch (IOException e) {
-            System.err.println("Error handling client: " + e.getMessage());
+            System.err.println("\u001B[31mError handling client: " + e.getMessage() + "\u001B[0m");
         } finally {
             try {
                 clientSocket.close();
@@ -78,8 +78,5 @@ public class Server extends NetworkEntity {
         }
     }
 
-    public static void main(String[] args) {
-        Server server = new Server(5000);
-        server.handleConnection(); // Start the server
-    }
+
 }
