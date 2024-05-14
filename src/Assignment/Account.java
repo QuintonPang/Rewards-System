@@ -2,7 +2,7 @@
 package Assignment;
 
 
-public class Account  {
+public abstract class Account  {
 
   private String username;
   private String email;
@@ -53,6 +53,10 @@ public class Account  {
   public void setPassword(String password) {
       this.password = password;
   }
+  
+  public abstract boolean login();
+  
+  public abstract void createAccount();
   
 }
 

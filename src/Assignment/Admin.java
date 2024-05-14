@@ -16,7 +16,8 @@ public class Admin extends Account {
     public Admin() {
     }
     
-
+    
+    @Override
     public boolean login() {
         AdminInfo adminInfo = loginManager.loginStaff();
         if (adminInfo != null) {

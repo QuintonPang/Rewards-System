@@ -19,6 +19,7 @@ public class Member extends Account {
     public Member() {
     }
 
+    @Override
     public boolean login() {
         MemberInfo memberInfo = loginManager.loginMember();
         if (memberInfo != null) {

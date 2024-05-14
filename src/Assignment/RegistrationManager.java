@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RegistrationManager extends Account {
+public class RegistrationManager {
 
     private static final String FILENAME = "user.txt";
     private static final String ANSI_GREEN = "\u001B[32m";
