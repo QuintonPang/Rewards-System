@@ -52,6 +52,7 @@ public class MemberDashBoard {
         System.out.println("| 2. Redeem rewards                                    |");
         System.out.println("| 3. View Profile                                      |");
         System.out.println("| 4. Show my referees                                  |");
+        System.out.println("| 5. Customer Service                                  |");
         System.out.println("--------------------------------------------------------");
 
         System.out.print("Enter your choice: ");

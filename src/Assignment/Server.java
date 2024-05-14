@@ -56,7 +56,7 @@ public class Server extends NetworkEntity {
                 out.flush();
             }
         } catch (IOException e) {
-            System.out.println("Error handling client: " + e.getMessage());
+            System.err.println("Error handling client: " + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
