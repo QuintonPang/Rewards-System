@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
-/**
- *
- * @author Kang
- */
 public class Admin extends Account {
 
     private String adminNo;
@@ -78,14 +71,7 @@ public class Admin extends Account {
     }
     
     public String getAdminNo(){
-        return loginManager.getStaffNo();
+        return adminNo;
     }
     
-    
-    public static void main(String[] args) {
-        Admin admin = new Admin();
-        admin.printAdminMainMenu();
-        admin.login();
-        System.out.println(admin.getUsername());
-    }
 }

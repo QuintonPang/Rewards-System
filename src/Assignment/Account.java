@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
 
@@ -56,20 +53,6 @@ public class Account  {
   public void setPassword(String password) {
       this.password = password;
   }
-  
-      public void printStartMenu() {
-        System.out.println("------------------------------");
-        System.out.println("|         Start Menu         |");
-        System.out.println("------------------------------");
-        System.out.println("| 1. Create User Account     |");
-        System.out.println("| 2. Login                   |");
-        System.out.println("| 3. Forgot Password         |");
-        System.out.println("| 4. Exit                    |");
-        System.out.println("------------------------------");
-        System.out.print("Enter your choice: ");
-
-
-    }
   
 }
 

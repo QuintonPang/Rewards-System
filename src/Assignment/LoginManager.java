@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
-/**
- *
- * @author munchun
- */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,14 +13,12 @@ import java.util.Scanner;
 
 public class LoginManager {
 
-    private static final String filename = "user.txt";
-    private Scanner scanner;
-    MemberDashBoard userAccount = new MemberDashBoard();
+    private static final String FILENAME = "user.txt";
+    private Scanner scanner = new Scanner(System.in);
     private String memberNo;
     private String staffNo;
 
     public LoginManager() {
-        scanner = new Scanner(System.in);
     }
 
 
@@ -95,7 +87,7 @@ public class LoginManager {
 
     MemberInfo loginMember() {
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get(FILENAME);
             InputStream input = Files.newInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             System.out.println("\n===========================================");

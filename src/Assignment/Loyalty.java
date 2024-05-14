@@ -23,7 +23,6 @@ public class Loyalty {
         tierMultipliers.put(tier, multiplier);
     }
 
-    //display to admin to modify
     public void printTierMultipliers() {
 
         int counter = 1;
@@ -37,7 +36,6 @@ public class Loyalty {
         System.out.println("---------------------------------");
     }
 
-    //return grade level
     public String determineGrade(int points) {
         if (points >= 3000) {
             return "Platinium";
@@ -72,7 +70,7 @@ public class Loyalty {
         return tierMultipliers.get(getCustomerGrade(customerId));
     }
 
-    //toString Customer Grade Details
+
     public String toString(String customerId) throws FileNotFoundException {
         String grade = getCustomerGrade(customerId);
         int accumulatedPoint = calculateAccumulatedPoint(customerId);

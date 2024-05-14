@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
-/**
- *
- * @author munchun
- */
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -30,8 +23,6 @@ public class RegistrationManager extends Account {
     private static final String ANSI_RESET = "\u001B[0m";
     Scanner scanner = new Scanner(System.in);
     String memberNo;
-
-    Policy policy = new Policy();
     
  public void createAccountUser() {
 
@@ -84,7 +75,6 @@ public class RegistrationManager extends Account {
                     return; // Return to the menu
                 } else {
                     new Earning("Referral", 10, referrer);
-                    policy.updateExpiryDate();
                 }
             } else {
                 referrer = "0";

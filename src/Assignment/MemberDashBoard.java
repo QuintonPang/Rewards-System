@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-//public class User    Account extends Account implements AccountOperations
 public class MemberDashBoard {
 
     private static final String filename = "user.txt";

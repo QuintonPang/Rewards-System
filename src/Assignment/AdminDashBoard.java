@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
 import java.io.BufferedReader;
@@ -22,13 +19,9 @@ import java.awt.Desktop;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author munchun
- */
 public class AdminDashBoard {
 
-    private static final String filename = "user.txt";
+    private static final String FILENAME = "user.txt";
     private String memberNo;
 
     public void printAdminMainMenu() {
@@ -63,7 +56,7 @@ public class AdminDashBoard {
         System.out.println("--------------------------------");
         System.out.println("View Customer Details");
                     System.out.println("--------------------------------");
-        try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get(FILENAME)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
             Scanner scanner = new Scanner(System.in);
             

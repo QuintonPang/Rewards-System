@@ -26,8 +26,6 @@ import java.util.logging.Logger;
 public class Main {
 
     private final static int POINTS_PER_RM = 10;
-    private final static String ANSI_COLORNAME = "\u001B[37m";
-    private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
 
     // Declaring ANSI_RESET so that we can reset the color
     public static final String ANSI_RESET = "\u001B[0m";
@@ -162,6 +160,7 @@ public class Main {
                             switch (registerMenuChoice) {
                                 case "1":
                                     member.createAccount();
+                                    policy.updateExpiryDate();
                                     // userAccount.createAccount();
                                     registerMenuChoice = "exit";
                                     break;
@@ -422,31 +421,24 @@ public class Main {
                                                     }
                                                     break;
                                                 case "8":
-                                                    System.out.println(
-                                                            "-------------------------------------------------");
+                                                    System.out.println("-------------------------------------------------");
                                                     if (policy.getExpiryMonths() > 1) {
-                                                        System.out.println("| Current Expiration Duration : "
-                                                                + policy.getExpiryMonths() + " Months\t|");
+                                                        System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Months\t|");
                                                     } else {
-                                                        System.out.println("| Current Expiration Duration : "
-                                                                + policy.getExpiryMonths() + " Month \t|");
+                                                        System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Month \t|");
                                                     }
-                                                    System.out.println(
-                                                            "-------------------------------------------------");
-                                                    System.out
-                                                            .print("Do you want to update expiration duration?(Y/N):");
+                                                    System.out.println("-------------------------------------------------");
+                                                    System.out.print("Do you want to update expiration duration?(Y/N):");
                                                     String expirationDurationChoice = scanner.nextLine();
                                                     if (expirationDurationChoice.equalsIgnoreCase("Y")) {
                                                         validate = false;
                                                         while (!validate) {
-                                                            System.out.print(
-                                                                    "Update the expiration durations in months (01-12) :");
+                                                            System.out.print("Update the expiration durations in months (01-12) :");
                                                             expiryMonths = scanner.nextLine();
                                                             if (policy.validateMonth(expiryMonths)) {
                                                                 policy.setExpiryMonths(Integer.parseInt(expiryMonths));
                                                                 System.out.println("--------------------------------");
-                                                                System.out.println("New expiration durations : "
-                                                                        + policy.getExpiryMonths());
+                                                                System.out.println("New expiration durations : " + policy.getExpiryMonths());
                                                                 validate = true;
 
                                                             } else {
@@ -454,6 +446,7 @@ public class Main {
                                                             }
                                                         }
                                                     }
+                                                    break;
                                                 case "9":
                                                     Server server = new Server(5000);
                                                     server.handleConnection();
