@@ -51,7 +51,7 @@ public class MemberDashBoard {
         System.out.println("| 2. Redeem rewards                                    |");
         System.out.println("| 3. View Profile                                      |");
         System.out.println("| 4. Show my referees                                  |");
-        System.out.println("| 5. Contact Staff                                     |");
+        System.out.println("| 5. Customer Service                                  |");
         System.out.println("--------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
@@ -129,9 +129,9 @@ public class MemberDashBoard {
 
         if (updated) {
             Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("Password reset successful.");
+            System.out.println("\nPassword reset successful\n");
         } else {
-            System.err.println("\u001B[31m Username or email not found! \u001B[0m");
+            System.err.println("\nUsername or email not found!\n");
 
         }
 
@@ -141,6 +141,7 @@ public class MemberDashBoard {
 
         // Assuming getMemberId() returns the correct membership number
         String membershipNumber = memberNo;
+        String choice = " ";
         List<Earning> earnings = CSVWrite.getAllEarnings();
 
         List<Earning> filteredList = new ArrayList<>();
@@ -182,7 +183,10 @@ public class MemberDashBoard {
                     boolean modifyDetails = promptModifyDetails();
                     if (modifyDetails) {
                         updateAccount(membershipNumber);
-                    } else {
+                    }else if (choice.equalsIgnoreCase("N")) {
+                        return;
+                    }else  {
+                        System.err.println("Invalid Input!\n Returning to the Menu");
                         return;
                     }
 
@@ -190,7 +194,7 @@ public class MemberDashBoard {
                 }
             }
 
-            System.out.println("User not found.");
+            System.err.println("User not found");
 
         } catch (FileNotFoundException e) {
             System.out.println("Error: user.txt not found.");
@@ -208,7 +212,8 @@ public class MemberDashBoard {
     }
 
     public void updateAccount(String membershipNumber) {
-        System.out.println("Which details do you want to modify?");
+        System.out.println("\nWhich details do you want to modify?");
+        System.out.println("------------------------------------------------");
         System.out.println("1. Username");
         System.out.println("2. Email");
         System.out.println("3. Phone");
@@ -234,7 +239,7 @@ public class MemberDashBoard {
 
                 break;
             default:
-                System.out.println("Invalid choice!\n");
+                System.err.println("Invalid choice!\n");
                 updateAccount(memberNo); // Pass membershipNumber to recursive call
         }
     }
@@ -270,8 +275,8 @@ public class MemberDashBoard {
 
                     // Check if the new username is valid
                     if (!isValidUsername(newUsername)) {
-                        System.out.println("\u001B[31m Invalid username format should be (6-20 characters && no special characters)! \u001B[0m");
-                        return; // Exit the method if the username is invalid
+                        System.out.println("\u001B[31mInvalid username format should be (6-20 characters && no special characters)! \u001B[0m");
+                        updateAccount(membershipNumber);; // Exit the method if the username is invalid
                     }
 
                     // Update the username in the line
@@ -305,8 +310,8 @@ public class MemberDashBoard {
                 if (user.length >= 5 && user[4].equals(membershipNumber)) {
                     String newEmail = promptForValidEmail(); // Validate and get new email from user input
                     if (newEmail == null) {
-                        System.out.println("\u001B[31m Invalid email format! Email not updated! \u001B[0m");
-                        return; // Exit if the user input is invalid
+                        System.out.println("\u001B[31mInvalid email format! Email not updated! \u001B[0m");
+                        updateAccount(membershipNumber);; // Exit if the user input is invalid
                     }
 
                     user[1] = newEmail;
@@ -334,7 +339,7 @@ public class MemberDashBoard {
             if (isValidEmail(newEmail)) {
                 return newEmail;
             }
-            System.out.println("\u001B[31m Invalid email format! Please try again! \u001B[0m");
+            System.out.println("\u001B[31mInvalid email format! Please try again! \u001B[0m");
         }
     }
 
@@ -353,8 +358,8 @@ public class MemberDashBoard {
 
                     // Check if the new phone number is valid
                     if (!isValidPhone(newPhone)) {
-                        System.out.println("\u001B[31m Invalid phone number format should be (digits only)! \u001B[0m");
-                        return; // Exit the method if the phone number is invalid
+                        System.out.println("\u001B[31mInvalid phone number format should be (digits only)! \u001B[0m");
+                        updateAccount(membershipNumber);; // Exit the method if the phone number is invalid
                     }
 
                     // Update the phone number in the line
@@ -393,7 +398,7 @@ public class MemberDashBoard {
                     // Check if the new password is valid
                     if (!isValidPassword(newPassword)) {
                         System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
-                        return; // Exit the method if the password is invalid
+                        updateAccount(membershipNumber);; // Exit the method if the password is invalid
                     }
 
                     // Update the password in the line

@@ -1,8 +1,6 @@
 package Assignment;
 
 import javax.swing.JOptionPane;
-import java.awt.*;
-import java.util.Scanner;
 
 public class EndingPage {
     // ANSI escape codes for color
