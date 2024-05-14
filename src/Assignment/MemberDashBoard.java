@@ -58,9 +58,10 @@ public class MemberDashBoard {
 
     }
 
-    public void showReferees() {
+    public void showReferees(String memberNo) {
 
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+            System.out.println("Show memberNo at referal: " + memberNo);
 
             String line;
             System.out.println();

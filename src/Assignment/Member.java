@@ -41,7 +41,7 @@ public class Member extends Account {
     }
     
     public void showReferees(){
-        memberDashBoard.showReferees();
+        memberDashBoard.showReferees(memberNo);
     }
     
     public void viewProfile() throws FileNotFoundException{
