@@ -111,4 +111,19 @@ public class Loyalty {
         return "Current Grade\t\t: " + grade + "(Earning Points x " + String.valueOf(getMultiplier(points)) + ")\t|"
                 + "\n| Next Tier\t\t: " + nextTiers + "\t\t\t\t|";
     }
+
+    public String getNextTiers(String customerId) throws FileNotFoundException {    
+        int accumulatedPoint = calculateAccumulatedPoint(customerId);
+        if (accumulatedPoint >= 3000) {
+            nextTiers = "No more tiers";
+        } else if (accumulatedPoint >= 2000) {
+            nextTiers = String.valueOf(accumulatedPoint) + "/3000" + " Platinum";
+        } else if (accumulatedPoint >= 1000) {
+            nextTiers = String.valueOf(accumulatedPoint) + "/2000" + " Gold";
+        } else {
+            nextTiers = String.valueOf(accumulatedPoint) + "/1000" + " Silver";
+        }
+        return nextTiers;
+    }
+
 }

@@ -180,7 +180,9 @@ public class MemberDashBoard {
                     System.out.printf("%-23s %-1s %-37s %-1s\n","| Membership Number",":",user[4],"|");
                     //System.out.printf("| Current Point\t\t: %-37d |\n", totalPoints);
                     System.out.printf("%-23s %-1s %-37s %-1s\n","| Current Point",":",totalPoints,"|");
-                    System.out.println("| " + loyalty.toString(memberNo));
+                    System.out.printf("%-23s %-1s %-9s %-16s%-4s%-6s %-1s\n","| Current Grade",":",loyalty.determineGrade(user[4]),"(Earning Points x",loyalty.getMultiplier(user[4]),")","|");
+                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Next Tier",":",loyalty.getNextTiers(user[4]),"|");
+//                    System.out.println("| " + loyalty.toString(memberNo));
                     System.out.println("-----------------------------------------------------------------");
 
                     // Prompt the user outside of the loop
