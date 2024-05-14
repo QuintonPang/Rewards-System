@@ -172,11 +172,11 @@ public class MemberDashBoard {
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
                 if (user.length >= 5 && user[4].equals(membershipNumber)) {
-                    System.out.println("| Username\t\t: " + user[0] + "\t\t\t\t|");
-                    System.out.println("| Email\t\t\t: " + user[1] + "\t\t\t|");
-                    System.out.println("| Phone\t\t\t: " + user[2] + "\t\t\t\t|");
-                    System.out.println("| Membership Number\t: " + user[4] + "\t\t\t\t|");
-                    System.out.println("| Current Point\t\t: " + totalPoints + "\t\t\t\t\t|");
+                    System.out.printf("| Username\t\t: %-37s |\n", user[0]);
+                    System.out.printf("| Email\t\t\t: %-37s |\n", user[1]);
+                    System.out.printf("| Phone\t\t\t: %-37s |\n", user[2]);
+                    System.out.printf("| Membership Number\t: %-37s |\n", user[4]);
+                    System.out.printf("| Current Point\t\t: %-37d |\n", totalPoints);
                     System.out.println("| " + loyalty.toString(memberNo));
                     System.out.println("-----------------------------------------------------------------");
 
