@@ -255,7 +255,7 @@ public class MemberDashBoard {
                 break;
             default:
                 System.err.println("Invalid choice!\n");
-                updateAccount(memberNo); // Pass membershipNumber to recursive call
+                updateAccount(membershipNumber); // Pass membershipNumber to recursive call
         }
     }
 

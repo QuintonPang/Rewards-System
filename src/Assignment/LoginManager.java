@@ -57,7 +57,7 @@ public class LoginManager {
                     }
                 }
                 if (!found) {
-                    System.out.println("Invalid username or password.");
+                    System.out.println("\u001B[31m\nInvalid username or password. \u001B[0m");
                     System.out.println("-------------------------------");
                     return null;
 
@@ -117,7 +117,7 @@ public class LoginManager {
                 if (!loginSuccessful) { // Check login status before displaying invalid message
                     boolean invalidInput = true;
                     while (invalidInput) {
-                        System.err.println("\nInvalid username or password.");
+                        System.out.println("\u001B[31m\nInvalid username or passwod. \u001B[0m");
                         System.out.println("-------------------------------");
                         return null;
                     }
