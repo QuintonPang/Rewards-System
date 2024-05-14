@@ -142,7 +142,6 @@ public class MemberDashBoard {
 
         // Assuming getMemberId() returns the correct membership number
         String membershipNumber = memberNo;
-        String choice = " ";
         List<Earning> earnings = CSVWrite.getAllEarnings();
 
         List<Earning> filteredList = new ArrayList<>();
@@ -185,13 +184,13 @@ public class MemberDashBoard {
                     System.out.println("-----------------------------------------------------------------");
 
                     // Prompt the user outside of the loop
-                    boolean modifyDetails = promptModifyDetails();
-                    if (modifyDetails) {
+                   String modifyDetails = promptModifyDetails();
+                    if (modifyDetails.equalsIgnoreCase("Y")) {
                         updateAccount(membershipNumber);
-                    }else if (choice.equalsIgnoreCase("N")) {
+                    }else if (modifyDetails.equalsIgnoreCase("N")) {
                         return;
                     }else  {
-                        System.err.println("Invalid Input!\n Returning to the Menu");
+                        System.err.println("Invalid Input!\nReturning to the Menu");
                         return;
                     }
 
@@ -210,10 +209,10 @@ public class MemberDashBoard {
         }
     }
 
-    private boolean promptModifyDetails() {
+    private String promptModifyDetails() {
         System.out.print("Do you want to modify your account details? (Y/N): ");
         String choice = scanner.nextLine();
-        return choice.equalsIgnoreCase("Y");
+        return choice;
     }
 
     public void updateAccount(String membershipNumber) {
