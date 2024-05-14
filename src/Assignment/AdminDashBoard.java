@@ -54,6 +54,7 @@ public class AdminDashBoard {
     }
 
     public void checkCustomerDetails() {
+        boolean found = false;
         System.out.println("--------------------------------");
         System.out.println("View Customer Details");
                     System.out.println("--------------------------------");
@@ -71,7 +72,7 @@ public class AdminDashBoard {
 
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
-                if (user.length >= 5 && user[4].equals(memberNo)) {
+                if (user.length >= 5 && user[4].equals(memberNo) && !found) {
                     
                     System.out.println("Username: " + user[0]);
                     System.out.println("Email: " + user[1]);
@@ -83,9 +84,14 @@ public class AdminDashBoard {
                     int currentValue = getCurrentValueFromCSV();
                         System.out.println("Current Value: " + currentValue);
                         System.out.println("");
+                    found = true;
 
                     break;
                 }
+                
+            }
+            if (!found){
+                System.err.println("Member Not Found!");
             }
 
         } catch (Exception e) {
