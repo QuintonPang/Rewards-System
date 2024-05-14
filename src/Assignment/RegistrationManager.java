@@ -1,6 +1,4 @@
-
 package Assignment;
-
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,13 +16,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RegistrationManager extends Account {
+
     private static final String FILENAME = "user.txt";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_RESET = "\u001B[0m";
+    Policy policy = new Policy();
     Scanner scanner = new Scanner(System.in);
     String memberNo;
-    
- public void createAccountUser() {
+
+    public void createAccountUser() {
 
         try {
             Path path = Paths.get(FILENAME);
@@ -51,52 +51,35 @@ public class RegistrationManager extends Account {
             String email = "";
             String phone = "";
             String password = "";
+            String referrer = "";
 
             System.out.print("Username: ");
             username = scanner.nextLine();
-
-            System.out.print("Enter your email: ");
-            email = scanner.nextLine();
-
-            System.out.print("Enter your phone number: ");
-            phone = scanner.nextLine();
-
-            System.out.print("Enter your password: ");
-            password = scanner.nextLine();
-
-            String referrer = "";
-
-            System.out.print("Referred by (Member No) (Empty to skip): ");
-            referrer = scanner.nextLine();
-            if (referrer.length() > 0) {
-                boolean validMember = memberIsExists(referrer);
-                if (!validMember) {
-                    System.out.println("\u001B[31mMember does not exist! \u001B[0m");
-                    return; // Return to the menu
-                } else {
-                    new Earning("Referral", 10, referrer);
-                }
-            } else {
-                referrer = "0";
-            }
-
-            // Validate input
             if (!isValidUsername(username)) {
                 System.out.println(
                         "\u001B[31mInvalid username format should be (6-20 characters, no special characters)! \u001B[0m");
                 return; // Return to the menu
             }
 
+            System.out.print("Enter your email: ");
+            email = scanner.nextLine();
+            
             if (!isValidEmail(email)) {
                 System.out.println("\u001B[31mInvalid email format should be (format: xxxxxx@yyy.zzz)! \u001B[0m");
                 return; // Return to the menu
             }
 
+            System.out.print("Enter your phone number: ");
+            phone = scanner.nextLine();
+            
             if (!isValidPhone(phone)) {
                 System.out.println("\u001B[31mInvalid phone number format should be (digits only, between 10/11 words)! \u001B[0m");
                 return; // Return to the menu
             }
 
+            System.out.print("Enter your password: ");
+            password = scanner.nextLine();
+            
             if (!isValidPassword(password)) {
                 System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
                 return; // Return to the menu
@@ -108,6 +91,30 @@ public class RegistrationManager extends Account {
                         "\u001B[31mUsername, email, or phone number already exists. Please try again! \u001B[0m");
                 return; // Return to the menu
             }
+            
+
+            System.out.print("Referred by (Member No) (Empty to skip): ");
+            referrer = scanner.nextLine();
+            if (referrer.length() > 0) {
+                boolean validMember = memberIsExists(referrer);
+                if (!validMember) {
+                    System.out.println("\u001B[31mMember does not exist! \u001B[0m");
+                    return; // Return to the menu
+                } else {
+                    new Earning("Referral", 10, referrer);
+                    policy.updateExpiryDate();
+                }
+            } else {
+                referrer = "0";
+            }
+
+            
+
+            
+
+            
+
+            
 
             // Generate a random membership number
             Random random = new Random();
@@ -269,8 +276,8 @@ public class RegistrationManager extends Account {
 
                     // Check if the line contains enough parts and matches the given username,
                     // email, or phone
-                    if (parts.length >= 4 &&
-                            (parts[0].equals(username) || parts[1].equals(email) || parts[2].equals(phone))) {
+                    if (parts.length >= 4
+                            && (parts[0].equals(username) || parts[1].equals(email) || parts[2].equals(phone))) {
                         return true; // Username, email, or phone already exists in the file
                     }
                 }
@@ -300,8 +307,7 @@ public class RegistrationManager extends Account {
         boolean found = false;
 
         // validate member ID
-        try (InputStream input = Files.newInputStream(Paths.get("user.txt"));
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get("user.txt")); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
             String membershipNumber = memberNo;
             String line;
 

@@ -160,7 +160,6 @@ public class Main {
                             switch (registerMenuChoice) {
                                 case "1":
                                     member.createAccount();
-                                    policy.updateExpiryDate();
                                     // userAccount.createAccount();
                                     registerMenuChoice = "exit";
                                     break;
