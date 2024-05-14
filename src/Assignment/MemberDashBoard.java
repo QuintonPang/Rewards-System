@@ -25,7 +25,7 @@ public class MemberDashBoard {
     Loyalty loyalty = new Loyalty();
     Scanner scanner = new Scanner(System.in);
 
-    // Declaring ANSI_RESET so that we can reset the color 
+    // Declaring ANSI_RESET so that we can reset the color
     public static final String ANSI_RESET = "\u001B[0m";
 
     public void printStartMenu() {
@@ -60,7 +60,8 @@ public class MemberDashBoard {
 
     public void showReferees(String memberNo) {
 
-        try (InputStream input = Files.newInputStream(Paths.get(FILENAME)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get(FILENAME));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
             System.out.println("Show memberNo at referal: " + memberNo);
 
             String line;
@@ -124,7 +125,8 @@ public class MemberDashBoard {
                         updated = true;
                         break;
                     } else {
-                        System.err.println("\u001B[31mInvalid password! Password must be between 6 and 20 characters.\u001B[0m");
+                        System.err.println(
+                                "\u001B[31mInvalid password! Password must be between 6 and 20 characters.\u001B[0m");
                     }
                 } else {
                     System.err.println("\u001B[31mPasswords do not match!\u001B[0m");
@@ -162,7 +164,7 @@ public class MemberDashBoard {
         }
         Collections.sort(filteredList, new EarningComparator());
         int totalPoints = 0;
-        for (Earning e : filteredList) { // for each Player p in list         
+        for (Earning e : filteredList) { // for each Player p in list
             totalPoints += e.getValue();
         }
         System.out.println("-----------------------------------------------------------------");
@@ -175,27 +177,30 @@ public class MemberDashBoard {
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
                 if (user.length >= 5 && user[4].equals(membershipNumber)) {
-                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Username",":",user[0],"|");
-                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Email",":",user[1],"|");
-                    //System.out.printf("| Email\t\t\t: %-37s |\n", user[1]);
-                    //System.out.printf("| Phone\t\t\t: %-37s |\n", user[2]);
-                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Phone",":",user[2],"|");
-                   // System.out.printf("| Membership Number\t: %-37s |\n", user[4]);
-                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Membership Number",":",user[4],"|");
-                    //System.out.printf("| Current Point\t\t: %-37d |\n", totalPoints);
-                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Current Point",":",totalPoints,"|");
-                    System.out.printf("%-23s %-1s %-9s %-16s%-4s%-6s %-1s\n","| Current Grade",":",loyalty.determineGrade(user[4]),"(Earning Points x",loyalty.getMultiplier(user[4]),")","|");
-                    System.out.printf("%-23s %-1s %-37s %-1s\n","| Next Tier",":",loyalty.getNextTiers(user[4]),"|");
-//                    System.out.println("| " + loyalty.toString(memberNo));
+                    System.out.printf("%-23s %-1s %-37s %-1s\n", "| Username", ":", user[0], "|");
+                    System.out.printf("%-23s %-1s %-37s %-1s\n", "| Email", ":", user[1], "|");
+                    // System.out.printf("| Email\t\t\t: %-37s |\n", user[1]);
+                    // System.out.printf("| Phone\t\t\t: %-37s |\n", user[2]);
+                    System.out.printf("%-23s %-1s %-37s %-1s\n", "| Phone", ":", user[2], "|");
+                    // System.out.printf("| Membership Number\t: %-37s |\n", user[4]);
+                    System.out.printf("%-23s %-1s %-37s %-1s\n", "| Membership Number", ":", user[4], "|");
+                    // System.out.printf("| Current Point\t\t: %-37d |\n", totalPoints);
+                    System.out.printf("%-23s %-1s %-37s %-1s\n", "| Current Point", ":", totalPoints, "|");
+                    System.out.printf("%-23s %-1s %-9s %-16s%-4s%-6s %-1s\n", "| Current Grade", ":",
+                            loyalty.determineGrade(user[4]), "(Earning Points x", loyalty.getMultiplier(user[4]), ")",
+                            "|");
+                    System.out.printf("%-23s %-1s %-37s %-1s\n", "| Next Tier", ":", loyalty.getNextTiers(user[4]),
+                            "|");
+                    // System.out.println("| " + loyalty.toString(memberNo));
                     System.out.println("-----------------------------------------------------------------");
 
                     // Prompt the user outside of the loop
-                   String modifyDetails = promptModifyDetails();
+                    String modifyDetails = promptModifyDetails();
                     if (modifyDetails.equalsIgnoreCase("Y")) {
                         updateAccount(membershipNumber);
-                    }else if (modifyDetails.equalsIgnoreCase("N")) {
+                    } else if (modifyDetails.equalsIgnoreCase("N")) {
                         return;
-                    }else  {
+                    } else {
                         System.err.println("Invalid Input!\nReturning to the Menu");
                         return;
                     }
@@ -285,19 +290,22 @@ public class MemberDashBoard {
 
                     // Check if the new username is valid
                     if (!isValidUsername(newUsername)) {
-                        System.out.println("\u001B[31mInvalid username format should be (6-20 characters && no special characters)! \u001B[0m");
-                        updateAccount(membershipNumber);; // Exit the method if the username is invalid
-                    }
+                        System.out.println(
+                                "\u001B[31mInvalid username format should be (6-20 characters && no special characters)! \u001B[0m");
+                        updateAccount(membershipNumber);
+                    } else {
 
-                    // Update the username in the line
-                    user[0] = newUsername;
-                    lines.set(i, String.join(" ", user));
-                    updated = true;
-                    break; // Exit the loop after updating the username
+                        // Update the username in the line
+                        user[0] = newUsername;
+                        lines.set(i, String.join(" ", user));
+                        updated = true;
+                        break; // Exit the loop after updating the username
+                    }
                 }
             }
 
             if (updated) {
+
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Username updated successfully.");
             } else {
@@ -321,14 +329,16 @@ public class MemberDashBoard {
                     String newEmail = promptForValidEmail(); // Validate and get new email from user input
                     if (newEmail == null) {
                         System.out.println("\u001B[31mInvalid email format! Email not updated! \u001B[0m");
-                        updateAccount(membershipNumber);; // Exit if the user input is invalid
-                    }
-
+                        updateAccount(membershipNumber);
+                        ; // Exit if the user input is invalid
+                    }else{
+                    
                     user[1] = newEmail;
                     lines.set(i, String.join(" ", user));
                     updated = true;
                     break;
                 }
+            }
             }
 
             if (updated) {
@@ -343,15 +353,15 @@ public class MemberDashBoard {
     }
 
     private String promptForValidEmail() {
-        while (true) {
-            System.out.print("Enter new email: ");
-            String newEmail = scanner.nextLine();
-            if (isValidEmail(newEmail)) {
-                return newEmail;
-            }
-            System.out.println("\u001B[31mInvalid email format! Please try again! \u001B[0m");
+        System.out.print("Enter new email: ");
+        String newEmail = scanner.nextLine();
+        if (!isValidEmail(newEmail)) {
+            return null;
         }
+        return newEmail;
     }
+
+
 
     public void updatePhone(String membershipNumber) {
         try {
@@ -368,9 +378,11 @@ public class MemberDashBoard {
 
                     // Check if the new phone number is valid
                     if (!isValidPhone(newPhone)) {
-                        System.out.println("\u001B[31mInvalid phone number format should be (digits only, between 10/11 words)! \u001B[0m");
-                        updateAccount(membershipNumber);; // Exit the method if the phone number is invalid
-                    }
+                        System.out.println(
+                                "\u001B[31mInvalid phone number format should be (digits only, between 10/11 words)! \u001B[0m");
+                        updateAccount(membershipNumber);
+                        ; // Exit the method if the phone number is invalid
+                    }else{
 
                     // Update the phone number in the line
                     user[2] = newPhone;
@@ -378,6 +390,7 @@ public class MemberDashBoard {
                     updated = true;
                     break; // Exit the loop after updating the phone number
                 }
+            }
             }
 
             if (updated) {
@@ -408,8 +421,9 @@ public class MemberDashBoard {
                     // Check if the new password is valid
                     if (!isValidPassword(newPassword)) {
                         System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
-                        updateAccount(membershipNumber);; // Exit the method if the password is invalid
-                    }
+                        updateAccount(membershipNumber);
+                        ; // Exit the method if the password is invalid
+                    }else{
 
                     // Update the password in the line
                     user[3] = newPassword;
@@ -417,6 +431,7 @@ public class MemberDashBoard {
                     updated = true;
                     break; // Exit the loop after updating the password
                 }
+            }
             }
 
             if (updated) {
