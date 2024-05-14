@@ -18,12 +18,12 @@ import java.util.Scanner;
 
 public class MemberDashBoard {
 
-    private static final String filename = "user.txt";
-    Scanner scanner = new Scanner(System.in);
+    private static final String FILENAME = "user.txt";
     private String memberNo;
-    Loyalty loyalty = new Loyalty();
     private final static String ANSI_COLORNAME = "\u001B[37m";
     private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
+    Loyalty loyalty = new Loyalty();
+    Scanner scanner = new Scanner(System.in);
 
     // Declaring ANSI_RESET so that we can reset the color 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -60,7 +60,7 @@ public class MemberDashBoard {
 
     public void showReferees(String memberNo) {
 
-        try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+        try (InputStream input = Files.newInputStream(Paths.get(FILENAME)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
             System.out.println("Show memberNo at referal: " + memberNo);
 
             String line;
@@ -104,7 +104,7 @@ public class MemberDashBoard {
         System.out.print("Enter your email: ");
         String email = scanner.nextLine();
 
-        List<String> lines = Files.readAllLines(Paths.get(filename));
+        List<String> lines = Files.readAllLines(Paths.get(FILENAME));
         boolean updated = false;
 
         for (int i = 0; i < lines.size(); i++) {
@@ -129,7 +129,7 @@ public class MemberDashBoard {
         }
 
         if (updated) {
-            Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(Paths.get(FILENAME), lines, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("\nPassword reset successful\n");
         } else {
             System.err.println("\nUsername or email not found!\n");
@@ -268,7 +268,7 @@ public class MemberDashBoard {
 
     public void updateUsername(String membershipNumber) {
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get(FILENAME);
             List<String> lines = Files.readAllLines(path);
             boolean updated = false;
 
@@ -306,7 +306,7 @@ public class MemberDashBoard {
 
     public void updateEmail(String membershipNumber) {
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get(FILENAME);
             List<String> lines = Files.readAllLines(path);
             boolean updated = false;
 
@@ -351,7 +351,7 @@ public class MemberDashBoard {
 
     public void updatePhone(String membershipNumber) {
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get(FILENAME);
             List<String> lines = Files.readAllLines(path);
             boolean updated = false;
 
@@ -390,7 +390,7 @@ public class MemberDashBoard {
 
     public void updatePassword(String membershipNumber) {
         try {
-            Path path = Paths.get(filename);
+            Path path = Paths.get(FILENAME);
             List<String> lines = Files.readAllLines(path);
             boolean updated = false;
 
