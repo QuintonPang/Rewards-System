@@ -15,8 +15,7 @@ public class Admin extends Account {
 
     public Admin() {
     }
-    
-    
+     
     @Override
     public boolean login() {
         AdminInfo adminInfo = loginManager.loginStaff();
@@ -32,9 +31,9 @@ public class Admin extends Account {
         }else{
             return false;
         }
-        
     }
     
+    @Override
     public void createAccount(){
         registrationManager.createAccountStaff();
     }
@@ -73,6 +72,5 @@ public class Admin extends Account {
     
     public String getAdminNo(){
         return adminNo;
-    }
-    
+    }  
 }
