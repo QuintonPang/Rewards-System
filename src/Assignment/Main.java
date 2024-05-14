@@ -311,7 +311,7 @@ public class Main {
                                                     member.showReferees();
                                                     break;
                                                 case "5":
-                                                    Client client = new Client("127.0.0.1", 5000);
+                                                    Client client = new Client("127.0.0.2", 8000);
                                                     client.handleConnection();
                                                     break;
 
@@ -443,7 +443,7 @@ case "8":
                                                     
                                                         break;
                                                 case "9":
-                                                    Server server = new Server(5000);
+                                                    Server server = new Server(8000);
                                                     server.handleConnection();
                                                     break;
 
