@@ -15,6 +15,7 @@ public class Policy {
     private int expiryMonths;
 
     public Policy() {
+        expiryMonths = 3; //Deault Expiration Duration
     }
 
     // Method to update expiry date for the last record only
@@ -49,7 +50,7 @@ public class Policy {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     LocalDate earningDate = LocalDate.parse(earningDateString, formatter);
 
-                    // Add 3 months to the earning date
+                    // Add Expiry months to the earning date
                     LocalDate updatedDate = earningDate.plusMonths(getExpiryMonths());
 
                     // Format updated date back to string
@@ -64,7 +65,6 @@ public class Policy {
                     // Write the updated line to the output file
                     writer.write(updatedLine);
                     writer.newLine();
-                    System.out.println("Date updated successfully for the last record.");
                 } else {
                     // Handle malformed last line
                     System.out.println("Malformed last line: " + lastLine);
@@ -109,33 +109,6 @@ public class Policy {
         return Pattern.matches(monthsRegex, input);
     }
 
-    //Testing Policy
-    public static void main(String[] args) {
-        Policy policy = new Policy();
-        //
-        //policy.checkExpiryPoint("ABC2842");
-        Scanner scanner = new Scanner(System.in);
-        //insert into main start
-        String expiryMonths;
-        boolean validate = false;
-        while (!validate) {
-            System.out.println("Update the expiration durations in months (01-12)");
-            expiryMonths = scanner.nextLine();
-            System.out.println(policy.validateMonth(expiryMonths));
-            if (policy.validateMonth(expiryMonths)) {
-                System.out.println("Valid");
-                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-                System.out.println(policy.getExpiryMonths());
-                validate = true;
 
-            } else {
-                System.err.println("Invalid");
-            }
-
-        }
-        policy.updateExpiryDate();
-        //insert stop here
-
-    }
 
 }

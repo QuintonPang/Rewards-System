@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Assignment;
 
 import java.io.File;
@@ -18,17 +14,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- *
- * @author TARUMT
- */
 public class CSVWrite {
 
     public CSVWrite() throws IOException {
-//        List<String[]> dataLines = new ArrayList<>();
-//        dataLines.add(new String[]{"John", "Doe", "38", "Comment Data\nAnother line of comment data"});
-//        dataLines.add(new String[]{"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
-//        givenDataArray_whenConvertToCSV_thenOutputCreated(dataLines);
 
     }
 
@@ -49,9 +37,6 @@ public class CSVWrite {
         }
         return escapedData;
     }
-    
- 
-
 
     public static void givenDataArray_whenConvertToCSV_thenOutputCreated(List<String[]> dataLines, String fileName, boolean isAppend) throws IOException {
         FileWriter csvOutputFile = new FileWriter(fileName, isAppend);
@@ -60,7 +45,6 @@ public class CSVWrite {
                     .map(data -> CSVWrite.convertToCSV(data))
                     .forEach(pw::println);
         }
-//    assertTrue(csvOutputFile.exists());
     }
 
     public static double getTotalValueOfColumn(String fileName, int columnNo, int headerLines, String memberNo) throws IOException {  // specify the header lines in the csv file to skip
@@ -100,47 +84,47 @@ public class CSVWrite {
 
         }
 
-        // printing the sum
-        //System.out.println("Total sum (in INR) for icecream sale in the given year is :" + sum);
         return sum;
     }
 
-    public static List<Earning>  getAllEarnings() throws FileNotFoundException {
+    public static List<Earning> getAllEarnings() throws FileNotFoundException {
         List<Earning> records = new ArrayList<>();
 
-          File file = new File("earning.csv");
-        if(!(file.exists()&& !(file.isDirectory()))){ return records; }
+        File file = new File("earning.csv");
+        if (!(file.exists() && !(file.isDirectory()))) {
+            return records;
+        }
         try (Scanner scanner = new Scanner(new File("earning.csv"))) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if(!line.isEmpty()) records.add(getRecordFromLine(line));
+                if (!line.isEmpty()) {
+                    records.add(getRecordFromLine(line));
+                }
 
             }
-            
+
         }
         return records;
     }
 
     private static Earning getRecordFromLine(String line) {
-        if(line.isEmpty()) return null;
-//        try (Scanner rowScanner = new Scanner(line)) {
-            //rowScanner.useDelimiter(",");
-            //System.out.println(rowScanner.next());
-//            while (rowScanner.hasNext()) {
-                String[] values = line.split(",");
-                String memberNo = (values[0]);
-                String invoiceNo = (values[1]);
+        if (line.isEmpty()) {
+            return null;
+        }
 
-                int value = (Integer.parseInt(values[2]));
-                int oriValue = (Integer.parseInt(values[3]));
-                LocalDate earningDate =  LocalDate.of(Integer.parseInt(values[4].split("-")[0]),Integer.parseInt(values[4].split("-")[1]),Integer.parseInt(values[4].split("-")[2]));
-                LocalDate expiryDate =  LocalDate.of(Integer.parseInt(values[5].split("-")[0]),Integer.parseInt(values[5].split("-")[1]),Integer.parseInt(values[5].split("-")[2]));
+        String[] values = line.split(",");
+        String memberNo = (values[0]);
+        String invoiceNo = (values[1]);
 
-                Earning earning = new Earning(invoiceNo,value,memberNo,oriValue,earningDate,expiryDate);
+        int value = (Integer.parseInt(values[2]));
+        int oriValue = (Integer.parseInt(values[3]));
+        LocalDate earningDate = LocalDate.of(Integer.parseInt(values[4].split("-")[0]), Integer.parseInt(values[4].split("-")[1]), Integer.parseInt(values[4].split("-")[2]));
+        LocalDate expiryDate = LocalDate.of(Integer.parseInt(values[5].split("-")[0]), Integer.parseInt(values[5].split("-")[1]), Integer.parseInt(values[5].split("-")[2]));
 
-//            }
-//        }
+        Earning earning = new Earning(invoiceNo, value, memberNo, oriValue, earningDate, expiryDate);
+
+
         return earning;
     }
 }

@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Assignment;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,27 +11,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class UserAccount extends Account implements AccountOperations {
+public class MemberDashBoard {
 
     private static final String filename = "user.txt";
-    private Scanner scanner;
-    private String memberId;
+    Scanner scanner = new Scanner(System.in);
+    private String memberNo;
+    Loyalty loyalty = new Loyalty();
+    private final static String ANSI_COLORNAME = "\u001B[37m";
+    private final static String ANSI_RED_BACKGROUND = "\u001B[41m";
 
-    public UserAccount() {
-        super(null, null, null, null, null, null); // Set initial values to null
-        scanner = new Scanner(System.in);
-    }
+    // Declaring ANSI_RESET so that we can reset the color 
+    public static final String ANSI_RESET = "\u001B[0m";
 
-    @Override
-    public void displayMenu() {
+    public void printStartMenu() {
         System.out.println("------------------------------");
-        System.out.println("|         Main Menu          |");
+        System.out.println("|         Start Menu         |");
         System.out.println("------------------------------");
         System.out.println("| 1. Create User Account     |");
         System.out.println("| 2. Login                   |");
@@ -42,72 +38,52 @@ public class UserAccount extends Account implements AccountOperations {
         System.out.println("| 4. Exit                    |");
         System.out.println("------------------------------");
         System.out.print("Enter your choice: ");
-
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "1":
-                createAccount();
-                break;
-            case "2":
-                login();
-                break;
-            case "3": {
-                try {
-                    forgot();
-                } catch (IOException ex) {
-                    Logger.getLogger(UserAccount.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            break;
-
-            case "4":
-                //System.exit(0);
-                //  System.out.println("ran");
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                displayMenu();
-        }
     }
 
-    @Override
-    public void createAccount() {
-        RegistrationManager registrationManager = new RegistrationManager();
-        registrationManager.createAccount();
+    public void printMemberMainMenu() {
+        System.out.println("\n--------------------------------------------------------");
+        System.out.print("|           ");
+        System.out.print(ANSI_COLORNAME + ANSI_RED_BACKGROUND + " Welcome to our rewards system " + ANSI_RESET);
+        System.out.println("            |");
+        System.out.println("--------------------------------------------------------");
+        System.out.println("| 0. Exit                                              |");
+        System.out.println("| 1. Earn rewards                                      |");
+        System.out.println("| 2. Redeem rewards                                    |");
+        System.out.println("| 3. View Profile                                      |");
+        System.out.println("| 4. Show my referees                                  |");
+        System.out.println("--------------------------------------------------------");
+
+        System.out.print("Enter your choice: ");
+
     }
 
-    @Override
     public void showReferees() {
 
         try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
 
-            System.out.print("\nEnter your Membership Number: ");
-            Scanner s = new Scanner(System.in);
-            String membershipNumber = s.nextLine();
             String line;
-
-            System.out.println("\nMy Referees: ");
+            System.out.println();
+            System.out.println("-----------------------------------------");
+            System.out.println("|             My Referees               |");
+            System.out.println("-----------------------------------------");
             int total = 0;
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
-                if (user.length >=7&& user[6].equals(membershipNumber)) {
-                    total += 1;
-                    System.out.println("Username: " + user[0]);
-                    System.out.println("Membership Number: " + user[4]);
+                if (user.length >= 6 && user[5].equals(memberNo)) {
 
-                    System.out.println("-----------------------------------");
+                    total += 1;
+                    System.out.println("| Username\t\t: " + user[0] + "\t|");
+                    System.out.println("| Membership Number\t: " + user[4] + "\t|");
+
+                    System.out.println("-----------------------------------------");
 
                 }
             }
 
             System.out.println("Total: " + total);
 
-            System.out.println("Press any key to continue");
-
-            System.in.read(); // PAUSE THE PROGRAM UNTIL USER PRESSE
-
         } catch (FileNotFoundException e) {
-            System.out.println("Error: user.txt not found.");
+            System.out.println("\u001B[31mError: user.txt not found!\u001B[0m");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error reading user accounts: " + e.getMessage());
@@ -116,16 +92,11 @@ public class UserAccount extends Account implements AccountOperations {
 
     }
 
-
-    public void login() {
-        LoginManager loginManager = new LoginManager();
-        loginManager.login();
-    }
-
     public void forgot() throws IOException {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\n Forgot Password \n");
+        System.out.println("\n===========================================");
+        System.out.println("|             Forgot Password               |");
+        System.out.println("===========================================\n");
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
         System.out.print("Enter your email: ");
@@ -150,8 +121,7 @@ public class UserAccount extends Account implements AccountOperations {
                     updated = true;
                     break;
                 } else {
-                    System.out.println("Passwords do not match. Try again.");
-                    return; // Exit the method if passwords do not match
+                    System.err.println("\u001B[31m Passwords do not match! \u001B[0m");
                 }
             }
         }
@@ -159,64 +129,63 @@ public class UserAccount extends Account implements AccountOperations {
         if (updated) {
             Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Password reset successful.");
-            displayMenuOption();
         } else {
-            System.out.println("Username or email not found.");
+            System.err.println("\u001B[31m Username or email not found! \u001B[0m");
+
         }
 
     }
 
-    public void displayMenuOption() {
-        System.out.println("------------------------------");
-        System.out.println("|         Main Menu          |");
-        System.out.println("------------------------------");
-        System.out.println("| 1. Update User Details     |");
-        System.out.println("| 2. Exit                    |");
-        System.out.println("------------------------------");
-        System.out.print("Enter your choice: ");
+    public void viewProfile(String memberNo) throws FileNotFoundException {
 
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "1":
-                viewProfile();
-                break;
-            case "2":
-                break;
-            //System.exit(0);
-            default:
-                System.out.println("Invalid choice.");
-                displayMenuOption();
+        // Assuming getMemberId() returns the correct membership number
+        String membershipNumber = memberNo;
+        List<Earning> earnings = CSVWrite.getAllEarnings();
+
+        List<Earning> filteredList = new ArrayList<>();
+        List<Earning> otherMembers = new ArrayList<>();
+
+        for (Earning earn : earnings) {
+
+            if (earn.getMemberNo().equals(memberNo)) {
+
+                filteredList.add(earn);
+            } else {
+                otherMembers.add(earn);
+            }
         }
-    }
+        Collections.sort(filteredList, new EarningComparator());
+        int totalPoints = 0;
+        for (Earning e : filteredList) { // for each Player p in list         
+            totalPoints += e.getValue();
+        }
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("|                         View Profile                          |");
+        System.out.println("-----------------------------------------------------------------");
 
-    public String viewProfile() {
-        System.out.println("View Profile");
-
-        try (InputStream input = Files.newInputStream(Paths.get(filename)); BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-
-            //   System.out.println("\nEnter your Membership Number: ");
-            // based on logged in user
-            String membershipNumber = memberId;
+        try (BufferedReader reader = new BufferedReader(new FileReader("user.txt"))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split(" ");
-                if (user[4].equals(membershipNumber)) {
-                    System.out.println("Username: " + user[0]);
-                    System.out.println("Email: " + user[1]);
-                    System.out.println("Phone: " + user[2]);
-                    System.out.println("Membership Number: " + user[4]);
-                    System.out.println("Transaction Record: " + user[5]);
+                if (user.length >= 5 && user[4].equals(membershipNumber)) {
+                    System.out.println("| Username\t\t: " + user[0] + "\t\t\t\t|");
+                    System.out.println("| Email\t\t\t: " + user[1] + "\t\t\t|");
+                    System.out.println("| Phone\t\t\t: " + user[2] + "\t\t\t\t|");
+                    System.out.println("| Membership Number\t: " + user[4] + "\t\t\t\t|");
+                    System.out.println("| Current Point\t\t: " + totalPoints + "\t\t\t\t\t|");
+                    System.out.println("| " + loyalty.toString(memberNo));
+                    System.out.println("-----------------------------------------------------------------");
 
                     // Prompt the user outside of the loop
                     boolean modifyDetails = promptModifyDetails();
                     if (modifyDetails) {
                         updateAccount(membershipNumber);
                     } else {
-                        displayMenuOption();
+                        return;
                     }
 
-                    return membershipNumber; // Return the membership number if the profile is found
+                    return; // Return if the profile is found
                 }
             }
 
@@ -229,12 +198,10 @@ public class UserAccount extends Account implements AccountOperations {
             System.out.println("Error reading user accounts: " + e.getMessage());
             e.printStackTrace();
         }
-
-        return null; // Return null if the profile is not found
     }
 
     private boolean promptModifyDetails() {
-        System.out.println("Do you want to modify your account details? (Y/N): ");
+        System.out.print("Do you want to modify your account details? (Y/N): ");
         String choice = scanner.nextLine();
         return choice.equalsIgnoreCase("Y");
     }
@@ -245,7 +212,6 @@ public class UserAccount extends Account implements AccountOperations {
         System.out.println("2. Email");
         System.out.println("3. Phone");
         System.out.println("4. Password");
-        //  System.out.println("5. Transaction Record");
         System.out.println("5. Go back to main menu");
         System.out.print("Enter your choice: ");
 
@@ -263,29 +229,27 @@ public class UserAccount extends Account implements AccountOperations {
             case "4":
                 updatePassword(membershipNumber);
                 break;
-//      case "5":
-//        updateTransactionRecord(membershipNumber);
             case "5":
-                displayMenuOption();
+
                 break;
             default:
-                System.out.println("Invalid choice.");
-                updateAccount(membershipNumber); // Pass membershipNumber to recursive call
+                System.out.println("Invalid choice!\n");
+                updateAccount(memberNo); // Pass membershipNumber to recursive call
         }
     }
 
     private boolean isValidUsername(String username) {
         return username.length() >= 6 && username.length() <= 20 && !username.matches("[^a-zA-Z0-9]");
     }
-    
+
     private boolean isValidEmail(String email) {
         return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+");
     }
-    
+
     private boolean isValidPhone(String phone) {
         return phone.matches("[0-9]+") && phone.length() == 10 || phone.length() == 11;
     }
-    
+
     private boolean isValidPassword(String password) {
         return password.length() >= 6 && password.length() <= 20;
     }
@@ -305,7 +269,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new username is valid
                     if (!isValidUsername(newUsername)) {
-                        System.out.println("Invalid username format should be (6-20 characters, no special characters)");
+                        System.out.println("\u001B[31m Invalid username format should be (6-20 characters && no special characters)! \u001B[0m");
                         return; // Exit the method if the username is invalid
                     }
 
@@ -321,7 +285,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Username updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31m Membership number not found! \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating username: " + ex.getMessage());
@@ -340,7 +304,7 @@ public class UserAccount extends Account implements AccountOperations {
                 if (user.length >= 5 && user[4].equals(membershipNumber)) {
                     String newEmail = promptForValidEmail(); // Validate and get new email from user input
                     if (newEmail == null) {
-                        System.out.println("Invalid email format. Email not updated.");
+                        System.out.println("\u001B[31m Invalid email format! Email not updated! \u001B[0m");
                         return; // Exit if the user input is invalid
                     }
 
@@ -355,7 +319,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Email updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31m Membership number not found! \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating email: " + ex.getMessage());
@@ -369,7 +333,7 @@ public class UserAccount extends Account implements AccountOperations {
             if (isValidEmail(newEmail)) {
                 return newEmail;
             }
-            System.out.println("Invalid email format. Please try again.");
+            System.out.println("\u001B[31m Invalid email format! Please try again! \u001B[0m");
         }
     }
 
@@ -388,7 +352,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new phone number is valid
                     if (!isValidPhone(newPhone)) {
-                        System.out.println("Invalid phone number format should be (digits only)");
+                        System.out.println("\u001B[31m Invalid phone number format should be (digits only)! \u001B[0m");
                         return; // Exit the method if the phone number is invalid
                     }
 
@@ -404,7 +368,7 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Phone number updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31m Membership number not found \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating phone number: " + ex.getMessage());
@@ -427,7 +391,7 @@ public class UserAccount extends Account implements AccountOperations {
 
                     // Check if the new password is valid
                     if (!isValidPassword(newPassword)) {
-                        System.out.println("Invalid password format should be (6-20 characters)");
+                        System.out.println("\u001B[31mInvalid password format should be (6-20 characters)! \u001B[0m");
                         return; // Exit the method if the password is invalid
                     }
 
@@ -443,43 +407,10 @@ public class UserAccount extends Account implements AccountOperations {
                 Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Password updated successfully.");
             } else {
-                System.out.println("Membership number not found.");
+                System.out.println("\u001B[31mMembership Number not found! \u001B[0m");
             }
         } catch (IOException ex) {
             System.out.println("Error updating password: " + ex.getMessage());
-        }
-
-    }
-
-    public void updateTransactionRecord(String membershipNumber) {
-        try {
-            Path path = Paths.get(filename);
-            List<String> lines = Files.readAllLines(path);
-            boolean updated = false;
-
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                String[] user = line.split(" ");
-                if (user.length >= 5 && user[4].equals(membershipNumber)) {
-                    System.out.print("Enter new transaction record: ");
-                    String newTransactionRecord = scanner.nextLine();
-
-                    // Update the transaction record in the line
-                    user[5] = newTransactionRecord;
-                    lines.set(i, String.join(" ", user));
-                    updated = true;
-                    break; // Exit the loop after updating the transaction record
-                }
-            }
-
-            if (updated) {
-                Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
-                System.out.println("Transaction record updated successfully.");
-            } else {
-                System.out.println("Membership number not found.");
-            }
-        } catch (IOException ex) {
-            System.out.println("Error updating transaction record: " + ex.getMessage());
         }
 
     }
