@@ -37,6 +37,7 @@ public class AdminDashBoard {
         System.out.println("| 6. User Activity Checking             |");
         System.out.println("| 7. Update TierMultiplier              |");
         System.out.println("| 8. Update Expiration Duration         |");
+        System.out.println("| 9. Live server                        |");
         System.out.println("-----------------------------------------");
         System.out.print("  Enter your choice: ");
     }

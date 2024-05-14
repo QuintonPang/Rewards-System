@@ -117,13 +117,13 @@ public class LoginManager {
                 if (!loginSuccessful) { // Check login status before displaying invalid message
                     boolean invalidInput = true;
                     while (invalidInput) {
-                        System.out.println("\nInvalid username or password.");
+                        System.err.println("\nInvalid username or password.");
                         System.out.println("-------------------------------");
                         return null;
                     }
                 }
             } catch (IOException ex) {
-                System.out.println("Error reading user accounts: " + ex.getMessage());
+                System.err.println("Error reading user accounts: " + ex.getMessage());
             } finally {
                 try {
                     if (reader != null) {

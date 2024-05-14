@@ -273,15 +273,35 @@ public class Main {
                                                         break;
                                                     }
 
-                                                    System.out.print("Enter your choice:");
-                                                    String redemptionChoice = scanner.nextLine();
+                                                    String redemptionChoice = " ";
 
-                                                    while (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
-                                                        System.out.println("Invalid input!");
+                                                    while (true) {
                                                         System.out.print("Enter your choice:");
                                                         redemptionChoice = scanner.nextLine();
-
+                                                    
+                                                        if (!isNumeric(redemptionChoice) || Integer.parseInt(redemptionChoice) < 1 || Integer.parseInt(redemptionChoice) > redemptionItems.length) {
+                                                            System.out.println("Invalid input!");
+                                                            System.out.print("Do you want to go back to the menu? (Y/N): ");
+                                                            String backToMenuChoice = scanner.nextLine();
+                                                            while (!backToMenuChoice.equalsIgnoreCase("Y") && !backToMenuChoice.equalsIgnoreCase("N")) {
+                                                                System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                                                System.out.print("Do you want to go back to the menu? (Y/N): ");
+                                                                backToMenuChoice = scanner.nextLine();
+                                                            }
+                                                        
+                                                            if (backToMenuChoice.equalsIgnoreCase("Y")) {
+                                                                // Assuming member.printMemberMainMenu() takes the user back to the main menu
+                                                                member.printMemberMainMenu();
+                                                                break; // Exit the redemption loop
+                                                            }
+                                                        }
+                                                    
+                                                        // Handle the valid redemption choice here
+                                                    
+                                                       
                                                     }
+                                                    
+                                                  
 
                                                 {
                                                     try {
@@ -420,33 +440,38 @@ public class Main {
                                                         System.out.println("The new multiplier for " + tier + " is updated to " + multiplier +".\n");
                                                     }
                                                     break;
-                                                case "8":
-                                                    System.out.println("-------------------------------------------------");
-                                                    if (policy.getExpiryMonths() > 1) {
-                                                        System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Months\t|");
-                                                    } else {
-                                                        System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Month \t|");
-                                                    }
-                                                    System.out.println("-------------------------------------------------");
-                                                    System.out.print("Do you want to update expiration duration?(Y/N):");
-                                                    String expirationDurationChoice = scanner.nextLine();
-                                                    if (expirationDurationChoice.equalsIgnoreCase("Y")) {
-                                                        validate = false;
-                                                        while (!validate) {
-                                                            System.out.print("Update the expiration durations in months (01-12) :");
-                                                            expiryMonths = scanner.nextLine();
-                                                            if (policy.validateMonth(expiryMonths)) {
-                                                                policy.setExpiryMonths(Integer.parseInt(expiryMonths));
-                                                                System.out.println("--------------------------------");
-                                                                System.out.println("New expiration durations : " + policy.getExpiryMonths());
-                                                                validate = true;
-
-                                                            } else {
-                                                                System.err.println("\u001B[31mInvalid!\u001B[0m");
+                                                    case "8":
+                                                        System.out.println("-------------------------------------------------");
+                                                        if (policy.getExpiryMonths() > 1) {
+                                                            System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Months\t|");
+                                                        } else {
+                                                            System.out.println("| Current Expiration Duration : " + policy.getExpiryMonths() + " Month \t|");
+                                                        }
+                                                        System.out.println("-------------------------------------------------");
+                                                        System.out.print("Do you want to update expiration duration?(Y/N):");
+                                                        String expirationDurationChoice = scanner.nextLine();
+                                                        while (!expirationDurationChoice.equalsIgnoreCase("Y") && !expirationDurationChoice.equalsIgnoreCase("N")) {
+                                                            System.out.println("\u001B[31mInvalid choice.\u001B[0m");
+                                                            System.out.print("Do you want to update expiration duration?(Y/N):");
+                                                            expirationDurationChoice = scanner.nextLine();
+                                                        }
+                                                        if (expirationDurationChoice.equalsIgnoreCase("Y")) {
+                                                            validate = false;
+                                                            while (!validate) {
+                                                                System.out.print("Update the expiration durations in months (01-12) :");
+                                                                expiryMonths = scanner.nextLine();
+                                                                if (policy.validateMonth(expiryMonths)) {
+                                                                    policy.setExpiryMonths(Integer.parseInt(expiryMonths));
+                                                                    System.out.println("--------------------------------");
+                                                                    System.out.println("New expiration durations : " + policy.getExpiryMonths());
+                                                                    validate = true;
+                                                                } else {
+                                                                    System.err.println("\u001B[31mInvalid!\u001B[0m");
+                                                                }
                                                             }
                                                         }
-                                                    }
-                                                    break;
+                                                        break;
+
                                                 case "9":
                                                     Server server = new Server(5000);
                                                     server.handleConnection();

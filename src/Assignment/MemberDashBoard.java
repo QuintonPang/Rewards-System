@@ -94,7 +94,9 @@ public class MemberDashBoard {
 
     public void forgot() throws IOException {
 
-        System.out.println("\n Forgot Password \n");
+        System.out.println("\n===========================================");
+        System.out.println("|             Forgot Password               |");
+        System.out.println("===========================================\n");
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
         System.out.print("Enter your email: ");
@@ -119,7 +121,7 @@ public class MemberDashBoard {
                     updated = true;
                     break;
                 } else {
-                    System.out.println("\u001B[31m Passwords do not match! \u001B[0m");
+                    System.err.println("\u001B[31m Passwords do not match! \u001B[0m");
                 }
             }
         }
@@ -128,7 +130,7 @@ public class MemberDashBoard {
             Files.write(Paths.get(filename), lines, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Password reset successful.");
         } else {
-            System.out.println("\u001B[31m Username or email not found! \u001B[0m");
+            System.err.println("\u001B[31m Username or email not found! \u001B[0m");
 
         }
 
