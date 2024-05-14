@@ -210,7 +210,7 @@ public class RegistrationManager {
             }
 
             if (!isValidPhone(phone)) {
-                System.out.println("\u001B[31mInvalid phone number format should be (digits only)! \u001B[0m");
+                System.out.println("\u001B[31mInvalid phone number format should be (digits only, between 10/11 words)! \u001B[0m");
                 return; // Return to the menu
             }
 
