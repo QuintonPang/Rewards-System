@@ -500,3 +500,4 @@ class EarningComparator implements java.util.Comparator<Earning> {
         return a.getEarningDate().isBefore(b.getEarningDate()) ? -1 : 1;
     }
 }
+

@@ -118,12 +118,16 @@ public class MemberDashBoard {
                 String confirmPassword = scanner.nextLine();
 
                 if (newPassword.equals(confirmPassword)) {
-                    user[3] = newPassword;
-                    lines.set(i, String.join(" ", user));
-                    updated = true;
-                    break;
+                    if (isValidPassword(newPassword)) {
+                        user[3] = newPassword;
+                        lines.set(i, String.join(" ", user));
+                        updated = true;
+                        break;
+                    } else {
+                        System.err.println("\u001B[31mInvalid password! Password must be between 6 and 20 characters.\u001B[0m");
+                    }
                 } else {
-                    System.err.println("\u001B[31m Passwords do not match! \u001B[0m");
+                    System.err.println("\u001B[31mPasswords do not match!\u001B[0m");
                 }
             }
         }
